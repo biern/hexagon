@@ -39,6 +39,16 @@ YUI.add('hexagon.gameview', function (Y) {
 
             bw.getHexAt([2,2]).getNeighbourCells().set('playerID', 'marcin');
             bw.on('*:invalidMove', function () { alert("Invalid move"); });
+
+            var s2 = {
+                size: [2, 3],
+                cells: [
+                    [],
+                    [{}, {disabled: true}]
+                ]
+            };
+
+            setTimeout(function () { bw.set('state', s2); }, 1000);
             // setTimeout(function() { bw.getHexListAt([[0,0], [1,1]]).set('disabled', true); }, 2000);
         }
     });

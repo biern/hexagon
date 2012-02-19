@@ -4,14 +4,10 @@ YUI.add('hex.board', function (Y) {
 
         renderUI: function () {
             this._node = this.get('contentBox');
-            // this._node.setContent('<div><div>' + this.get('x') + '|' + this.get('y') + '</div></div>');
-            // TODO
-            // this._node.setContent('<div class="outer"><div class="yui3-hexagoncell-token"></div></div>');
-            // this._node.setContent('<div class="test2"></div>');
         },
 
         bindUI: function () {
-            this._node.after('click', function(n) {
+            this._node.after('click', function (n) {
                 this.set('selected', this.get('selected') ? 0 : 1);
             }, this);
         },
@@ -35,17 +31,31 @@ YUI.add('hex.board', function (Y) {
 
     });
 
-    // var HexRow = Y.namespace('Hex').HexRow = Y.Base.create('hexrow', Y.Widget, [Y.WidgetChild, Y.WidgetParent]);
-
-
     var HexList = Y.namespace('Hex').HexList = function() {};
     Y.augment(HexList, Y.ArrayList);
     Y.ArrayList.addMethod(HexList.prototype, ['set', 'get']);
 
     var Board = Y.namespace('Hex').Board = Y.Base.create('board', Y.Widget, [Y.WidgetParent], {
 
+        initializer: function () {
+            this._addChildren();
+        },
+
         renderUI: function () {
-            this._renderBoard();
+
+        },
+
+        _renderBoard: function () {
+            var row, rowCls = this.getClassName('row');
+
+            this.get('contentBox').all('.' + rowCls).remove();
+            this.each(function (child, i) {
+                if (i % this.get('cols') === 0) {
+                    row = this.get('contentBox').appendChild('<div class="' + rowCls + '"></div>');
+                }
+                child.render();
+                row.appendChild(child.get('boundingBox'));
+            }, this);
         },
 
         bindUI: function () {
@@ -53,7 +63,7 @@ YUI.add('hex.board', function (Y) {
         },
 
         syncUI: function () {
-            // Skip syncChange - avoid rendering twice
+            this._syncSize();
         },
 
         getHexAt: function(coords) {
@@ -84,35 +94,22 @@ YUI.add('hex.board', function (Y) {
             this._syncSize(this.get('size'));
         },
 
-        _renderBoard: function () {
-            // TODO: Does not work when re-rendering (ie. change size)
-            // since children seem to render just after .add() is called
-            // if the widget is already rendered
-            console.log("renderBoard");
-            var contentBox = this.get('contentBox'),
-                w = this.get('cols'),
+        _addChildren: function () {
+            var w = this.get('cols'),
                 h = this.get('rows');
 
             this.removeAll();
-            contentBox.all('.row').remove();
 
             for (var i = 0; i < h; i++) {
-                var row = contentBox.appendChild('<div class="row"/>');
                 for (var j = 0; j < w; j++) {
-                    var child = new (this.get('defaultChildType'))({
-                        x: j, y: i
-                    });
-                    // var child = this.add({ x: j, y: i}).item(0);
-
+                    var child = this.add({ x: j, y: i }).item(0);
                     child.addTarget(this);
-                    child.render(row);
-
-                    this.add(child);
                 }
             }
         },
 
         _syncSize: function (size) {
+            this._addChildren();
             this._renderBoard();
         },
 

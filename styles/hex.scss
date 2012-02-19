@@ -8,24 +8,28 @@ $H: 62px;
 // Token size:
 $T: 25px;
 
+body {
+    background: grey;
+}
+
 .yui3-board {
     position: relative;
     font-family: 'Lemon', cursive;
     color: grey;
 }
 
-.yui3-board .row {
+.yui3-board .yui3-board-row {
     height: $H / 2;
     margin: 1px;
     padding: 0px;
     white-space: nowrap;
 }
 
-.yui3-board .row:nth-child(even) {
+.yui3-board .yui3-board-row:nth-child(even) {
     padding-left: 3/4 * $W;
 }
 
-.yui3-board .row:last-child {
+.yui3-board .yui3-board-row:last-child {
     height: $H;
 }
 

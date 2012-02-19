@@ -28,21 +28,24 @@
 
 /* $W: 82px; */
 /* $H: 80px; */
+body {
+  background: grey; }
+
 .yui3-board {
   position: relative;
   font-family: 'Lemon', cursive;
   color: grey; }
 
-.yui3-board .row {
+.yui3-board .yui3-board-row {
   height: 31px;
   margin: 1px;
   padding: 0px;
   white-space: nowrap; }
 
-.yui3-board .row:nth-child(even) {
+.yui3-board .yui3-board-row:nth-child(even) {
   padding-left: 54px; }
 
-.yui3-board .row:last-child {
+.yui3-board .yui3-board-row:last-child {
   height: 62px; }
 
 .yui3-hexagoncell {
