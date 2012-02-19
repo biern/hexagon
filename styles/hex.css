@@ -1,0 +1,161 @@
+.shape-hexagon {
+  width: 100px;
+  height: 55px;
+  background: red;
+  position: relative; }
+
+.shape-hexagon:before {
+  content: "";
+  position: absolute;
+  top: -25px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 25px solid red; }
+
+.shape-hexagon:after {
+  content: "";
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 25px solid red; }
+
+/* $W: 82px; */
+/* $H: 80px; */
+.yui3-board {
+  position: relative;
+  font-family: 'Lemon', cursive;
+  color: grey; }
+
+.yui3-board .row {
+  height: 31px;
+  margin: 1px;
+  padding: 0px;
+  white-space: nowrap; }
+
+.yui3-board .row:nth-child(even) {
+  padding-left: 54px; }
+
+.yui3-board .row:last-child {
+  height: 62px; }
+
+.yui3-hexagoncell {
+  display: inline-block;
+  position: relative;
+  width: 72px;
+  height: 62px;
+  padding: 0px;
+  margin: 0px;
+  margin-right: 31px;
+  /* line-height: $H; */
+  text-align: center; }
+
+.yui3-hexagoncell-content {
+  z-index: 1;
+  background-image: url("../images/hex-test-72-62.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  /* @include transition($property: -moz-transform, $duration: 1s); */ }
+
+.yui3-hexagoncell-selected .yui3-hexagoncell-content {
+  background-image: url("../images/hex-test-72-62.png"), no-repeat, center;
+  background-color: rgba(0, 0, 255, 0.2);
+  /* @include transform($rotate: 360deg); */ }
+
+.yui3-hexagoncell-disabled {
+  opacity: 0; }
+
+.yui3-hexagoncell-highlight-clone {
+  background-image: url("../images/hex-test-72-62.png"), no-repeat, center;
+  background-color: rgba(0, 255, 0, 0.2); }
+
+.yui3-hexagoncell-highlight-jump {
+  background-image: url("../images/hex-test-72-62.png"), no-repeat, center;
+  background-color: rgba(255, 255, 0, 0.2); }
+
+.yui3-hexagoncell-content:hover {
+  z-index: 2;
+  background-image: url("../images/hex-test-72-62.png"), url("../images/hex.png"); }
+
+.yui3-hexagoncell-token {
+  height: 62px; }
+
+.yui3-hexagoncell-token-content {
+  position: relative;
+  top: 18.5px;
+  left: 23.5px;
+  width: 25px;
+  height: 25px;
+  /* @include transition($property: ?, $duration: 0.5s); */ }
+
+.yui3-hexagoncell-token-red {
+  background-color: red;
+  -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  border-radius: 6.25px;
+  -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  /* -moz-animation-duration: 7s; */
+  /* -moz-animation-name: funkytokens; */
+  /* -moz-animation-iteration-count: infinite; */
+  /* -moz-animation-timing-function: linear; */ }
+
+@-moz-keyframes token-emerge {
+  from {
+    -moz-transform: translate(0px, 0px) rotate(0deg) scale(0);
+    -webkit-transform: translate(0px, 0px) rotate(0deg) scale(0); }
+
+  to {
+    -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    width: 20px;
+    height: 30px; } }
+
+@-moz-keyframes funkytokens {
+  0% {
+    -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    width: 20px;
+    height: 30px; }
+
+  20% {
+    -moz-transform: translate(0px, 0px) rotate(90deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(90deg) scale(1);
+    width: 30px;
+    height: 20px; }
+
+  40% {
+    -moz-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    width: 20px;
+    height: 30px; }
+
+  60% {
+    -moz-transform: translate(0px, 0px) rotate(270deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(270deg) scale(1);
+    width: 30px;
+    height: 20px; }
+
+  75% {
+    -moz-transform: translate(0px, 0px) rotate(360deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(360deg) scale(1); }
+
+  85% {
+    -moz-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    width: 30px;
+    height: 20px; }
+
+  100% {
+    -moz-transform: translate(0px, 0px) rotate(375deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(375deg) scale(1);
+    width: 20px;
+    height: 30px; } }

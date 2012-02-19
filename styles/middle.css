@@ -1,0 +1,28 @@
+.test {
+    border: 1px solid #000000;
+    display: inline-block;
+    margin: 0 5px;
+}
+.cdef .test {
+    background-color: #FFFF00;
+}
+.ctop .test {
+    background-color: #00FF00;
+    vertical-align: top;
+}
+.cbot .test {
+    background-color: #00FFFF;
+    vertical-align: bottom;
+}
+.cmid .test {
+    background-color: #FF8888;
+    vertical-align: middle;
+}
+.cbas .test {
+    background-color: #9999FF;
+    vertical-align: baseline;
+}
+.cdef, .ctop, .cbot, .cmid, .cbas {
+    background-color: #EEEEEE;
+    border: 1px dashed #666666;
+}

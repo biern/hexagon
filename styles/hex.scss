@@ -1,0 +1,163 @@
+@import "utils";
+@import "shapes";
+
+$W: 72px;
+/* $W: 82px; */
+$H: 62px;
+/* $H: 80px; */
+// Token size:
+$T: 25px;
+
+.yui3-board {
+    position: relative;
+    font-family: 'Lemon', cursive;
+    color: grey;
+}
+
+.yui3-board .row {
+    height: $H / 2;
+    margin: 1px;
+    padding: 0px;
+    white-space: nowrap;
+}
+
+.yui3-board .row:nth-child(even) {
+    padding-left: 3/4 * $W;
+}
+
+.yui3-board .row:last-child {
+    height: $H;
+}
+
+.yui3-hexagoncell {
+    display: inline-block;
+    position: relative;
+    width: $W;
+    height: $H;
+    padding: 0px;
+    margin: 0px;
+    margin-right: $H / 2;
+
+    // Use to center text in the middle
+    /* line-height: $H; */
+    text-align: center;
+
+}
+
+.yui3-hexagoncell-content {
+    z-index: 1;
+    background: {
+        image: url('../images/hex-test-72-62.png');
+        repeat: no-repeat;
+        position: center;
+    }
+
+    @include transition($property: all, $duration: 0.5s);
+/* @include transition($property: -moz-transform, $duration: 1s); */
+}
+
+.yui3-hexagoncell-selected .yui3-hexagoncell-content {
+    background-image: url('../images/hex-test-72-62.png'), no-repeat, center;
+    background-color: rgba(0,0,255,0.2);
+    /* @include transform($rotate: 360deg); */
+}
+
+.yui3-hexagoncell-disabled {
+    opacity: 0;
+}
+
+.yui3-hexagoncell-highlight-clone {
+    background-image: url('../images/hex-test-72-62.png'), no-repeat, center;
+    background-color: rgba(0,255,0,0.2);
+}
+
+.yui3-hexagoncell-highlight-jump {
+    background-image: url('../images/hex-test-72-62.png'), no-repeat, center;
+    background-color: rgba(255,255,0,0.2);
+}
+
+.yui3-hexagoncell-content:hover {
+    z-index: 2;
+    background-image: url('../images/hex-test-72-62.png'), url('../images/hex.png');
+}
+
+.yui3-hexagoncell-token {
+    height: $H;
+}
+
+.yui3-hexagoncell-token-content {
+    position: relative;
+    top: ($H - $T) / 2;
+    left: ($W - $T) / 2;
+    width: $T;
+    height: $T;
+    // TODO:
+    /* @include transition($property: ?, $duration: 0.5s); */
+}
+
+.yui3-hexagoncell-token-red {
+    background-color: red;
+    @include transform($rotate: 15deg);
+    border-radius: $T / 4;
+    -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+    /* -moz-animation-duration: 7s; */
+    /* -moz-animation-name: funkytokens; */
+    /* -moz-animation-iteration-count: infinite; */
+    /* -moz-animation-timing-function: linear; */
+
+}
+
+
+@-moz-keyframes token-emerge {
+    from {
+        @include transform($rotate: 0deg, $scale: 0.0);
+    }
+
+    to {
+        @include transform($rotate: 15deg, $scale: 1.0);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+}
+
+@-moz-keyframes funkytokens {
+    0% {
+        @include transform($rotate: 15deg);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+
+    20% {
+        @include transform($rotate: 90deg);
+        width: $T * 1.2;
+        height: $T * 0.8;
+    }
+
+    40% {
+        @include transform($rotate: 180deg);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+
+    60% {
+        @include transform($rotate: 270deg);
+        width: $T * 1.2;
+        height: $T * 0.8;
+    }
+
+    75% {
+        @include transform($rotate: 360deg);
+    }
+
+    85% {
+        @include transform($rotate: 180deg);
+        width: $T * 1.2;
+        height: $T * 0.8;
+    }
+
+    100% {
+        @include transform($rotate: 375deg);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+}

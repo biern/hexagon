@@ -1,0 +1,73 @@
+.hex-board .row {
+  height: 31px; /* 1/2 H */
+  margin: 1px;
+  padding: 0px;
+  vertical-align: middle;
+  clear: both;
+}
+
+.hex-board .row:nth-child(even) {
+  padding-left: 54px; /* 3/4 W */
+}
+
+
+.hex-board .hex {
+  z-index: 1;
+  color: pink;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0px;
+  margin: 0px;
+  background-image: url('hex-test-72-62.png');
+  display: inline-block;
+  margin-right: 31px; /* 1/2 H */
+  width: 72px;
+  height: 62px;
+  /* border: 1px solid black; */
+}
+
+.hex-board .hex:hover {
+  z-index: -1;
+  background-color: pink;
+}
+
+.token {
+    display: inline-block;
+}
+
+.token:hover {
+
+}
+
+.token span {
+    /* border: 20px solid rgba(0,0,0,0); */
+    /* border-left: 10px solid red; */
+    /* background-clip: padding-box; */
+    /* /\* background: red; *\/ */
+    display: inline-block;
+    width: 5px;
+    height: 10;
+    /* -moz-transition-property: all; */
+    -moz-transition-duration: 1s;
+    -moz-transition-timing-function: ease
+}
+
+.token span:first-child {
+    border: 13px solid rgba(0,0,0,0);
+    border-right: 20px solid red;
+}
+
+.token span:nth-child(even) {
+    border: 13px solid rgba(0,0,0,0);
+    border-left: 20px solid red;
+}
+
+.token:hover span:first-child {
+    border: 13px solid rgba(0,0,0,0);
+    border-right: 20px solid blue;
+}
+
+.token:hover span:nth-child(even) {
+    border: 13px solid rgba(0,0,0,0);
+    border-left: 20px solid blue;
+}

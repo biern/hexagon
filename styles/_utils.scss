@@ -1,0 +1,17 @@
+@mixin transition($property: all, $duration: 0s, $timing-function: ease) {
+  transition: $property $duration $timing-function;
+  -moz-transition: $property $duration $timing-function;
+  -webkit-transition: $property $duration $timing-function;
+}
+
+@mixin transform($translate: (0px ,0px), $rotate: 0deg, $scale: 1.0) {
+  -moz-transform: translate($translate) rotate($rotate) scale($scale);
+  -webkit-transform: translate($translate) rotate($rotate) scale($scale);
+}
+
+@mixin border-radius($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -khtml-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
