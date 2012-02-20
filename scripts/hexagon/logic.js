@@ -61,6 +61,64 @@ YUI.add('hexagon.logic', function(Y) {
         });
     };
 
+    namespace.compressState = function (state) {
+
+    };
+
+    namespace.decompressState = function (string, playerIDMap) {
+        var w = 0, h = 0,
+            i, c, nextPos,
+            nextRow = '\n', disabled = '-', cell = 'x',
+            skip = ' ',
+            state = {
+                size: [0, 0],
+                cells: [
+                    []
+                ]
+            },
+            incW = function () {
+                w++;
+                if (w + 1 > state.size[0]) {
+                    state.size[0] = w + 1;
+                }
+
+            };
+
+        playerIDMap = playerIDMap || {};
+
+        for(i = 0; i < string.length; i++) {
+            c = string[i];
+            switch(c) {
+            case nextRow:
+                state.cells.push([]);
+                w = 0;
+                h++;
+                if (h + 1 > state.size[1]) {
+                    state.size[1] = h + 1;
+                }
+                break;
+            case skip:
+                break;
+            case disabled:
+                state.cells[h][w] = { disabled: true };
+                incW();
+                break;
+            case cell:
+                state.cells[h][w] = {};
+                incW();
+                break;
+            default:
+                var id = playerIDMap[c] || c;
+                state.cells[h][w] = {
+                    playerID: id
+                };
+                incW();
+            }
+        }
+
+        return state;
+    };
+
 }, '0', {
     requires: ['arraylist-add', 'arraylist-filter']
 });
