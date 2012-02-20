@@ -8,7 +8,9 @@ YUI.add('hex.board', function (Y) {
 
         bindUI: function () {
             this._node.after('click', function (n) {
-                this.set('selected', this.get('selected') ? 0 : 1);
+                if (!this.get('disabled')) {
+                    this.set('selected', this.get('selected') ? 0 : 1);
+                }
             }, this);
         },
 

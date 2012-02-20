@@ -258,16 +258,18 @@ YUI.add('hexagon.board', function (Y) {
         _syncState: function(state) {
             console.log('syncState');
             this.set('size', state.size);
-
+            this.each(function (e) {
+                e.set('disabled', true);
+            });
             Y.Array.each(state.cells, function (row, i){
                 Y.Array.each(state.cells[i], function (cellState, j) {
-                    this._cellFromState(this.getHexAt([i, j]), cellState);
+                    this._cellFromState(this.getHexAt([j, i]), cellState);
                 }, this);
             }, this);
         },
 
         _cellFromState: function(cell, cellState) {
-            cell.set('disabled', cellState.disabled === undefined ? false : true);
+            cell.set('disabled', cellState === undefined ? true : cellState.disabled === true);
             cell.set('playerID', cellState.playerID || null);
         }
 
