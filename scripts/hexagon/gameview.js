@@ -17,7 +17,6 @@ YUI.add('hexagon.gameview', function (Y) {
             };
 
             this._boardWidget = new Y.Hexagon.Board({
-                // size: [5, 10],
                 state: state,
                 playerID: "marcin",
                 playerStyles: {
@@ -48,7 +47,15 @@ YUI.add('hexagon.gameview', function (Y) {
                 ]
             };
 
-            setTimeout(function () { bw.set('state', s2); }, 1000);
+            var s3 =
+                '-   x   x   -   x   \n\
+                   x   1   x   -   x \n\
+                 -   x   x   -   x   \n\
+                   -   x   -   x   x ';
+
+            window.x = Y.Hexagon.logic.decompressState(s3, { 1: 'marcin' });
+
+            setTimeout(function () { bw.set('state', window.x); }, 1000);
             // setTimeout(function() { bw.getHexListAt([[0,0], [1,1]]).set('disabled', true); }, 2000);
         }
     });
