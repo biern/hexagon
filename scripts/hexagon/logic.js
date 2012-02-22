@@ -61,12 +61,31 @@ YUI.add('hexagon.logic', function(Y) {
         });
     };
 
-    namespace.compressState = function (state) {
+    namespace.compressState = function (state, playerIDMap) {
+        // TODO: auto players numbering
+        var i, j, cell, res = "";
 
+        for (i = 0; i < state.cells.length; i++) {
+            if (state.cells[i] === undefined) {
+                continue;
+            }
+            for (j = 0; j < state.cells[i].length; j++) {
+                cell = state.cells[i][j];
+                if (cell === undefined || cell.disabled) {
+                    res += '-';
+                } else if (cell.playerID) {
+                    res += playerIDMap[cell.playerID];
+                } else {
+                    res += 'x';
+                }
+            }
+            res += '\n';
+        }
+        return  res;
     };
 
     namespace.decompressState = function (string, playerIDMap) {
-        var w = 0, h = 0,
+        var w = 0, h = 0, reversedMap = {},
             i, c, nextPos,
             nextRow = '\n', disabled = '-', cell = 'x',
             skip = ' ',
@@ -85,6 +104,10 @@ YUI.add('hexagon.logic', function(Y) {
             };
 
         playerIDMap = playerIDMap || {};
+
+        for (var k in playerIDMap) {
+            reversedMap[playerIDMap[k]] = k;
+        }
 
         for(i = 0; i < string.length; i++) {
             c = string[i];
@@ -108,7 +131,7 @@ YUI.add('hexagon.logic', function(Y) {
                 incW();
                 break;
             default:
-                var id = playerIDMap[c] || c;
+                var id = reversedMap[c] || c;
                 state.cells[h][w] = {
                     playerID: id
                 };
