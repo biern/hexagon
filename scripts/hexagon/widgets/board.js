@@ -21,6 +21,7 @@ YUI.add('hexagon.board', function (Y) {
             this.constructor.superclass.bindUI.call(this);
             this.after('highlightChange', this._afterHighlightChange, this);
             this.after('playerIDChange', this._afterPlayerIDChange, this);
+            this.after('disabledChange', this._afterDisabledChange, this);
             this.on('selectedChange', this._onSelectedChange, this);
         },
 
@@ -169,6 +170,12 @@ YUI.add('hexagon.board', function (Y) {
 
             if (e.newVal){
                 this.get('contentBox').addClass(this.getClassName('highlight', e.newVal));
+            }
+        },
+
+        _afterDisabledChange: function (e) {
+            if (e.newVal) {
+                this.set('playerID', null);
             }
         },
 
