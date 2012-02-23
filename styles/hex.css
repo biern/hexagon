@@ -64,9 +64,7 @@ body {
   background-image: url("../images/hex-test-72-62.png");
   background-repeat: no-repeat;
   background-position: center;
-  transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -webkit-transition: all 0.5s ease;
+  /* @include transition($property: all, $duration: 2s); */
   /* @include transition($property: -moz-transform, $duration: 1s); */ }
 
 .yui3-hexagoncell-selected .yui3-hexagoncell-content {
@@ -98,10 +96,17 @@ body {
   left: 23.5px;
   width: 25px;
   height: 25px;
-  /* @include transition($property: ?, $duration: 0.5s); */ }
+  /* @include transition($property: all, $duration: 0.5s); */ }
 
 .yui3-hexagoncell-token-red {
   background-color: red;
+  -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  border-radius: 6.25px;
+  -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s; }
+
+.yui3-hexagoncell-token-blue {
+  background-color: blue;
   -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
   -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
   border-radius: 6.25px;

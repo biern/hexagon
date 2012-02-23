@@ -56,7 +56,7 @@ body {
         position: center;
     }
 
-    @include transition($property: all, $duration: 0.5s);
+    /* @include transition($property: all, $duration: 2s); */
 /* @include transition($property: -moz-transform, $duration: 1s); */
 }
 
@@ -96,11 +96,22 @@ body {
     width: $T;
     height: $T;
     // TODO:
-    /* @include transition($property: ?, $duration: 0.5s); */
+    /* @include transition($property: all, $duration: 0.5s); */
 }
 
 .yui3-hexagoncell-token-red {
     background-color: red;
+    @include transform($rotate: 15deg);
+    border-radius: $T / 4;
+    -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+}
+
+.yui3-hexagoncell-token-disappear {
+    // TODO:
+}
+
+.yui3-hexagoncell-token-blue {
+    background-color: blue;
     @include transform($rotate: 15deg);
     border-radius: $T / 4;
     -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
@@ -110,7 +121,6 @@ body {
     /* -moz-animation-timing-function: linear; */
 
 }
-
 
 @-moz-keyframes token-emerge {
     from {
