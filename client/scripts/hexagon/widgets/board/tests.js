@@ -13,6 +13,7 @@ YUI.add('hexagon.board.tests', function (Y) {
 
     var board = namespace.board = new Y.Hexagon.Board({
         playerID: 'player1',
+        activePlayerID: 'player1',
         playerStyles: {
             player1: 'red'
         }
@@ -141,10 +142,25 @@ YUI.add('hexagon.board.tests', function (Y) {
 
         testMoveToDisabled: function () {
             var posFrom = [0, 0],
-                posTo = [2, 2];
+                posTo = [1, 2];
 
             var subscription = board.once('*:move', function (e, move) {
                 Y.Assert.fail('Move to disabled field should fail');
+            }, this);
+
+            board.getHexAt(posFrom).set('selected', 1);
+            board.getHexAt(posTo).set('selected', 1);
+            subscription.detach();
+        },
+
+        testMoveLock: function () {
+            var posFrom = [0, 0],
+                posTo = [0, 1];
+
+            board.set('activePlayerID', 'player2');
+
+            var subscription = board.once('*:move', function (e, move) {
+                Y.Assert.fail('Move when locked should fail');
             }, this);
 
             board.getHexAt(posFrom).set('selected', 1);

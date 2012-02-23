@@ -7,7 +7,8 @@ YUI.add('hexagon.gameview', function (Y) {
         initializer: function () {
             var model = this.model,
                 bw = this._boardWidget = new Y.Hexagon.Board({
-                    playerID: "marcin",
+                    playerID: 'marcin',
+                    activePlayerID: 'marcin',
                     playerStyles: {
                         marcin: 'red'
                     }
