@@ -2,28 +2,41 @@ YUI.add('hexagon.gamemodel', function (Y) {
 
     Y.namespace('Hexagon').GameModel = Y.Base.create('GameModel', Y.Model, [], {
 
+        _getBoardState: function () {
+            return this.getAttrs([
+                'size', 'cells', 'activePlayerID'
+            ]);
+        }
+
     }, {
 
         ATTRS: {
-            players: {
-                value: []
+
+            playerID: {
+                value: null
             },
 
-            playerCurrent: {
-
+            activePlayerID: {
+                value: null
             },
 
-            playerLocal: {
+            size: {
+                value: [0, 0]
+            },
 
+            cells: {
+                value: [[]]
+            },
+
+            // Returns all neccessary information for current board state.
+            boardState: {
+                getter: '_getBoardState'
             },
 
             server: {
                 value: null
-            },
-
-            boardState: {
-                value: null
             }
+
         }
 
     });

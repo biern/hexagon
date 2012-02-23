@@ -2,25 +2,21 @@ YUI.add('hexagon.gameview', function (Y) {
 
     Y.namespace('Hexagon').GameView = Y.Base.create('GameView', Y.View, [], {
         // TODO: fix that: if already in DOM it should be rendered there, not create new tag
-        container: '<div class="hexagon-game"/>',
+        container: Y.one('.hexagon-game'),
 
         initializer: function () {
-            var model = this.model,
-                bw = this._boardWidget = new Y.Hexagon.Board({
-                    playerID: 'marcin',
-                    activePlayerID: 'marcin',
-                    playerStyles: {
-                        marcin: 'red'
-                    }
-                }),
-                testState1 = {
-                    size: [2, 3],
-                    cells: [
-                        [],
-                        [{}, {disabled: true}]
-                    ]
-                },
-                stringState =
+            var model = this.model;
+
+            model.after('change', this._afterModelChange, this);
+
+            var bw = this._boardWidget = new Y.Hexagon.Board({
+                playerID: this.model.get('playerID'),
+                playerStyles: {
+                    marcin: 'red'
+                }
+            }),
+
+            stringState =
                 '-   x   x   -   x   \n\
                    x   1   x   -   x \n\
                  -   x   x   -   x   \n\
@@ -28,7 +24,13 @@ YUI.add('hexagon.gameview', function (Y) {
 
             window.bw = bw;
 
-            bw.on('*:invalidMove', function () { alert("Invalid move"); });                       bw.set('state', Y.Hexagon.logic.decompressState(stringState, { 'marcin': '1' }));
+            bw.on('*:invalidMove', function () { alert("Invalid move"); });
+            // bw.set('state', Y.Hexagon.logic.decompressState(stringState, { 'marcin': '1' }));
+
+            setTimeout(function() { model.setAttrs(
+                Y.Hexagon.logic.decompressState(stringState, { 'marcin': '1' })
+            ); }, 1000 );
+            setTimeout(function () { model.set('activePlayerID', 'marcin'); }, 2000);
         },
 
         render: function () {
@@ -36,7 +38,31 @@ YUI.add('hexagon.gameview', function (Y) {
                 Y.one('body').append(this.container);
             }
             this._boardWidget.render(this.container);
+        },
+
+        _afterModelChange: function (e) {
+            var changed = e.changed;
+
+            // Perform a full resync
+            if (Y.Object.hasKey(changed, 'cells') || Y.Object.hasKey(changed, 'size')) {
+                this._syncBoardAttr('state', this.model.get('boardState'));
+                return;
+            }
+
+            // Other attributes
+            Y.Array.each(['playerID', 'activePlayerID'], function (item) {
+                if (Y.Object.hasKey(changed, item)) {
+                    this._syncBoardAttr(item, changed[item].newVal);
+                }
+            }, this);
+        },
+
+        _syncBoardAttr: function (name, value) {
+            this._boardWidget.set(name, value);
         }
+
     });
 
-}, '0', { requires: ['view', 'hexagon.board'] });
+}, '0', {
+    requires: ['view', 'hexagon.board']
+});
