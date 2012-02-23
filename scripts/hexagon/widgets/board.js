@@ -284,6 +284,28 @@ YUI.add('hexagon.board', function (Y) {
             cell.set('playerID', cellState.playerID || null);
         }
 
+        // FIXME: makes reading initial state impossible
+        // _getState: function () {
+        //     var state = {
+        //         size: this.get('size'),
+        //         cells: []
+        //     }, row, cell;
+        //     this.each(function (item) {
+        //         cell = {};
+        //         if (item.get('disabled')) {
+        //             cell.disabled = true;
+        //         } else if (item.get('playerID')) {
+        //             cell.playerID = item.get('playerID');
+        //         }
+        //         row = state.cells[item.get('y')];
+        //         if (!row) {
+        //             state.cells[item.get('y')] = [cell];
+        //         } else {
+        //             row.push(cell);
+        //         }
+        //     });
+        // }
+
     }, {
         ATTRS: {
 
@@ -301,7 +323,7 @@ YUI.add('hexagon.board', function (Y) {
 
             state: {
                 value: {}
-                // TODO: getter
+                // getter: '_getState'
             },
 
             playerStyles: {
