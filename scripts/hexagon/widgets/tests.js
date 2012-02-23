@@ -55,51 +55,53 @@ YUI.add('hexagon.board.tests', function (Y) {
         testJump: function () {
             var posFrom = [0, 0],
                 posTo = [1, 0],
-                fired = false;
+                bState = board.get('state');
 
-            var subscription = board.once('*:move', function (e, move) {
+            assertFired.call(this, function () {
+                board.getHexAt(posFrom).set('selected', 1);
+                board.getHexAt(posTo).set('selected', 1);
+            }, board, '*:move', function (e, move) {
                 Y.Assert.areEqual(move.type, 'jump');
                 Y.ArrayAssert.itemsAreEqual(move.from, posFrom);
                 Y.ArrayAssert.itemsAreEqual(move.to, posTo);
-                fired = true;
-            }, this);
-            board.getHexAt(posFrom).set('selected', 1);
-            board.getHexAt(posTo).set('selected', 1);
-            subscription.detach();
-            Y.Assert.isTrue(fired);
+            });
+            // TODO:
+            // Y.Assert.areEqual(state.cells[posFrom].playerID,
+            //                   bState.cells[posTo].playerID);
+            // Y.Assert.isUndefined(bState.cells[posFrom].playerID);
         },
 
         testClone: function () {
             var posFrom = [0, 0],
                 posTo = [0, 1],
-                fired = false;
+                bState = board.get('state');
 
-            var subscription = board.once('*:move', function (e, move) {
+            assertFired.call(this, function () {
+                board.getHexAt(posFrom).set('selected', 1);
+                board.getHexAt(posTo).set('selected', 1);
+            }, board, '*:move', function (e, move) {
                 Y.Assert.areEqual(move.type, 'clone');
                 Y.ArrayAssert.itemsAreEqual(move.from, posFrom);
                 Y.ArrayAssert.itemsAreEqual(move.to, posTo);
-                fired = true;
-            }, this);
-            board.getHexAt(posFrom).set('selected', 1);
-            board.getHexAt(posTo).set('selected', 1);
-            subscription.detach();
-            Y.Assert.isTrue(fired);
+            });
+            // TODO:
+            // Y.Assert.areEqual(state.cells[posFrom].playerID,
+            //                   bState.cells[posTo].playerID);
+            // Y.Assert.areEqual(bState.cells[posFrom].playerID,
+            //                   bState.cells[posTo].playerID);
         },
 
         testInvalidMove: function () {
             var posFrom = [0, 0],
-                posTo = [2, 2],
-                fired = false;
+                posTo = [2, 2];
 
-            var subscription = board.once('*:invalidMove', function (e, move) {
+            assertFired.call(this, function () {
+                board.getHexAt(posFrom).set('selected', 1);
+                board.getHexAt(posTo).set('selected', 1);
+            }, board, '*:invalidMove', function (e, move) {
                 Y.ArrayAssert.itemsAreEqual(move.from, posFrom);
                 Y.ArrayAssert.itemsAreEqual(move.to, posTo);
-                fired = true;
-            }, this);
-            board.getHexAt(posFrom).set('selected', 1);
-            board.getHexAt(posTo).set('selected', 1);
-            subscription.detach();
-            Y.Assert.isTrue(fired);
+            });
         },
 
         testMoveToDisabled: function () {
