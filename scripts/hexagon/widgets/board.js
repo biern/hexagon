@@ -263,7 +263,11 @@ YUI.add('hexagon.board', function (Y) {
         },
 
         _syncState: function(state) {
-            console.log('syncState');
+            // Defaults
+            state = state || {};
+            state.size = state.size || [0, 0];
+            state.cells = state.cells || {};
+
             this.set('size', state.size);
             this.each(function (e) {
                 e.set('disabled', true);
@@ -297,6 +301,7 @@ YUI.add('hexagon.board', function (Y) {
 
             state: {
                 value: {}
+                // TODO: getter
             },
 
             playerStyles: {
