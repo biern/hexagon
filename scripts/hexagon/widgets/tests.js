@@ -3,7 +3,7 @@ YUI.add('hexagon.board.tests', function (Y) {
     var namespace = Y.namespace('Hexagon.board.tests');
 
     var state = namespace.state = {
-        size: [5, 10],
+        size: [3, 3],
         cells: [
             [{ playerID: 'player1' }, {}, { playerID: 'player2' }],
             [{}, { disabled: true }, { disabled: true }],
@@ -36,7 +36,6 @@ YUI.add('hexagon.board.tests', function (Y) {
         name: 'Test board',
 
         setUp: function () {
-            console.log('setup suite');
             board.render();
         },
 
@@ -45,10 +44,46 @@ YUI.add('hexagon.board.tests', function (Y) {
         }
     });
 
+    namespace.testState = new Y.Test.Case({
+
+        setUp: function () {
+            board.set('state', state);
+        },
+
+        testPlayerID: function () {
+            var pos = [0, 0];
+
+            Y.Assert.areEqual(board.getHexAt(pos).get('playerID'),
+               state.cells[pos[1]][pos[0]].playerID);
+
+            pos = [2, 0];
+
+            Y.Assert.areEqual(board.getHexAt(pos).get('playerID'),
+               state.cells[pos[1]][pos[0]].playerID);
+
+        },
+
+        testDisabled: function () {
+            var pos = [1, 1];
+
+            Y.Assert.areEqual(board.getHexAt(pos).get('disabled'),
+               state.cells[pos[1]][pos[0]].disabled);
+        },
+
+        testDefault: function () {
+            var pos = [0, 1];
+
+            Y.Assert.isFalse(board.getHexAt(pos).get('disabled'));
+            Y.Assert.isNull(board.getHexAt(pos).get('playerID'));
+
+        }
+
+    });
+    suite.add(namespace.testState);
+
     namespace.testMoves = new Y.Test.Case({
 
         setUp: function () {
-            console.log('setup');
             board.set('state', state);
         },
 
