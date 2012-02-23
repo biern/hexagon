@@ -74,11 +74,13 @@ YUI.add('hexagon.board', function (Y) {
         performMove: function (move) {
             if (move.type === "clone") {
                 move.cellTo.set('playerID', move.playerID);
+                move.cellTo.possessNeighbours();
             }
 
             if (move.type === "jump") {
                 move.cellFrom.set('playerID', null);
                 move.cellTo.set('playerID', move.playerID);
+                move.cellTo.possessNeighbours();
             }
 
         },
@@ -97,7 +99,11 @@ YUI.add('hexagon.board', function (Y) {
         },
 
         possessNeighbours: function () {
-            // TODO
+            this.getNeighbourCells().each(function (cell) {
+                if (cell.get('playerID')) {
+                    cell.set('playerID', this.get('playerID'));
+                };
+            }, this);
         },
 
         _fireCloneMove: function (destination) {
