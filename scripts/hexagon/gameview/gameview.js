@@ -28,6 +28,7 @@ YUI.add('hexagon.gameview', function (Y) {
         },
 
         render: function () {
+            // TODO: Make test cases from this
             if (!this.container.inDoc()) {
                 Y.one('body').append(this.container);
             }
@@ -53,9 +54,12 @@ YUI.add('hexagon.gameview', function (Y) {
                  -   x   x   -   x   \n\
                    -   x   -   x   x ';
 
-            window.x = Y.Hexagon.logic.decompressState(s3, { 1: 'marcin' });
+            window.x = Y.Hexagon.logic.decompressState(s3, { 'marcin': '1' });
+            window.bw = bw;
 
-            setTimeout(function () { bw.set('state', window.x); }, 1000);
+            // setTimeout(function () { bw.set('state', window.x); }, 1000);
+            // setTimeout(function () {             alert(Y.Hexagon.logic.compressState(bw.get('state'), { 'marcin': '1'})); }, 2000);
+            // setTimeout(function () { bw.getHexAt([1,1]).set('disabled', true); }, 1000);
             // setTimeout(function() { bw.getHexListAt([[0,0], [1,1]]).set('disabled', true); }, 2000);
         }
     });
