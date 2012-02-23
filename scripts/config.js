@@ -1,88 +1,47 @@
+var HEX_BASE_URL = "scripts/hex/",
+    HEXAGON_BASE_URL = "scripts/hexagon/";
+
 window.YUI_config = {
-    debug: true,
-    filter: "debug",
-    logInclude: {
-        event: true
-    },
+    filter: 'raw',
+    useConsoleOutput: true,
+    throwFail: true,
     groups: {
-        gallery: {
-            base: "/assets/gallery/",
+        hex: {
+            base: HEX_BASE_URL,
             modules: {
-                "gallery-button": {
-                    path: "gallery-button/gallery-button.js",
-                    requires: ["widget","event-mouseenter","widget-child"]
+	        'hex.board': {
+	            path: 'board/board.js',
+	            requires: ['arraylist-add', 'arraylist-filter', 'node', 'widget-parent', 'widget-child']
+	        }
+            }
+        },
+        hexagon: {
+            base: HEXAGON_BASE_URL,
+            modules: {
+                'hexagon.gameview': {
+                    path: 'gameview/gameview.js',
+                    requires: ['view', 'hexagon.board']
                 },
-                "gallery-button-toggle": {
-                    path: "gallery-button-toggle/gallery-button-toggle.js",
-                    requires: ["gallery-button"]
+                'hexagon.gamemodel': {
+                    path: 'gamemodel/gamemodel.js',
+                    requires: ['model']
                 },
-                "gallery-button-group": {
-                    path: "gallery-button-group/gallery-button-group.js",
-                    requires: ["widget-parent","widget-child"]
+                'hexagon.board': {
+                    path: 'widgets/board/board.js',
+                    requires: ['hex.board', 'hexagon.logic', 'substitute']
+                },
+                'hexagon.logic': {
+                    path: 'logic/logic.js',
+                    requires: ['arraylist-add', 'arraylist-filter']
                 }
             }
         },
-        bridge: {
-            base: "/assets/bridge/",
+        hexagon_tests: {
+            base: HEXAGON_BASE_URL,
             modules: {
-                "card": {
-                    path: "card/card.js",
-                    requires: ["widget", "widget-child"],
-                    skinnable: true
-                },
-                "cardlist": {
-                    path: "card/cardlist.js",
-                    requires: ["widget", "widget-parent", "card"]
-                },
-                "hand": {
-                    path: "hand/hand.js",
-                    requires: ["cardlist", "handbar"],
-                    skinnable: true
-                },
-                "handbar": {
-                    path: "hand/handbar.js",
-                    requires: ["widget"]
-                },
-                "biddingbox": {
-                    path: "biddingbox/biddingbox.js",
-                    requires: ["passbox", "newbidbox", "alertbox"],
-                    skinnable: true
-                },
-                "passbox": {
-                    path: "biddingbox/passbox.js",
-                    requires: ["gallery-button", "gallery-button-group"],
-                    skinnable: true
-                },
-                "alertbox": {
-                    path: "biddingbox/alertbox.js",
-                    requires: ["node", "gallery-button-toggle"],
-                    skinnable: true
-                },
-                "newbidbox": {
-                    path: "biddingbox/newbidbox.js",
-                    requires: ["gallery-button", "gallery-button-toggle", "gallery-button-group"],
-                    skinnable: true
-                },
-                "trick": {
-                    path: "trick/trick.js",
-                    requires: ["widget", "widget-parent", "trickcard", "helpers"],
-                    skinnable: true
-                },
-                "trickcard": {
-                    path: "trick/trickcard.js",
-                    requires: ["card"]
-                },
-                "auction": {
-                    path: "auction/auction.js",
-                    requires: ["widget", "widget-parent", "auctionbid"],
-                    skinnable: true
-                },
-                "auctionbid": {
-                    path: "auction/auctionbid.js",
-                    requires: ["gallery-button"]
-                },
-                "helpers": {
-                    path: "helpers/helpers.js"
+                'hexagon.board.tests': {
+                    path: 'widgets/board/tests.js',
+                    requires: ['hexagon.board', 'test']
                 }
             }
         }
