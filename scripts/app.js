@@ -28,7 +28,7 @@ YUI({
                     requires: ['model']
                 },
                 'hexagon.board': {
-                    path: 'widgets/board.js',
+                    path: 'widgets/board/board.js',
                     requires: ['hex.board', 'hexagon.logic', 'substitute']
                 },
                 'hexagon.logic': {
