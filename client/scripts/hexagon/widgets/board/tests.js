@@ -3,6 +3,7 @@ YUI.add('hexagon.board.tests', function (Y) {
     var namespace = Y.namespace('Hexagon.board.tests');
 
     var state = namespace.state = {
+        activePlayerID: 'player1',
         size: [3, 3],
         cells: [
             [{ playerID: 'player1' }, {}, { playerID: 'player2' }],
@@ -13,7 +14,6 @@ YUI.add('hexagon.board.tests', function (Y) {
 
     var board = namespace.board = new Y.Hexagon.Board({
         playerID: 'player1',
-        activePlayerID: 'player1',
         playerStyles: {
             player1: 'red'
         }

@@ -304,7 +304,10 @@ YUI.add('hexagon.board', function (Y) {
             state.size = state.size || [0, 0];
             state.cells = state.cells || {};
 
+            // Extract other attributes from board state
             this.set('size', state.size);
+            this.set('activePlayerID', state.activePlayerID);
+
             this.each(function (e) {
                 e.set('disabled', true);
             });
@@ -371,6 +374,7 @@ YUI.add('hexagon.board', function (Y) {
                 value: false
             },
 
+            // Currently set-only attr used to sync all board attributes at once if neccessary. When set, extracts and sets also the following attrs: activePlayerID, size
             state: {
                 value: {}
                 // getter: '_getState'
