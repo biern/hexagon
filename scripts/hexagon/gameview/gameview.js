@@ -5,62 +5,36 @@ YUI.add('hexagon.gameview', function (Y) {
         container: '<div class="hexagon-game"/>',
 
         initializer: function () {
-            var model = this.model;
-
-            var state = {
-                size: [5, 10],
-                cells: [
-                    [{ playerID: 'marcin' }, {}, {}],
-                    [{}, { disabled: true }, { disabled: true }],
-                    [{}, { disabled: true }, {}]
-                ]
-            };
-
-            this._boardWidget = new Y.Hexagon.Board({
-                state: state,
-                playerID: "marcin",
-                playerStyles: {
-                    marcin: 'red'
-                }
-            });
-            // model.after('change', this.render, this);
-            // model.after('destroy', this.destroy, this);
-        },
-
-        render: function () {
-            // TODO: Make test cases from this
-            if (!this.container.inDoc()) {
-                Y.one('body').append(this.container);
-            }
-
-            this._boardWidget.render(this.container);
-
-            var bw = this._boardWidget;
-
-            bw.getHexAt([2,2]).getNeighbourCells().set('playerID', 'marcin');
-            bw.on('*:invalidMove', function () { alert("Invalid move"); });
-
-            var s2 = {
-                size: [2, 3],
-                cells: [
-                    [],
-                    [{}, {disabled: true}]
-                ]
-            };
-
-            var s3 =
+            var model = this.model,
+                bw = this._boardWidget = new Y.Hexagon.Board({
+                    playerID: "marcin",
+                    playerStyles: {
+                        marcin: 'red'
+                    }
+                }),
+                testState1 = {
+                    size: [2, 3],
+                    cells: [
+                        [],
+                        [{}, {disabled: true}]
+                    ]
+                },
+                stringState =
                 '-   x   x   -   x   \n\
                    x   1   x   -   x \n\
                  -   x   x   -   x   \n\
                    -   x   -   x   x ';
 
-            window.x = Y.Hexagon.logic.decompressState(s3, { 'marcin': '1' });
             window.bw = bw;
 
-            // setTimeout(function () { bw.set('state', window.x); }, 1000);
-            // setTimeout(function () {             alert(Y.Hexagon.logic.compressState(bw.get('state'), { 'marcin': '1'})); }, 2000);
-            // setTimeout(function () { bw.getHexAt([1,1]).set('disabled', true); }, 1000);
-            // setTimeout(function() { bw.getHexListAt([[0,0], [1,1]]).set('disabled', true); }, 2000);
+            bw.on('*:invalidMove', function () { alert("Invalid move"); });                       bw.set('state', Y.Hexagon.logic.decompressState(stringState, { 'marcin': '1' }));
+        },
+
+        render: function () {
+            if (!this.container.inDoc()) {
+                Y.one('body').append(this.container);
+            }
+            this._boardWidget.render(this.container);
         }
     });
 
