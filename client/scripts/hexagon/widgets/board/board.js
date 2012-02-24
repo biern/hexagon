@@ -55,6 +55,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         performMove: function (move) {
+            this.get('parent')._stateCached = false;
             if (move.type === "clone") {
                 move.cellTo.set('playerID', move.playerID);
                 move.cellTo.possessNeighbours();
@@ -237,6 +238,11 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
     var Board = namespace.Board = Y.Base.create('Board', Y.Hex.Board, [], {
 
+        initializer: function (config) {
+            this.constructor.superclass.initializer.apply(this, arguments);
+            this._stateCached = config.state;
+        },
+
         renderUI: function () {
             this.constructor.superclass.renderUI.call(this);
         },
@@ -283,7 +289,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         _afterStateChange: function (e) {
-            this._syncState(this.get('state'));
+            this._syncState(e.newVal);
         },
 
         _syncActivePlayerID: function (activePlayerID) {
@@ -300,6 +306,9 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
         _syncState: function(state) {
             // Defaults
+            console.log('syncstate');
+            console.log(state);
+
             state = state || {};
             state.size = state.size || [0, 0];
             state.cells = state.cells || {};
@@ -328,29 +337,44 @@ YUI.add('hexagon.widgets.board', function (Y) {
             this.each(function (c) {
                 c.set('highlight', false);
             });
-        }
+        },
 
-        // FIXME: makes reading initial state impossible
-        // _getState: function () {
-        //     var state = {
-        //         size: this.get('size'),
-        //         cells: []
-        //     }, row, cell;
-        //     this.each(function (item) {
-        //         cell = {};
-        //         if (item.get('disabled')) {
-        //             cell.disabled = true;
-        //         } else if (item.get('playerID')) {
-        //             cell.playerID = item.get('playerID');
-        //         }
-        //         row = state.cells[item.get('y')];
-        //         if (!row) {
-        //             state.cells[item.get('y')] = [cell];
-        //         } else {
-        //             row.push(cell);
-        //         }
-        //     });
-        // }
+        _setState: function (value) {
+            this._stateCached = value;
+            return value;
+        },
+
+        _getState: function () {
+            console.log('getstate');
+            if (this._stateCached) {
+                console.log('cache');
+                return this._stateCached;
+            }
+
+            var state = {
+                size: this.get('size'),
+                activePlayerID: this.get('activePlayerID'),
+                cells: []
+            }, row, cell;
+            this.each(function (item) {
+                cell = {};
+                if (item.get('disabled')) {
+                    cell.disabled = true;
+                } else if (item.get('playerID')) {
+                    cell.playerID = item.get('playerID');
+                }
+                row = state.cells[item.get('y')];
+                if (!row) {
+                    state.cells[item.get('y')] = [cell];
+                } else {
+                    row.push(cell);
+                }
+            });
+
+            this._stateCached = state;
+
+            return state;
+        }
 
     }, {
         ATTRS: {
@@ -375,10 +399,10 @@ YUI.add('hexagon.widgets.board', function (Y) {
                 value: false
             },
 
-            // Currently set-only attr used to sync all board attributes at once if neccessary. When set, extracts and sets also the following attrs: activePlayerID, size
+            // TODO: tests
             state: {
-                value: {}
-                // getter: '_getState'
+                setter: '_setState',
+                getter: '_getState'
             },
 
             playerStyles: {
