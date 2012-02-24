@@ -12,7 +12,6 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
         _addHostAttrs: function (host) {
             this._boardAttrs = host.attrNamespace('board');
             this._boardAttrs.addAttrs(ModelPlug.ADD_ATTRS);
-            console.log(this._boardAttrs.get('state'));
         },
 
         _addHostMethods: function (host) {
@@ -24,11 +23,6 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
             var host = this.get('host');
 
             this._boardAttrs.after('stateChange', function (e) {
-
-                console.log('change:');
-                console.log(e.attrName);
-                console.log(e.subAttrName);
-
                 // Skip syncing whole state if only playerID changes (common case)
                 if (e.subAttrName === 'state.activePlayerID') {
                     board.set('activePlayerID', e.newVal.activePlayerID);
@@ -39,13 +33,12 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
         },
 
         _syncBoardState: function (board, state) {
+            // TODO: board.syncState(state);
             board.set('state', state);
-            // board.syncState(state);
         }
 
     }, {
 
-        // TODO: plugs.boardstate?
         NS: 'boardstatePlug',
 
         ADD_ATTRS: {
