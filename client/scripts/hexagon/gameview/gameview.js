@@ -7,7 +7,7 @@ YUI.add('hexagon.gameview', function (Y) {
         initializer: function () {
             var model = this.model;
 
-            model.after('change', this._afterModelChange, this);
+            // model.after('change', this._afterModelChange, this);
 
             var bw = this._boardWidget = new Y.Hexagon.Board({
                 playerID: this.model.get('playerID'),
@@ -24,13 +24,16 @@ YUI.add('hexagon.gameview', function (Y) {
 
             window.bw = bw;
 
-            bw.on('*:invalidMove', function () { alert("Invalid move"); });
-            // bw.set('state', Y.Hexagon.logic.decompressState(stringState, { 'marcin': '1' }));
+            model.connectBoard(bw);
 
-            setTimeout(function() { model.setAttrs(
-                Y.Hexagon.logic.decompressState(stringState, { 'marcin': '1' })
-            ); }, 1000 );
-            setTimeout(function () { model.set('activePlayerID', 'marcin'); }, 2000);
+            setTimeout(function () {
+                model.board.set('state', Y.Hexagon.logic.decompressState(stringState, { 'marcin': '1' }));
+            }, 1000);
+            setTimeout(function () {
+                model.board.set('state.activePlayerID', 'marcin');
+            }, 2000);
+
+            bw.on('*:invalidMove', function () { alert("Invalid move"); });
         },
 
         render: function () {
@@ -64,5 +67,5 @@ YUI.add('hexagon.gameview', function (Y) {
     });
 
 }, '0', {
-    requires: ['view', 'hexagon.board']
+    requires: ['view', 'hexagon.widgets.board']
 });

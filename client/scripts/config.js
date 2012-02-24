@@ -18,21 +18,30 @@ window.YUI_config = {
         hexagon: {
             base: HEXAGON_BASE_URL,
             modules: {
+
                 'hexagon.gameview': {
                     path: 'gameview/gameview.js',
                     requires: ['view', 'hexagon.widgets.board']
                 },
-                'hexagon.gamemodel': {
-                    path: 'gamemodel/gamemodel.js',
+
+                'hexagon.models.synchronized': {
+                    path: 'models/synchronized/synchronized.js',
                     requires: ['model']
                 },
+
                 'hexagon.widgets.board': {
                     path: 'widgets/board/board.js',
                     requires: ['hex.board', 'hexagon.logic', 'substitute']
                 },
+
                 'hexagon.logic': {
                     path: 'logic/logic.js',
                     requires: ['arraylist-add', 'arraylist-filter']
+                },
+
+                'hexagon.models.plugs.boardstate' : {
+                    path: 'models/plugs/boardstate.js',
+                    requires: ['plugin', 'base']
                 }
             }
         },
