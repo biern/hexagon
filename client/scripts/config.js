@@ -19,14 +19,9 @@ window.YUI_config = {
             base: HEXAGON_BASE_URL,
             modules: {
 
-                'hexagon.gameview': {
-                    path: 'gameview/gameview.js',
-                    requires: ['view', 'hexagon.widgets.board']
-                },
-
-                'hexagon.models.synchronized': {
-                    path: 'models/synchronized/synchronized.js',
-                    requires: ['model']
+                'hexagon.logic': {
+                    path: 'logic/logic.js',
+                    requires: ['arraylist-add', 'arraylist-filter']
                 },
 
                 'hexagon.widgets.board': {
@@ -34,9 +29,14 @@ window.YUI_config = {
                     requires: ['hex.board', 'hexagon.logic', 'substitute']
                 },
 
-                'hexagon.logic': {
-                    path: 'logic/logic.js',
-                    requires: ['arraylist-add', 'arraylist-filter']
+                'hexagon.views.game': {
+                    path: 'views/game/game.js',
+                    requires: ['view', 'hexagon.widgets.board']
+                },
+
+                'hexagon.models.synchronized': {
+                    path: 'models/synchronized/synchronized.js',
+                    requires: ['model']
                 },
 
                 'hexagon.models.plugs.boardstate' : {

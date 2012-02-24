@@ -1,6 +1,6 @@
-YUI.add('hexagon.gameview', function (Y) {
+YUI.add('hexagon.views.game', function (Y) {
 
-    Y.namespace('Hexagon').GameView = Y.Base.create('GameView', Y.View, [], {
+    Y.namespace('Hexagon.views').Game = Y.Base.create('GameView', Y.View, [], {
         // TODO: fix that: if already in DOM it should be rendered there, not create new tag
         container: Y.one('.hexagon-game'),
 
