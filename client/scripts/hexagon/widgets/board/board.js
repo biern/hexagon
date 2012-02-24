@@ -1,4 +1,4 @@
-YUI.add('hexagon.board', function (Y) {
+YUI.add('hexagon.widgets.board', function (Y) {
     var namespace = Y.namespace('Hexagon');
     var HexagonCell = namespace.HexagonCell = Y.Base.create('HexagonCell', Y.Hex.HexCell, [], {
 

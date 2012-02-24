@@ -1,4 +1,4 @@
-YUI.add('hexagon.board.tests', function (Y) {
+YUI.add('hexagon.widgets.board.tests', function (Y) {
 
     var namespace = Y.namespace('Hexagon.board.tests');
 
@@ -172,5 +172,5 @@ YUI.add('hexagon.board.tests', function (Y) {
     suite.add(namespace.testMoves);
 
 }, '0', {
-    requires: ['hexagon.board', 'test']
+    requires: ['hexagon.widgets.board', 'test']
 });

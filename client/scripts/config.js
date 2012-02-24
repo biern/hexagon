@@ -20,13 +20,13 @@ window.YUI_config = {
             modules: {
                 'hexagon.gameview': {
                     path: 'gameview/gameview.js',
-                    requires: ['view', 'hexagon.board']
+                    requires: ['view', 'hexagon.widgets.board']
                 },
                 'hexagon.gamemodel': {
                     path: 'gamemodel/gamemodel.js',
                     requires: ['model']
                 },
-                'hexagon.board': {
+                'hexagon.widgets.board': {
                     path: 'widgets/board/board.js',
                     requires: ['hex.board', 'hexagon.logic', 'substitute']
                 },
@@ -39,9 +39,9 @@ window.YUI_config = {
         hexagon_tests: {
             base: HEXAGON_BASE_URL,
             modules: {
-                'hexagon.board.tests': {
+                'hexagon.widgets.board.tests': {
                     path: 'widgets/board/tests.js',
-                    requires: ['hexagon.board', 'test']
+                    requires: ['hexagon.widgets.board', 'test']
                 }
             }
         }
