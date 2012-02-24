@@ -1,5 +1,5 @@
 YUI.add('hexagon.widgets.board', function (Y) {
-    var namespace = Y.namespace('Hexagon');
+    var namespace = Y.namespace('Hexagon.widgets');
     var HexagonCell = namespace.HexagonCell = Y.Base.create('HexagonCell', Y.Hex.HexCell, [], {
 
         initializer: function () {
@@ -303,6 +303,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
             state = state || {};
             state.size = state.size || [0, 0];
             state.cells = state.cells || {};
+            state.activePlayerID = state.activePlayerID || null;
 
             // Extract other attributes from board state
             this.set('size', state.size);

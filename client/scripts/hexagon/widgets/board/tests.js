@@ -1,6 +1,6 @@
 YUI.add('hexagon.widgets.board.tests', function (Y) {
 
-    var namespace = Y.namespace('Hexagon.board.tests');
+    var namespace = Y.namespace('Hexagon.widgets.board.tests');
 
     var state = namespace.state = {
         activePlayerID: 'player1',
@@ -12,7 +12,7 @@ YUI.add('hexagon.widgets.board.tests', function (Y) {
         ]
     };
 
-    var board = namespace.board = new Y.Hexagon.Board({
+    var board = namespace.board = new Y.Hexagon.widgets.Board({
         playerID: 'player1',
         playerStyles: {
             player1: 'red'

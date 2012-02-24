@@ -9,7 +9,7 @@ YUI.add('hexagon.views.game', function (Y) {
 
             // model.after('change', this._afterModelChange, this);
 
-            var bw = this._boardWidget = new Y.Hexagon.Board({
+            var bw = this._boardWidget = new Y.Hexagon.widgets.Board({
                 playerID: this.model.get('playerID'),
                 playerStyles: {
                     marcin: 'red'
