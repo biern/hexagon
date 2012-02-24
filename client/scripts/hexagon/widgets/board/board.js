@@ -1,5 +1,5 @@
-YUI.add('hexagon.board', function (Y) {
-    var namespace = Y.namespace('Hexagon');
+YUI.add('hexagon.widgets.board', function (Y) {
+    var namespace = Y.namespace('Hexagon.widgets');
     var HexagonCell = namespace.HexagonCell = Y.Base.create('HexagonCell', Y.Hex.HexCell, [], {
 
         initializer: function () {
@@ -7,23 +7,6 @@ YUI.add('hexagon.board', function (Y) {
             this._initEvents();
         },
 
-        renderUI: function () {
-            this.constructor.superclass.renderUI.call(this);
-            this.get('contentBox').setContent(
-               Y.substitute('<div class="{outer}"><div class="{inner}"></div></div>',
-                             { outer: this.getClassName('token'),
-                               inner: this.getClassName('token', 'content')
-                             }));
-
-        },
-
-        bindUI: function () {
-            this.constructor.superclass.bindUI.call(this);
-            this.after('highlightChange', this._afterHighlightChange, this);
-            this.after('playerIDChange', this._afterPlayerIDChange, this);
-            this.after('disabledChange', this._afterDisabledChange, this);
-            this.on('selectedChange', this._onSelectedChange, this);
-        },
 
         getCloneCells: function () {
             return this.get('parent').getHexListAt(
@@ -106,6 +89,61 @@ YUI.add('hexagon.board', function (Y) {
             }, this);
         },
 
+        renderUI: function () {
+            this.constructor.superclass.renderUI.call(this);
+            this.get('contentBox').setContent(
+               Y.substitute('<div class="{outer}"><div class="{inner}"></div></div>',
+                             { outer: this.getClassName('token'),
+                               inner: this.getClassName('token', 'content')
+                             }));
+
+        },
+
+        bindUI: function () {
+            this.constructor.superclass.bindUI.call(this);
+            this.after('highlightChange', this._afterHighlightChange, this);
+            this.after('playerIDChange', this._afterPlayerIDChange, this);
+            this.after('disabledChange', this._afterDisabledChange, this);
+            this.on('selectedChange', this._onSelectedChange, this);
+        },
+
+        _afterHighlightChange: function (e) {
+            if (e.prevVal) {
+                this.get('contentBox').removeClass(this.getClassName('highlight', e.prevVal));
+            }
+
+            if (e.newVal){
+                this.get('contentBox').addClass(this.getClassName('highlight', e.newVal));
+            }
+        },
+
+        _afterDisabledChange: function (e) {
+            if (e.newVal) {
+                this.set('playerID', null);
+            }
+        },
+
+        _afterPlayerIDChange: function (e) {
+            var tokenNode = this.get('contentBox').one('*').one('*'),
+                parent = this.get('parent'),
+                newStyle = parent.get('playerStyles')[e.newVal],
+                prevStyle = parent.get('playerStyles')[e.prevVal];
+
+            if (newStyle === prevStyle) {
+                return;
+            }
+
+            if (prevStyle) {
+                tokenNode.removeClass(this.getClassName('token', prevStyle));
+            }
+
+            if (newStyle){
+                tokenNode.addClass(this.getClassName('token', newStyle));
+                // // TODO: Randomize rotation on new tokens
+                // tokenNode.setStyle('transform', 'rotate(' + Math.random() * 360 + ')');
+            }
+        },
+
         _fireCloneMove: function (destination) {
             this.fire('move', {}, {
                 type: 'clone',
@@ -144,6 +182,13 @@ YUI.add('hexagon.board', function (Y) {
         _onSelectedChange: function (e) {
             var selected = this.get('parent').get('selection');
 
+            if (this.get('parent').get('lockMoves')) {
+                e.preventDefault();
+                e.halt();
+                return;
+            }
+
+            // If newly selected cell is empty and this one is occupied
             if (!this.get('occupied') && selected != this) {
                 if (selected && e.newVal && !this.get('disabled')) {
                     if (selected.requestMove(this)) {
@@ -167,43 +212,6 @@ YUI.add('hexagon.board', function (Y) {
                 bubbles: true
             });
 
-        },
-
-        _afterHighlightChange: function (e) {
-            if (e.prevVal) {
-                this.get('contentBox').removeClass(this.getClassName('highlight', e.prevVal));
-            }
-
-            if (e.newVal){
-                this.get('contentBox').addClass(this.getClassName('highlight', e.newVal));
-            }
-        },
-
-        _afterDisabledChange: function (e) {
-            if (e.newVal) {
-                this.set('playerID', null);
-            }
-        },
-
-        _afterPlayerIDChange: function (e) {
-            var tokenNode = this.get('contentBox').one('*').one('*'),
-                parent = this.get('parent'),
-                newStyle = parent.get('playerStyles')[e.newVal],
-                prevStyle = parent.get('playerStyles')[e.prevVal];
-
-            if (newStyle === prevStyle) {
-                return;
-            }
-
-            if (prevStyle) {
-                tokenNode.removeClass(this.getClassName('token', prevStyle));
-            }
-
-            if (newStyle){
-                tokenNode.addClass(this.getClassName('token', newStyle));
-                // // TODO: Randomize rotation on new tokens
-                // tokenNode.setStyle('transform', 'rotate(' + Math.random() * 360 + ')');
-            }
         }
 
 
@@ -237,11 +245,15 @@ YUI.add('hexagon.board', function (Y) {
             this.constructor.superclass.bindUI.call(this);
             this.on('selectionChange', this._onSelectionChange, this);
             this.after('stateChange', this._afterStateChange, this);
+            this.after('playerIDChange', this._afterPlayerIDChange, this);
+            this.after('activePlayerIDChange', this._afterActivePlayerIDChange, this);
+            this.after('lockMovesChange', this._afterLockMovesChange, this);
         },
 
         syncUI: function () {
             this.constructor.superclass.syncUI.call(this);
             this._syncState(this.get('state'));
+            this._syncActivePlayerID(this.get('activePlayerID'));
         },
 
         _onSelectionChange: function (e) {
@@ -258,14 +270,32 @@ YUI.add('hexagon.board', function (Y) {
             }
         },
 
-        _unhighlightAll: function () {
-            this.each(function (c) {
-                c.set('highlight', false);
-            });
+        _afterPlayerIDChange: function (e) {
+            this._syncActivePlayerID(this.get('activePlayerID'));
+        },
+
+        _afterActivePlayerIDChange: function (e){
+            this._syncActivePlayerID(e.newVal);
+        },
+
+        _afterLockMovesChange: function (e) {
+            this._syncLockMoves(e.newVal);
         },
 
         _afterStateChange: function (e) {
             this._syncState(this.get('state'));
+        },
+
+        _syncActivePlayerID: function (activePlayerID) {
+            if (activePlayerID !== this.get('playerID')) {
+                this.set('lockMoves', true);
+            } else {
+                this.set('lockMoves', false);
+            }
+        },
+
+        _syncLockMoves: function (lockMoves) {
+            // Maybe do sth in the future :-)
         },
 
         _syncState: function(state) {
@@ -273,8 +303,12 @@ YUI.add('hexagon.board', function (Y) {
             state = state || {};
             state.size = state.size || [0, 0];
             state.cells = state.cells || {};
+            state.activePlayerID = state.activePlayerID || null;
 
+            // Extract other attributes from board state
             this.set('size', state.size);
+            this.set('activePlayerID', state.activePlayerID);
+
             this.each(function (e) {
                 e.set('disabled', true);
             });
@@ -288,6 +322,12 @@ YUI.add('hexagon.board', function (Y) {
         _cellFromState: function(cell, cellState) {
             cell.set('disabled', cellState === undefined ? true : cellState.disabled === true);
             cell.set('playerID', cellState.playerID || null);
+        },
+
+        _unhighlightAll: function () {
+            this.each(function (c) {
+                c.set('highlight', false);
+            });
         }
 
         // FIXME: makes reading initial state impossible
@@ -319,6 +359,14 @@ YUI.add('hexagon.board', function (Y) {
                 value: null
             },
 
+            activePlayerID: {
+                value: null
+            },
+
+            lockMoves: {
+                value: false
+            },
+
             defaultChildType: {
                 value: HexagonCell
             },
@@ -327,6 +375,7 @@ YUI.add('hexagon.board', function (Y) {
                 value: false
             },
 
+            // Currently set-only attr used to sync all board attributes at once if neccessary. When set, extracts and sets also the following attrs: activePlayerID, size
             state: {
                 value: {}
                 // getter: '_getState'

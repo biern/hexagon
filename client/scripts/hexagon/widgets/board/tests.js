@@ -1,8 +1,9 @@
-YUI.add('hexagon.board.tests', function (Y) {
+YUI.add('hexagon.widgets.board.tests', function (Y) {
 
-    var namespace = Y.namespace('Hexagon.board.tests');
+    var namespace = Y.namespace('Hexagon.widgets.board.tests');
 
     var state = namespace.state = {
+        activePlayerID: 'player1',
         size: [3, 3],
         cells: [
             [{ playerID: 'player1' }, {}, { playerID: 'player2' }],
@@ -11,7 +12,7 @@ YUI.add('hexagon.board.tests', function (Y) {
         ]
     };
 
-    var board = namespace.board = new Y.Hexagon.Board({
+    var board = namespace.board = new Y.Hexagon.widgets.Board({
         playerID: 'player1',
         playerStyles: {
             player1: 'red'
@@ -141,10 +142,25 @@ YUI.add('hexagon.board.tests', function (Y) {
 
         testMoveToDisabled: function () {
             var posFrom = [0, 0],
-                posTo = [2, 2];
+                posTo = [1, 2];
 
             var subscription = board.once('*:move', function (e, move) {
                 Y.Assert.fail('Move to disabled field should fail');
+            }, this);
+
+            board.getHexAt(posFrom).set('selected', 1);
+            board.getHexAt(posTo).set('selected', 1);
+            subscription.detach();
+        },
+
+        testMoveLock: function () {
+            var posFrom = [0, 0],
+                posTo = [0, 1];
+
+            board.set('activePlayerID', 'player2');
+
+            var subscription = board.once('*:move', function (e, move) {
+                Y.Assert.fail('Move when locked should fail');
             }, this);
 
             board.getHexAt(posFrom).set('selected', 1);
@@ -156,5 +172,5 @@ YUI.add('hexagon.board.tests', function (Y) {
     suite.add(namespace.testMoves);
 
 }, '0', {
-    requires: ['hexagon.board', 'test']
+    requires: ['hexagon.widgets.board', 'test']
 });

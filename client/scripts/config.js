@@ -18,30 +18,39 @@ window.YUI_config = {
         hexagon: {
             base: HEXAGON_BASE_URL,
             modules: {
-                'hexagon.gameview': {
-                    path: 'gameview/gameview.js',
-                    requires: ['view', 'hexagon.board']
-                },
-                'hexagon.gamemodel': {
-                    path: 'gamemodel/gamemodel.js',
-                    requires: ['model']
-                },
-                'hexagon.board': {
-                    path: 'widgets/board/board.js',
-                    requires: ['hex.board', 'hexagon.logic', 'substitute']
-                },
+
                 'hexagon.logic': {
                     path: 'logic/logic.js',
                     requires: ['arraylist-add', 'arraylist-filter']
+                },
+
+                'hexagon.widgets.board': {
+                    path: 'widgets/board/board.js',
+                    requires: ['hex.board', 'hexagon.logic', 'substitute']
+                },
+
+                'hexagon.views.game': {
+                    path: 'views/game/game.js',
+                    requires: ['view', 'hexagon.widgets.board']
+                },
+
+                'hexagon.models.synchronized': {
+                    path: 'models/synchronized/synchronized.js',
+                    requires: ['model']
+                },
+
+                'hexagon.models.plugs.boardstate' : {
+                    path: 'models/plugs/boardstate.js',
+                    requires: ['plugin', 'base']
                 }
             }
         },
         hexagon_tests: {
             base: HEXAGON_BASE_URL,
             modules: {
-                'hexagon.board.tests': {
+                'hexagon.widgets.board.tests': {
                     path: 'widgets/board/tests.js',
-                    requires: ['hexagon.board', 'test']
+                    requires: ['hexagon.widgets.board', 'test']
                 }
             }
         }
