@@ -1,6 +1,6 @@
 YUI.add('hexagon.models.synchronized', function (Y) {
 
-    Y.namespace('Hexagon.models').SynchronizedModel = Y.Base.create('SynchrnoizedModel', Y.Model, [], {
+    Y.namespace('Hexagon.models').Synchronized = Y.Base.create('SynchrnoizedModel', Y.Model, [], {
 
         addPlugMethod: function (name) {
             if (this[name] === undefined) {
