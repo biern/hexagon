@@ -1,11 +1,8 @@
 
-YUI(YUI_config).use('hexagon.models.plugs.boardstate', 'hexagon.views.game', 'hexagon.models.synchronized', function(Y){
-    var model = new Y.Hexagon.models.Synchronized({
-        playerID: 'marcin',
-        activePlayerID: 'marcin'
+YUI(YUI_config).use('hexagon.models.game', 'hexagon.views.game', function(Y){
+    var model = new Y.Hexagon.models.Game({
+        playerID: 'marcin'
     });
-
-    model.plug(Y.Hexagon.models.plugs.BoardState);
 
     var view = new Y.Hexagon.views.Game({ model: model });
 

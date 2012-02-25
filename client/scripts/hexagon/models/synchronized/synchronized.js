@@ -19,10 +19,6 @@ YUI.add('hexagon.models.synchronized', function (Y) {
 
         ATTRS: {
 
-            playerID: {
-                value: null
-            },
-
             server: {
                 value: null
             }

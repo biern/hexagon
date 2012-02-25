@@ -39,6 +39,11 @@ window.YUI_config = {
                     requires: ['model']
                 },
 
+                'hexagon.models.game': {
+                    path: 'models/game/game.js',
+                    requires: ['hexagon.models.synchronized', 'hexagon.models.plugs.boardstate']
+                },
+
                 'hexagon.models.plugs.boardstate' : {
                     path: 'models/plugs/boardstate.js',
                     requires: ['plugin', 'base']
