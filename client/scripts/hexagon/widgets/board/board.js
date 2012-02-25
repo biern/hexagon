@@ -306,9 +306,6 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
         _syncState: function(state) {
             // Defaults
-            console.log('syncstate');
-            console.log(state);
-
             state = state || {};
             state.size = state.size || [0, 0];
             state.cells = state.cells || {};
@@ -345,9 +342,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         _getState: function () {
-            console.log('getstate');
             if (this._stateCached) {
-                console.log('cache');
                 return this._stateCached;
             }
 
@@ -399,7 +394,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
                 value: false
             },
 
-            // TODO: tests
+            // TODO: tests + remove logs
             state: {
                 setter: '_setState',
                 getter: '_getState'

@@ -33,7 +33,6 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
         },
 
         _syncBoardState: function (board, state) {
-            // TODO: board.syncState(state);
             board.set('state', state);
         }
 
