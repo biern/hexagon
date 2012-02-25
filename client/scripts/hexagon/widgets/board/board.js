@@ -406,4 +406,16 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
         }
     });
+
+    Y.namespace('Hexagon.widgets.board').synchronize = function (model, board) {
+        model.attrNamespace('board').after('stateChange', function (e) {
+            // Skip syncing whole state if only playerID changes (common case)
+            if (e.subAttrName === 'state.activePlayerID') {
+                board.set('activePlayerID', e.newVal.activePlayerID);
+            } else if (e.subAttrName === undefined){
+                board.set('state', e.newVal);
+            }
+        });
+    };
+
 }, '0', { requires: ['hex.board', 'hexagon.logic', 'substitute'] });

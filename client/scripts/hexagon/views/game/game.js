@@ -22,9 +22,7 @@ YUI.add('hexagon.views.game', function (Y) {
                  -   x   x   -   x   \n\
                    -   x   -   x   x ';
 
-            window.bw = bw;
-
-            model.connectBoard(bw);
+            Y.Hexagon.widgets.board.synchronize(model, bw);
 
             setTimeout(function () {
                 model.board.set('state', Y.Hexagon.logic.decompressState(stringState, { 'marcin': '1' }));
@@ -34,6 +32,8 @@ YUI.add('hexagon.views.game', function (Y) {
             }, 2000);
 
             bw.on('*:invalidMove', function () { alert("Invalid move"); });
+
+            window.bw = bw;
         },
 
         render: function () {
@@ -41,27 +41,6 @@ YUI.add('hexagon.views.game', function (Y) {
                 Y.one('body').append(this.container);
             }
             this._boardWidget.render(this.container);
-        },
-
-        _afterModelChange: function (e) {
-            var changed = e.changed;
-
-            // Perform a full resync
-            if (Y.Object.hasKey(changed, 'cells') || Y.Object.hasKey(changed, 'size')) {
-                this._syncBoardAttr('state', this.model.get('boardState'));
-                return;
-            }
-
-            // Other attributes
-            Y.Array.each(['playerID', 'activePlayerID'], function (item) {
-                if (Y.Object.hasKey(changed, item)) {
-                    this._syncBoardAttr(item, changed[item].newVal);
-                }
-            }, this);
-        },
-
-        _syncBoardAttr: function (name, value) {
-            this._boardWidget.set(name, value);
         }
 
     });
