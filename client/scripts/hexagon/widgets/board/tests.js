@@ -4,6 +4,7 @@ YUI.add('hexagon.widgets.board.tests', function (Y) {
 
     var state = namespace.state = {
         activePlayerID: 'player1',
+        allPlayers: ['player1', 'player2'],
         size: [3, 3],
         cells: [
             [{ playerID: 'player1' }, {}, { playerID: 'player2' }],
