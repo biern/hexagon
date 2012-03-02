@@ -9,12 +9,13 @@ $H: 62px;
 $T: 25px;
 
 body {
-    background: grey;
+    font-family: 'Lemon', cursive;
+    color: #FDFFBC;
+    background-color: #545544;
 }
 
 .yui3-board {
     position: relative;
-    font-family: 'Lemon', cursive;
     color: grey;
 }
 
@@ -51,7 +52,7 @@ body {
 .yui3-hexagoncell-content {
     z-index: 1;
     background: {
-        image: url('../images/hex-test-72-62.png');
+        image: url('../images/hex-72-62.png');
         repeat: no-repeat;
         position: center;
     }
@@ -61,7 +62,7 @@ body {
 }
 
 .yui3-hexagoncell-selected .yui3-hexagoncell-content {
-    background-image: url('../images/hex-test-72-62.png'), no-repeat, center;
+    background-image: url('../images/hex-72-62.png'), no-repeat, center;
     background-color: rgba(0,0,255,0.2);
     /* @include transform($rotate: 360deg); */
 }
@@ -71,18 +72,21 @@ body {
 }
 
 .yui3-hexagoncell-highlight-clone {
-    background-image: url('../images/hex-test-72-62.png'), no-repeat, center;
+    background-image: url('../images/hex-72-62.png'), no-repeat, center;
     background-color: rgba(0,255,0,0.2);
 }
 
 .yui3-hexagoncell-highlight-jump {
-    background-image: url('../images/hex-test-72-62.png'), no-repeat, center;
+    background-image: url('../images/hex-72-62.png'), no-repeat, center;
     background-color: rgba(255,255,0,0.2);
 }
 
-.yui3-hexagoncell-content:hover {
+.yui3-hexagoncell:hover {
     z-index: 2;
-    background-image: url('../images/hex-test-72-62.png'), url('../images/hex.png');
+}
+
+.yui3-hexagoncell-content:hover {
+    background-image: url('../images/hex-selected-72-62.png'), url('../images/hex-72-62.png');
 }
 
 .yui3-hexagoncell-token {
