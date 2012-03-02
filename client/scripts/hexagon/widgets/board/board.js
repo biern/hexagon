@@ -55,7 +55,10 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         performMove: function (move) {
-            this.get('parent')._stateCached = false;
+            var parent = this.get('parent');
+
+            parent._stateCached = false;
+            move.cellFrom.set('selected', 0);
             if (move.type === "clone") {
                 move.cellTo.set('playerID', move.playerID);
                 move.cellTo.possessNeighbours();
@@ -183,9 +186,11 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         _onSelectedChange: function (e) {
-            var selected = this.get('parent').get('selection');
+            var parent = this.get('parent'),
+                selected = parent.get('selection');
 
-            if (this.get('parent').get('lockMoves')) {
+            if ((parent.get('lockMoves') && e.newVal) ||
+                this.get('playerID') && this.get('playerID') !== parent.get('playerID')) {
                 e.preventDefault();
                 e.halt();
                 return;
