@@ -10,25 +10,33 @@ YUI.add('hexagon.views.game', function (Y) {
             // model.after('change', this._afterModelChange, this);
 
             var bw = this._boardWidget = new Y.Hexagon.widgets.Board({
-                playerID: this.model.get('playerID'),
+                playerID: 'player1',
                 playerStyles: {
-                    marcin: 'red'
+                    player1: 'red',
+                    player2: 'blue'
                 }
             }),
-
             stringState =
                 '-   x   x   -   x   \n\
-                   x   1   x   -   x \n\
+                   x   1   x   -   2 \n\
                  -   x   x   -   x   \n\
                    -   x   -   x   x ';
+
+            bw.after('activePlayerIDChange', function (e) {
+                this.set('playerID', e.newVal);
+            }, bw);
 
             Y.Hexagon.widgets.board.synchronize(model, bw);
 
             setTimeout(function () {
-                model.board.set('state', Y.Hexagon.logic.decompressState(stringState, { 'marcin': '1' }));
+                model.board.set('state', Y.Hexagon.logic.decompressState(
+                    stringState, {
+                        'player1': '1',
+                        'player2': '2'
+                    }));
             }, 1000);
             setTimeout(function () {
-                model.board.set('state.activePlayerID', 'marcin');
+                model.board.set('state.activePlayerID', 'player1');
             }, 2000);
 
             bw.on('*:invalidMove', function () { alert("Invalid move"); });

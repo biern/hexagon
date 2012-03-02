@@ -67,6 +67,8 @@ YUI.add('hexagon.widgets.board', function (Y) {
                 move.cellTo.possessNeighbours();
             }
 
+            parent.set('activePlayerID', Y.Hexagon.logic.nextPlayer(
+                parent.get('allPlayers'), parent.get('activePlayerID')));
         },
 
         requestMove: function (destination) {
@@ -314,6 +316,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
             // Extract other attributes from board state
             this.set('size', state.size);
             this.set('activePlayerID', state.activePlayerID);
+            this.set('allPlayers', state.allPlayers);
 
             this.each(function (e) {
                 e.set('disabled', true);
@@ -349,6 +352,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
             var state = {
                 size: this.get('size'),
                 activePlayerID: this.get('activePlayerID'),
+                allPlayers: this.get('allPlayers'),
                 cells: []
             }, row, cell;
             this.each(function (item) {
@@ -376,6 +380,10 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
             playerID: {
                 value: null
+            },
+
+            allPlayers: {
+                value: []
             },
 
             activePlayerID: {

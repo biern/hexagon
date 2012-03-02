@@ -61,6 +61,7 @@ YUI.add('hexagon.logic', function(Y) {
         });
     };
 
+    // TODO: Change compress/decompress pair to (de)compressStateCells
     namespace.compressState = function (state, playerIDMap) {
         // TODO: auto players numbering
         var i, j, cell, res = "";
@@ -91,6 +92,7 @@ YUI.add('hexagon.logic', function(Y) {
             skip = ' ',
             state = {
                 size: [0, 0],
+                allPlayers: [],
                 cells: [
                     []
                 ]
@@ -100,13 +102,13 @@ YUI.add('hexagon.logic', function(Y) {
                 if (w + 1 > state.size[0]) {
                     state.size[0] = w + 1;
                 }
-
             };
 
         playerIDMap = playerIDMap || {};
 
         for (var k in playerIDMap) {
             reversedMap[playerIDMap[k]] = k;
+            state.allPlayers.push(k);
         }
 
         for(i = 0; i < string.length; i++) {
@@ -140,6 +142,21 @@ YUI.add('hexagon.logic', function(Y) {
         }
 
         return state;
+    };
+
+    namespace.nextPlayer = function (arg1, arg2) {
+        // nextPlayer(state) || nextPlayer(allPlayers, activePlayerID)
+        if (arguments.length == 1) {
+            var state = arg1;
+
+            return state.allPlayers[(Y.Array.indexOf(state.allPlayers, state.activePlayerID) + 1) % state.allPlayers.length];
+        } else {
+            var allPlayers = arg1,
+                activePlayerID = arg2;
+
+            return allPlayers[(Y.Array.indexOf(allPlayers, activePlayerID) + 1) % allPlayers.length];
+        }
+
     };
 
 }, '0', {
