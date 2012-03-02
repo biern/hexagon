@@ -28,11 +28,6 @@
 
 /* $W: 82px; */
 /* $H: 80px; */
-body {
-  font-family: 'Lemon', cursive;
-  color: #FDFFBC;
-  background-color: #545544; }
-
 .yui3-board {
   position: relative;
   color: grey; }
