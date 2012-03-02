@@ -394,7 +394,6 @@ YUI.add('hexagon.widgets.board', function (Y) {
                 value: false
             },
 
-            // TODO: tests + remove logs
             state: {
                 setter: '_setState',
                 getter: '_getState'
@@ -407,6 +406,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
         }
     });
 
+    // TODO: Change to 'synchronizer' plug?
     Y.namespace('Hexagon.widgets.board').synchronize = function (model, board) {
         model.attrNamespace('board').after('stateChange', function (e) {
             // Skip syncing whole state if only playerID changes (common case)

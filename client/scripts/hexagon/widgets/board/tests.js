@@ -41,9 +41,36 @@ YUI.add('hexagon.widgets.board.tests', function (Y) {
         },
 
         tearDown: function () {
-            // board.destroy();
+            board.destroy();
         }
     });
+
+    namespace.testStateGetter = new Y.Test.Case({
+
+        setUp: function () {
+            board.set('state', state);
+            // Force regenerating state on read
+            board._stateCached = false;
+        },
+
+        testRead: function () {
+            var readState = board.get('state');
+
+            Y.ArrayAssert.itemsAreEqual(readState.size, state.size);
+            Y.Assert.areEqual(readState.activePlayerID, state.activePlayerID);
+
+            // Assert cell properties
+            Y.Array.each(readState.cells, function (row, i) {
+                Y.Array.each(row, function (cell, j) {
+                    Y.Array.each(['playerID', 'disabled'], function (attr) {
+                        Y.Assert.areEqual(cell[attr], state.cells[i][j][attr]);
+                    });
+                });
+            });
+        }
+
+    });
+    suite.add(namespace.testStateGetter);
 
     namespace.testState = new Y.Test.Case({
 
