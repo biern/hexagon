@@ -2,6 +2,8 @@ YUI.add('hexagon.widgets.board.tests', function (Y) {
 
     var namespace = Y.namespace('Hexagon.widgets.board.tests');
 
+    var assertFired = Y.Hexagon.utils.assertFired;
+
     var state = namespace.state = {
         activePlayerID: 'player1',
         allPlayers: ['player1', 'player2'],
@@ -20,21 +22,7 @@ YUI.add('hexagon.widgets.board.tests', function (Y) {
         }
     });
 
-    var assertFired = function (func, obj, name, handler) {
-        var fired = false;
-        handler = handler || function () {};
-        var _handler = function () {
-            fired = true;
-            handler.apply(this, arguments);
-        };
-        var sub = obj.once(name, _handler, this);
-
-        func();
-        sub.detach();
-        Y.Assert.isTrue(fired, 'Event ' + name + ' did not fire');
-    };
-
-    var suite = namespace.testSuite = new Y.Test.Suite({
+    var suite = namespace.suite = new Y.Test.Suite({
         name: 'Test board',
 
         setUp: function () {
@@ -200,5 +188,5 @@ YUI.add('hexagon.widgets.board.tests', function (Y) {
     suite.add(namespace.testMoves);
 
 }, '0', {
-    requires: ['hexagon.widgets.board', 'test']
+    requires: ['hexagon.widgets.board', 'hexagon.utils', 'test']
 });

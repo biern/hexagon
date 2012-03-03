@@ -26,31 +26,33 @@
   border-right: 50px solid transparent;
   border-top: 25px solid red; }
 
+/* $W: 82px; */
+/* $H: 80px; */
 .yui3-board {
   position: relative;
   color: grey; }
 
 .yui3-board .yui3-board-row {
-  height: 40px;
+  height: 31px;
   margin: 1px;
   padding: 0px;
   white-space: nowrap; }
 
 .yui3-board .yui3-board-row:nth-child(even) {
-  padding-left: 61.5px; }
+  padding-left: 54px; }
 
 .yui3-board .yui3-board-row:last-child {
-  height: 80px; }
+  height: 62px; }
 
 .yui3-hexagoncell {
   z-index: 1;
   display: inline-block;
   position: relative;
-  width: 82px;
-  height: 80px;
+  width: 72px;
+  height: 62px;
   padding: 0px;
   margin: 0px;
-  margin-right: 40px;
+  margin-right: 31px;
   /* line-height: $H; */
   text-align: center; }
   .yui3-hexagoncell:hover {
@@ -100,12 +102,12 @@
     background-position: center; }
 
 .yui3-hexagoncell-token {
-  height: 80px; }
+  height: 62px; }
 
 .yui3-hexagoncell-token-content {
   position: relative;
-  top: 27.5px;
-  left: 28.5px;
+  top: 18.5px;
+  left: 23.5px;
   width: 25px;
   height: 25px;
   /* @include transition($property: all, $duration: 0.5s); */ }

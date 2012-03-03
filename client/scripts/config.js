@@ -34,6 +34,13 @@ window.YUI_config = {
                     requires: ['view', 'hexagon.widgets.board']
                 },
 
+                'hexagon.utils': {
+                    path: 'utils/utils.js',
+                    requires: ['test']
+                },
+
+                // TODO: separate those below from hexagon
+
                 'hexagon.models.synchronized': {
                     path: 'models/synchronized/synchronized.js',
                     requires: ['model']
@@ -41,12 +48,23 @@ window.YUI_config = {
 
                 'hexagon.models.game': {
                     path: 'models/game/game.js',
-                    requires: ['hexagon.models.synchronized', 'hexagon.models.plugs.boardstate']
+                    requires: ['hexagon.models.synchronized',
+                               'hexagon.models.plugs.boardstate']
                 },
 
-                'hexagon.models.plugs.boardstate' : {
-                    path: 'models/plugs/boardstate.js',
+                'hexagon.models.plugs.synchronized': {
+                    path: 'models/plugs/synchronized/synchronized.js',
                     requires: ['plugin', 'base']
+                },
+
+                'hexagon.models.plugs.boardstate': {
+                    path: 'models/plugs/boardstate/boardstate.js',
+                    requires: ['hexagon.models.plugs.synchronized']
+                },
+
+                'hexagon.server.testserver': {
+                    path: 'server/testserver/testserver.js',
+                    requires: ['base']
                 }
             }
         },
@@ -55,7 +73,18 @@ window.YUI_config = {
             modules: {
                 'hexagon.widgets.board.tests': {
                     path: 'widgets/board/tests.js',
-                    requires: ['hexagon.widgets.board', 'test']
+                    requires: ['hexagon.widgets.board',
+                               'hexagon.utils',
+                               'test']
+                },
+
+                'hexagon.models.plugs.boardstate.tests': {
+                    path: 'models/plugs/boardstate/tests.js',
+                    requires: ['hexagon.models.plugs.boardstate',
+                               'hexagon.models.synchronized',
+                               'hexagon.server.testserver',
+                               'hexagon.utils',
+                               'test']
                 }
             }
         }
