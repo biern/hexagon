@@ -34,6 +34,13 @@ window.YUI_config = {
                     requires: ['view', 'hexagon.widgets.board']
                 },
 
+                'hexagon.utils': {
+                    path: 'utils/utils.js',
+                    requires: ['test']
+                },
+
+                // TODO: separate those below from hexagon
+
                 'hexagon.models.synchronized': {
                     path: 'models/synchronized/synchronized.js',
                     requires: ['model']
@@ -55,8 +62,11 @@ window.YUI_config = {
             modules: {
                 'hexagon.widgets.board.tests': {
                     path: 'widgets/board/tests.js',
-                    requires: ['hexagon.widgets.board', 'test']
+                    requires: ['hexagon.widgets.board',
+                               'hexagon.utils',
+                               'test']
                 }
+
             }
         }
     }
