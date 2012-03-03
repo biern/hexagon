@@ -429,6 +429,10 @@ YUI.add('hexagon.widgets.board', function (Y) {
                 board.set('state', e.newVal);
             }
         });
+
+        board.after('*:move', function (e, data) {
+            model.fire('board:move', { src: 'local' }, data);
+        });
     };
 
 }, '0', { requires: ['hex.board', 'hexagon.logic', 'substitute'] });
