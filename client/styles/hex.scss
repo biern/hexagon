@@ -2,9 +2,9 @@
 @import "shapes";
 
 $W: 72px;
-/* $W: 82px; */
+$W: 82px;
 $H: 62px;
-/* $H: 80px; */
+$H: 80px;
 // Token size:
 $T: 25px;
 
@@ -28,7 +28,33 @@ $T: 25px;
     height: $H;
 }
 
+// -----
+// cells
+// -----
+
+$cell_bg: url('../images/hex-72-62.png');
+$cell_hover_bg: url('../images/hex-hover-72-62.png');
+$cell_selected_bg: url('../images/hex-selected-72-62.png');
+$cell_clone_bg: url('../images/hex-highlight-clone-72-62.png');
+$cell_jump_bg: url('../images/hex-highlight-jump-72-62.png');
+
+@mixin cell-hoverable-bg($bg) {
+    background: {
+        image: $bg;
+        repeat: no-repeat;
+        position: center;
+    }
+    &:hover {
+        background: {
+            image: $cell_hover_bg, $bg;
+            repeat: no-repeat;
+            position: center;
+        }
+    }
+}
+
 .yui3-hexagoncell {
+    z-index: 1;
     display: inline-block;
     position: relative;
     width: $W;
@@ -41,23 +67,20 @@ $T: 25px;
     /* line-height: $H; */
     text-align: center;
 
+    &:hover {
+        z-index: 2;
+    }
 }
 
 .yui3-hexagoncell-content {
-    z-index: 1;
-    background: {
-        image: url('../images/hex-72-62.png');
-        repeat: no-repeat;
-        position: center;
-    }
-
-    /* @include transition($property: all, $duration: 2s); */
-/* @include transition($property: -moz-transform, $duration: 1s); */
+    @include cell-hoverable-bg($cell_bg);
+    /* /\* @include transition($property: all, $duration: 2s); *\/ */
+    /* /\* @include transition($property: -moz-transform, $duration: 1s); *\/ */
 }
 
 .yui3-hexagoncell-selected .yui3-hexagoncell-content {
-    background-image: url('../images/hex-72-62.png'), no-repeat, center;
-    background-color: rgba(0,0,255,0.2);
+    @include cell-hoverable-bg($cell_selected_bg);
+    /* background-color: rgba(0,0,255,0.2); */
     /* @include transform($rotate: 360deg); */
 }
 
@@ -66,21 +89,11 @@ $T: 25px;
 }
 
 .yui3-hexagoncell-highlight-clone {
-    background-image: url('../images/hex-72-62.png'), no-repeat, center;
-    background-color: rgba(0,255,0,0.2);
+    @include cell-hoverable-bg($cell_clone_bg);
 }
 
 .yui3-hexagoncell-highlight-jump {
-    background-image: url('../images/hex-72-62.png'), no-repeat, center;
-    background-color: rgba(255,255,0,0.2);
-}
-
-.yui3-hexagoncell:hover {
-    z-index: 2;
-}
-
-.yui3-hexagoncell-content:hover {
-    background-image: url('../images/hex-selected-72-62.png'), url('../images/hex-72-62.png');
+    @include cell-hoverable-bg($cell_jump_bg);
 }
 
 .yui3-hexagoncell-token {
@@ -97,15 +110,15 @@ $T: 25px;
     /* @include transition($property: all, $duration: 0.5s); */
 }
 
+.yui3-hexagoncell-token-disappear {
+    // TODO:
+}
+
 .yui3-hexagoncell-token-red {
     background-color: red;
     @include transform($rotate: 15deg);
     border-radius: $T / 4;
     -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
-}
-
-.yui3-hexagoncell-token-disappear {
-    // TODO:
 }
 
 .yui3-hexagoncell-token-blue {

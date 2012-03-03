@@ -26,72 +26,86 @@
   border-right: 50px solid transparent;
   border-top: 25px solid red; }
 
-/* $W: 82px; */
-/* $H: 80px; */
 .yui3-board {
   position: relative;
   color: grey; }
 
 .yui3-board .yui3-board-row {
-  height: 31px;
+  height: 40px;
   margin: 1px;
   padding: 0px;
   white-space: nowrap; }
 
 .yui3-board .yui3-board-row:nth-child(even) {
-  padding-left: 54px; }
+  padding-left: 61.5px; }
 
 .yui3-board .yui3-board-row:last-child {
-  height: 62px; }
+  height: 80px; }
 
 .yui3-hexagoncell {
+  z-index: 1;
   display: inline-block;
   position: relative;
-  width: 72px;
-  height: 62px;
+  width: 82px;
+  height: 80px;
   padding: 0px;
   margin: 0px;
-  margin-right: 31px;
+  margin-right: 40px;
   /* line-height: $H; */
   text-align: center; }
+  .yui3-hexagoncell:hover {
+    z-index: 2; }
 
 .yui3-hexagoncell-content {
-  z-index: 1;
   background-image: url("../images/hex-72-62.png");
   background-repeat: no-repeat;
   background-position: center;
-  /* @include transition($property: all, $duration: 2s); */
-  /* @include transition($property: -moz-transform, $duration: 1s); */ }
+  /* /\* @include transition($property: all, $duration: 2s); *\/ */
+  /* /\* @include transition($property: -moz-transform, $duration: 1s); *\/ */ }
+  .yui3-hexagoncell-content:hover {
+    background-image: url("../images/hex-hover-72-62.png"), url("../images/hex-72-62.png");
+    background-repeat: no-repeat;
+    background-position: center; }
 
 .yui3-hexagoncell-selected .yui3-hexagoncell-content {
-  background-image: url("../images/hex-72-62.png"), no-repeat, center;
-  background-color: rgba(0, 0, 255, 0.2);
+  background-image: url("../images/hex-selected-72-62.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  /* background-color: rgba(0,0,255,0.2); */
   /* @include transform($rotate: 360deg); */ }
+  .yui3-hexagoncell-selected .yui3-hexagoncell-content:hover {
+    background-image: url("../images/hex-hover-72-62.png"), url("../images/hex-selected-72-62.png");
+    background-repeat: no-repeat;
+    background-position: center; }
 
 .yui3-hexagoncell-disabled {
   opacity: 0; }
 
 .yui3-hexagoncell-highlight-clone {
-  background-image: url("../images/hex-72-62.png"), no-repeat, center;
-  background-color: rgba(0, 255, 0, 0.2); }
+  background-image: url("../images/hex-highlight-clone-72-62.png");
+  background-repeat: no-repeat;
+  background-position: center; }
+  .yui3-hexagoncell-highlight-clone:hover {
+    background-image: url("../images/hex-hover-72-62.png"), url("../images/hex-highlight-clone-72-62.png");
+    background-repeat: no-repeat;
+    background-position: center; }
 
 .yui3-hexagoncell-highlight-jump {
-  background-image: url("../images/hex-72-62.png"), no-repeat, center;
-  background-color: rgba(255, 255, 0, 0.2); }
-
-.yui3-hexagoncell:hover {
-  z-index: 2; }
-
-.yui3-hexagoncell-content:hover {
-  background-image: url("../images/hex-selected-72-62.png"), url("../images/hex-72-62.png"); }
+  background-image: url("../images/hex-highlight-jump-72-62.png");
+  background-repeat: no-repeat;
+  background-position: center; }
+  .yui3-hexagoncell-highlight-jump:hover {
+    background-image: url("../images/hex-hover-72-62.png"), url("../images/hex-highlight-jump-72-62.png");
+    background-repeat: no-repeat;
+    background-position: center; }
 
 .yui3-hexagoncell-token {
-  height: 62px; }
+  height: 80px; }
 
 .yui3-hexagoncell-token-content {
   position: relative;
-  top: 18.5px;
-  left: 23.5px;
+  top: 27.5px;
+  left: 28.5px;
   width: 25px;
   height: 25px;
   /* @include transition($property: all, $duration: 0.5s); */ }
