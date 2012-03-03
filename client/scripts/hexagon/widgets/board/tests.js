@@ -22,7 +22,7 @@ YUI.add('hexagon.widgets.board.tests', function (Y) {
         }
     });
 
-    var suite = namespace.testSuite = new Y.Test.Suite({
+    var suite = namespace.suite = new Y.Test.Suite({
         name: 'Test board',
 
         setUp: function () {
