@@ -1,13 +1,17 @@
 YUI.add('hexagon.logic', function(Y) {
 
     var namespace = Y.namespace('Hexagon.logic');
+
     /**
-     * Validates and performs move on state. If move was successfully performed return true, otherwise false
+     * Returns cell at given pos in state
      */
     namespace.cellAt = function (state, pos) {
         return state.cells[pos[1]][pos[0]];
     };
 
+    /**
+     * Validates and performs move on state. If move was successfully performed return true, otherwise false
+     */
     namespace.performMove = function (state, move) {
         var isClone = move.type === 'clone',
             isJump = move.type === 'jump',
@@ -50,6 +54,9 @@ YUI.add('hexagon.logic', function(Y) {
         return true;
     };
 
+    /**
+     * Returns ArrayList of positions neighbour to given pos. If size is given positions are always within it.
+     */
     namespace.neighboursPos = function (coords, size) {
         var x = coords[0],
             y = coords[1],
@@ -74,6 +81,9 @@ YUI.add('hexagon.logic', function(Y) {
         return namespace.neighboursPos (coords, size);
     };
 
+    /**
+     * Returns ArrayList of positions 'jumpable' from given pos. If size is given positions are always within it.
+     */
     namespace.jumpsPos = function (coords, size) {
         var x = coords[0],
             y = coords[1],
@@ -94,6 +104,9 @@ YUI.add('hexagon.logic', function(Y) {
         return namespace.fitCellsIn(res, size);
     };
 
+    /**
+     * Returns ArrayList of positions 'clonable' from given pos. If size is given positions are always within it.
+     */
     namespace.fitCellsIn = function (coords, size) {
         if (Y.Array.test(coords)) {
             coords = new Y.ArrayList(coords);
@@ -111,6 +124,13 @@ YUI.add('hexagon.logic', function(Y) {
         }));
     };
 
+    /**
+     * Returns state's cells in string form.
+     *
+     * 'x' represents empty cell
+     * '-' represents disabled cell
+     * players are mapped to chars according to playerIDMap.
+     */
     // TODO: Change compress/decompress pair to (de)compressStateCells
     namespace.compressState = function (state, playerIDMap) {
         // TODO: auto players numbering
@@ -135,6 +155,9 @@ YUI.add('hexagon.logic', function(Y) {
         return  res;
     };
 
+    /**
+     * Decompresses cells from string. See compressState.
+     */
     namespace.decompressState = function (string, playerIDMap) {
         var w = 0, h = 0, reversedMap = {},
             i, c, nextPos,
@@ -194,8 +217,13 @@ YUI.add('hexagon.logic', function(Y) {
         return state;
     };
 
+    /**
+     * Returns next player in order.
+     *
+     * Can be called in two ways:
+     * nextPlayer(state) or nextPlayer(allPlayers, activePlayerID)
+     */
     namespace.nextPlayer = function (arg1, arg2) {
-        // nextPlayer(state) || nextPlayer(allPlayers, activePlayerID)
         if (arguments.length == 1) {
             var state = arg1;
 
