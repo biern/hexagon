@@ -51,7 +51,7 @@ YUI.add('hexagon.models.plugs.boardstate.tests', function (Y) {
             utils.assertFired.call(this, function () {
                 server.fakeResponse('board:move', move);
             }, game, 'board:move', function (e, data) {
-
+                Y.Assert.areEqual(e.src, 'remote');
             });
         },
 
