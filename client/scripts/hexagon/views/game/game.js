@@ -20,7 +20,8 @@ YUI.add('hexagon.views.game', function (Y) {
                 '-   x   x   -   x   \n\
                    x   1   x   -   2 \n\
                  -   x   x   -   x   \n\
-                   -   x   -   x   x ';
+                   -   x   x   x   x \n\
+                 -   2   2   -   x';
 
             bw.after('activePlayerIDChange', function (e) {
                 this.set('playerID', e.newVal);
