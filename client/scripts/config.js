@@ -71,6 +71,13 @@ window.YUI_config = {
         hexagon_tests: {
             base: HEXAGON_BASE_URL,
             modules: {
+                'hexagon.logic.tests': {
+                    path: 'logic/tests.js',
+                    requires: ['hexagon.logic',
+                               'hexagon.utils',
+                               'test']
+                },
+
                 'hexagon.widgets.board.tests': {
                     path: 'widgets/board/tests.js',
                     requires: ['hexagon.widgets.board',
