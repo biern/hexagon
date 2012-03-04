@@ -159,7 +159,6 @@ YUI.add('hexagon.widgets.board', function (Y) {
                 cellTo: destination,
                 playerID: this.get('playerID')
             });
-            // console.log("clone: " + this.get('pos') + " -> " + destination.get('pos'));
         },
 
         _fireJumpMove: function (destination) {
@@ -171,7 +170,6 @@ YUI.add('hexagon.widgets.board', function (Y) {
                 cellTo: destination,
                 playerID: this.get('playerID')
             });
-            // console.log("jump: " + this.get('pos') + " -> " + destination.get('pos'));
         },
 
         _fireInvalidMove: function (destination) {
@@ -422,6 +420,10 @@ YUI.add('hexagon.widgets.board', function (Y) {
     // TODO: Add reaction for remote board moves
     Y.namespace('Hexagon.widgets.board').synchronize = function (model, board) {
         model.attrNamespace('board').after('stateChange', function (e) {
+            // Sync only with remote changes
+            if (e.src === 'sync' || e.src === 'local') {
+                return;
+            }
             // Skip syncing whole state if only playerID changes (common case)
             if (e.subAttrName === 'state.activePlayerID') {
                 board.set('activePlayerID', e.newVal.activePlayerID);

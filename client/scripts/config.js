@@ -59,7 +59,8 @@ window.YUI_config = {
 
                 'hexagon.models.plugs.boardstate': {
                     path: 'models/plugs/boardstate/boardstate.js',
-                    requires: ['hexagon.models.plugs.synchronized']
+                    requires: ['hexagon.models.plugs.synchronized',
+                               'hexagon.logic']
                 },
 
                 'hexagon.server.testserver': {

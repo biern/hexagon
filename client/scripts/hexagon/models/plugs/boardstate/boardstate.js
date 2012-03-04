@@ -1,6 +1,7 @@
 YUI.add('hexagon.models.plugs.boardstate', function (Y) {
 
     var namespace = Y.namespace('Hexagon.models.plugs'),
+        logic = Y.Hexagon.logic,
         SYNC_ATTRS = {
             move: ['from', 'to', 'type']
         };
@@ -26,19 +27,29 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
 
         },
 
+        _performMove: function (move) {
+            var state = this._boardAttrs.get('state');
+
+            if (logic.performMove(state, move)) {
+                this.set('state', state, { src: 'sync' });
+                return true;
+            }
+            return false;
+        },
+
         _afterBoardStateReceived: function (e, data) {
             this._boardAttrs.set('state', data, { src: 'remote' });
         },
 
         _afterBoardMoveReceived: function (e, data) {
+            this._performMove(data);
             this.get('host').fire('board:move', { src: 'remote' }, data);
-            // TODO: Sync state here
         },
 
         _afterBoardMove: function (e, data) {
             if (e.src === 'local') {
                 this.get('host').send('board:move', this.stripped(data, SYNC_ATTRS.move));
-                // TODO: Sync state here
+                this._performMove(data);
             }
         },
 
@@ -75,5 +86,5 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
     });
 
 }, '0', {
-    requires: ['hexagon.models.plugs.synchronized']
+    requires: ['hexagon.models.plugs.synchronized', 'hexagon.logic']
 });
