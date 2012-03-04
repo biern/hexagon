@@ -23,25 +23,25 @@ YUI.add('hexagon.views.game', function (Y) {
                    -   x   x   x   x \n\
                  -   2   2   -   x';
 
+            // Allows to player as any player
             bw.after('activePlayerIDChange', function (e) {
                 this.set('playerID', e.newVal);
             }, bw);
 
             Y.Hexagon.widgets.board.synchronize(model, bw);
 
-            setTimeout(function () {
-                model.board.set('state', Y.Hexagon.logic.decompressState(
-                    stringState, {
-                        'player1': '1',
-                        'player2': '2'
-                    }));
-            }, 1000);
+            model.board.set('state', Y.Hexagon.logic.decompressState(
+                stringState, {
+                    'player1': '1',
+                    'player2': '2'
+                }));
+
+            // If this set is not called like that, than model.board.set('state') that also calls bw.set('activePlayerID') is called after this line (why?)
             setTimeout(function () {
                 model.board.set('state.activePlayerID', 'player1');
-            }, 2000);
+            }, 0);
 
             bw.on('*:invalidMove', function () { alert("Invalid move"); });
-
             window.bw = bw;
         },
 
