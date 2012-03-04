@@ -1,6 +1,56 @@
 YUI.add('hexagon.logic', function(Y) {
 
     var namespace = Y.namespace('Hexagon.logic');
+    /**
+     * Validates and performs move on state. If move was successfully performed return true, otherwise false
+     */
+    namespace.cellAt = function (state, pos) {
+        return state.cells[pos[1]][pos[0]];
+    };
+
+    namespace.performMove = function (state, move) {
+        var isClone = move.type === 'clone',
+            isJump = move.type === 'jump',
+            from, to;
+
+        // Validate
+        if (!isClone && !isJump) {
+            return false;
+        }
+        if (isJump) {
+            // TODO
+        }
+        if (isClone) {
+            // TODO
+        }
+
+        from = namespace.cellAt(state, move.from);
+        if (from === undefined || from.playerID !== state.activePlayerID) {
+            return false;
+        }
+        to = namespace.cellAt(state, move.to);
+        if (to === undefined || to.disabled || to.playerID) {
+            return false;
+        }
+
+        // Move is valid
+        to.playerID = from.playerID;
+        if (isJump) {
+            delete from.playerID;
+        }
+        // Capture neighbours
+        namespace.neighbourCells(move.to, state.size).each(function (pos) {
+            var cell = namespace.cellAt(state, pos);
+            console.log(pos, cell);
+            if (cell.playerID) {
+                console.log('capturing', pos);
+                cell.playerID = to.playerID;
+            }
+        });
+        return true;
+    };
+
+    // TODO: rename to neighbourPos?
     namespace.neighbourCells = function (coords, size) {
         var x = coords[0],
             y = coords[1],
