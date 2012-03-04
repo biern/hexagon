@@ -27,16 +27,18 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
         },
 
         _afterBoardStateReceived: function (e, data) {
-            this._boardAttrs.set('state', data);
+            this._boardAttrs.set('state', data, { src: 'remote' });
         },
 
         _afterBoardMoveReceived: function (e, data) {
             this.get('host').fire('board:move', { src: 'remote' }, data);
+            // TODO: Sync state here
         },
 
         _afterBoardMove: function (e, data) {
             if (e.src === 'local') {
                 this.get('host').send('board:move', this.stripped(data, SYNC_ATTRS.move));
+                // TODO: Sync state here
             }
         },
 
