@@ -245,8 +245,8 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
     var Board = namespace.Board = Y.Base.create('Board', Y.Hex.Board, [], {
 
-        initializer: function (config) {
-            this._stateCached = config.state;
+        initializer: function () {
+            this._stateCached = this.get('state');
         },
 
         renderUI: function () {
@@ -419,6 +419,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
     });
 
     // TODO: Change to 'synchronizer' plug?
+    // TODO: Add reaction for remote board moves
     Y.namespace('Hexagon.widgets.board').synchronize = function (model, board) {
         model.attrNamespace('board').after('stateChange', function (e) {
             // Skip syncing whole state if only playerID changes (common case)
