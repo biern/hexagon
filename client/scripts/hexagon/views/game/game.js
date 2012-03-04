@@ -28,7 +28,7 @@ YUI.add('hexagon.views.game', function (Y) {
                 this.set('playerID', e.newVal);
             }, bw);
 
-            Y.Hexagon.widgets.board.synchronize(model, bw);
+            bw.plug(Y.Hexagon.widgets.board.Synchronizer, { model: model});
 
             model.board.set('state', Y.Hexagon.logic.decompressState(
                 stringState, {

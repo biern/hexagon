@@ -26,7 +26,7 @@ window.YUI_config = {
 
                 'hexagon.widgets.board': {
                     path: 'widgets/board/board.js',
-                    requires: ['hex.board', 'hexagon.logic', 'substitute']
+                    requires: ['hex.board', 'hexagon.logic', 'plugin', 'substitute']
                 },
 
                 'hexagon.views.game': {

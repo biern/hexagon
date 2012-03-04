@@ -416,25 +416,51 @@ YUI.add('hexagon.widgets.board', function (Y) {
         }
     });
 
-    // TODO: Change to 'synchronizer' plug?
-    // TODO: Add reaction for remote board moves
-    Y.namespace('Hexagon.widgets.board').synchronize = function (model, board) {
-        model.attrNamespace('board').after('stateChange', function (e) {
+    // TODO: Synchronizer tests
+    Y.namespace('Hexagon.widgets.board').Synchronizer = Y.Base.create('BoardSynchronizer', Y.Plugin.Base, [], {
+        initializer: function (config) {
+            this.model = config.model;
+            this.board = config.host;
+
+            this.model.board.after('stateChange', this._afterModelBoardStateChange, this);
+            this.model.board.after('board:move', this._afterModelBoardMove, this);
+            this.board.after('*:move', this._afterBoardMove, this);
+        },
+
+        _afterModelBoardStateChange: function (e) {
             // Sync only with remote changes
             if (e.src === 'sync' || e.src === 'local') {
                 return;
             }
             // Skip syncing whole state if only playerID changes (common case)
             if (e.subAttrName === 'state.activePlayerID') {
-                board.set('activePlayerID', e.newVal.activePlayerID);
+                this.board.set('activePlayerID', e.newVal.activePlayerID);
             } else if (e.subAttrName === undefined){
-                board.set('state', e.newVal);
+                this.board.set('state', e.newVal);
             }
-        });
+        },
 
-        board.after('*:move', function (e, data) {
-            model.fire('board:move', { src: 'local' }, data);
-        });
-    };
+        _afterModelBoardMove: function (e, move) {
+            // Sync with remote moves
+            if (e.src === 'remote') {
+                this.board.performMove(move);
+            }
+        },
 
-}, '0', { requires: ['hex.board', 'hexagon.logic', 'substitute'] });
+        _afterBoardMove: function (e, data) {
+            this.model.fire('board:move', { src: 'local' }, data);
+        }
+
+    }, {
+
+        NS: 'synchronizer',
+
+        ATTRS: {
+            model: {
+                writeOnce: 'initOnly',
+                value: null
+            }
+        }
+    });
+
+}, '0', { requires: ['hex.board', 'hexagon.logic', 'plugin', 'substitute'] });
