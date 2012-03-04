@@ -10,7 +10,6 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
         initializer: function (config) {
             var host = config.host;
 
-            // TODO: investigate superclass.call duplicate call thing
             this._addHostAttrs(host);
         },
 

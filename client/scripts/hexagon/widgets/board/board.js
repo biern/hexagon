@@ -246,7 +246,6 @@ YUI.add('hexagon.widgets.board', function (Y) {
     var Board = namespace.Board = Y.Base.create('Board', Y.Hex.Board, [], {
 
         initializer: function (config) {
-            this.constructor.superclass.initializer.apply(this, arguments);
             this._stateCached = config.state;
         },
 
