@@ -45,9 +45,7 @@ YUI.add('hexagon.logic', function(Y) {
         // Capture neighbours
         namespace.neighboursPos(move.to, state.size).each(function (pos) {
             var cell = namespace.cellAt(state, pos);
-            console.log(pos, cell);
             if (cell.playerID) {
-                console.log('capturing', pos);
                 cell.playerID = to.playerID;
             }
         });
