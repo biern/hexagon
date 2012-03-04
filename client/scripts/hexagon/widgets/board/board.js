@@ -10,7 +10,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
         getCloneCells: function () {
             return this.get('parent').getHexListAt(
-                Y.Hexagon.logic.cloneCells(
+                Y.Hexagon.logic.clonesPos(
                     this.get('pos'), this.get('parent').get('size')
                 )
             );
@@ -18,7 +18,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
         getJumpCells: function () {
             return this.get('parent').getHexListAt(
-                Y.Hexagon.logic.jumpCells(
+                Y.Hexagon.logic.jumpsPos(
                     this.get('pos'), this.get('parent').get('size')
                 )
             );
@@ -26,7 +26,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
         getNeighbourCells: function () {
             return this.get('parent').getHexListAt(
-                Y.Hexagon.logic.neighbourCells(
+                Y.Hexagon.logic.neighboursPos(
                     this.get('pos'), this.get('parent').get('size')
                 )
             );

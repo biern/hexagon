@@ -39,7 +39,7 @@ YUI.add('hexagon.logic', function(Y) {
             delete from.playerID;
         }
         // Capture neighbours
-        namespace.neighbourCells(move.to, state.size).each(function (pos) {
+        namespace.neighboursPos(move.to, state.size).each(function (pos) {
             var cell = namespace.cellAt(state, pos);
             console.log(pos, cell);
             if (cell.playerID) {
@@ -50,8 +50,7 @@ YUI.add('hexagon.logic', function(Y) {
         return true;
     };
 
-    // TODO: rename to neighbourPos?
-    namespace.neighbourCells = function (coords, size) {
+    namespace.neighboursPos = function (coords, size) {
         var x = coords[0],
             y = coords[1],
             res;
@@ -71,11 +70,11 @@ YUI.add('hexagon.logic', function(Y) {
         return namespace.fitCellsIn(res, size);
     };
 
-    namespace.cloneCells = function (coords, size) {
-        return namespace.neighbourCells (coords, size);
+    namespace.clonesPos = function (coords, size) {
+        return namespace.neighboursPos (coords, size);
     };
 
-    namespace.jumpCells = function (coords, size) {
+    namespace.jumpsPos = function (coords, size) {
         var x = coords[0],
             y = coords[1],
             res;
