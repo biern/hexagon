@@ -31,7 +31,7 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
             var state = this._boardAttrs.get('state');
 
             if (logic.performMove(state, move)) {
-                this.set('state', state, { src: 'sync', sender: this });
+                this._boardAttrs.set('state', state, { src: 'sync', sender: this });
                 return true;
             }
             return false;
