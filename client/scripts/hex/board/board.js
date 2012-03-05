@@ -79,7 +79,10 @@ YUI.add('hex.board', function (Y) {
 
         getHexListAt: function(coords) {
             var cells = new HexList();
-            Y.Array.each(coords, function(e) {
+            if (Y.Array.test(coords)) {
+                coords = new Y.Array(coords);
+            }
+            coords.each(function(e) {
                 var hex = this.getHexAt(e);
                 if (hex !== null) {
                     cells.add(hex);

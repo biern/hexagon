@@ -1,48 +1,40 @@
-YUI.add('hexagon.views.game', function (Y) {
+YUI.add('hexagon.views.localgame', function (Y) {
 
-    Y.namespace('Hexagon.views').Game = Y.Base.create('GameView', Y.View, [], {
+    Y.namespace('Hexagon.views').LocalGame = Y.Base.create('LocalGameView', Y.View, [], {
         // TODO: fix that: if already in DOM it should be rendered there, not create new tag
         container: Y.one('.hexagon-game'),
 
         initializer: function () {
             var model = this.model,
-            bw = this._boardWidget = new Y.Hexagon.widgets.Board({
-                playerID: 'player1',
-                playerStyles: {
+                playerStyles = {
                     player1: 'red',
                     player2: 'blue'
-                }
+                },
+            bw = this._boardWidget = new Y.Hexagon.widgets.Board({
+                playerID: 'player1',
+                playerStyles: playerStyles
             }),
             scores = this._scoresWidget = new Y.Hexagon.widgets.Scores({
                 players: [
                     { playerID: 'player1', style: 'red' },
                     { playerID: 'player2', style: 'blue' }]
             }),
-            bw2 = this._boardWidget2 = new Y.Hexagon.widgets.Board({
-                // playerID: 'player2',
-                playerStyles: {
-                    player1: 'red',
-                    player2: 'blue'
-                }
-            }),
-            stringState =
-                '-   x   x   -   x   \n\
-                   x   1   x   -   2 \n\
-                 -   x   x   -   x   \n\
-                   -   x   x   x   x \n\
-                 -   2   2   -   x';
+            ap = this._activePlayerWidget = new Y.Hexagon.widgets.ActivePlayer({
+                playerStyles: playerStyles
+            });
 
-            // Allows to play as any player on board1
+            // Allows to play as any player on board widget
             bw.after('activePlayerIDChange', function (e) {
                 this.set('playerID', e.newVal);
             }, bw);
 
             bw.plug(Y.Hexagon.widgets.board.ModelSync, { model: model});
-            bw2.plug(Y.Hexagon.widgets.board.ModelSync, { model: model});
             scores.plug(Y.Hexagon.widgets.scores.ModelSync, { model: model});
+            ap.plug(Y.Hexagon.widgets.activeplayer.ModelSync, { model: model});
 
+            // Set initial state
             model.board.set('state', Y.Hexagon.logic.decompressState(
-                stringState, {
+                this.get('map'), {
                     'player1': '1',
                     'player2': '2'
                 }));
@@ -53,8 +45,10 @@ YUI.add('hexagon.views.game', function (Y) {
             }, 0);
 
             bw.on('*:invalidMove', function () { alert("Invalid move"); });
+
+            window.ap = ap;
             window.bw = bw;
-            window.bw2 = bw2;
+            window.scores = scores;
         },
 
         render: function () {
@@ -62,10 +56,16 @@ YUI.add('hexagon.views.game', function (Y) {
                 Y.one('body').append(this.container);
             }
             this._boardWidget.render(this.container);
+            this._activePlayerWidget.render(this.container);
             this._scoresWidget.render(this.container);
-            this._boardWidget2.render(this.container);
         }
 
+    }, {
+        ATTRS: {
+            map: {
+                value: '1 x 2 \n'
+            }
+        }
     });
 
 }, '0', {

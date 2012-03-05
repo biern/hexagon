@@ -26,12 +26,30 @@ window.YUI_config = {
 
                 'hexagon.widgets.board': {
                     path: 'widgets/board/board.js',
-                    requires: ['hex.board', 'hexagon.logic', 'substitute']
+                    requires: ['hex.board', 'hexagon.logic', 'plugin', 'substitute']
+                },
+
+                'hexagon.widgets.scores': {
+                    path: 'widgets/scores/scores.js',
+                    requires: ['hexagon.logic', 'node', 'substitute']
+                },
+
+                'hexagon.widgets.activeplayer': {
+                    path: 'widgets/activeplayer/activeplayer.js',
+                    requires: ['node', 'substitute']
                 },
 
                 'hexagon.views.game': {
                     path: 'views/game/game.js',
-                    requires: ['view', 'hexagon.widgets.board']
+                    requires: ['view', 'hexagon.widgets.board', 'hexagon.widgets.scores']
+                },
+
+                'hexagon.views.localgame': {
+                    path: 'views/localgame/localgame.js',
+                    requires: ['hexagon.widgets.board',
+                               'hexagon.widgets.scores',
+                               'hexagon.widgets.activeplayer',
+                               'view']
                 },
 
                 'hexagon.utils': {
@@ -59,7 +77,8 @@ window.YUI_config = {
 
                 'hexagon.models.plugs.boardstate': {
                     path: 'models/plugs/boardstate/boardstate.js',
-                    requires: ['hexagon.models.plugs.synchronized']
+                    requires: ['hexagon.models.plugs.synchronized',
+                               'hexagon.logic']
                 },
 
                 'hexagon.server.testserver': {
@@ -71,6 +90,13 @@ window.YUI_config = {
         hexagon_tests: {
             base: HEXAGON_BASE_URL,
             modules: {
+                'hexagon.logic.tests': {
+                    path: 'logic/tests.js',
+                    requires: ['hexagon.logic',
+                               'hexagon.utils',
+                               'test']
+                },
+
                 'hexagon.widgets.board.tests': {
                     path: 'widgets/board/tests.js',
                     requires: ['hexagon.widgets.board',

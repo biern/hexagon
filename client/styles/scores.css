@@ -1,0 +1,22 @@
+.yui3-scores {
+  float: left; }
+
+.yui3-scores-content {
+  width: 400px; }
+
+.yui3-scores-box-content {
+  opacity: 0.8;
+  display: inline-block;
+  background: black;
+  padding: 10;
+  margin: 5px;
+  border-radius: 15px;
+  transition: width 2s ease;
+  -moz-transition: width 2s ease;
+  -webkit-transition: width 2s ease; }
+
+.yui3-scores-box-content-red {
+  background: red; }
+
+.yui3-scores-box-content-blue {
+  background: blue; }
