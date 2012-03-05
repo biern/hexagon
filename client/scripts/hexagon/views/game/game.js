@@ -17,7 +17,7 @@ YUI.add('hexagon.views.game', function (Y) {
                 }
             }),
             bw2 = this._boardWidget2 = new Y.Hexagon.widgets.Board({
-                playerID: 'player2',
+                // playerID: 'player2',
                 playerStyles: {
                     player1: 'red',
                     player2: 'blue'
@@ -51,6 +51,7 @@ YUI.add('hexagon.views.game', function (Y) {
 
             bw.on('*:invalidMove', function () { alert("Invalid move"); });
             window.bw = bw;
+            window.bw2 = bw2;
         },
 
         render: function () {
