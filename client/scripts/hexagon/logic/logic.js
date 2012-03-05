@@ -15,7 +15,14 @@ YUI.add('hexagon.logic', function(Y) {
     namespace.performMove = function (state, move) {
         var isClone = move.type === 'clone',
             isJump = move.type === 'jump',
+            isSkip = move.type === 'skip',
             from, to;
+
+        if (isSkip) {
+            // TODO: Allow only on no other possible move
+            state.activePlayerID = namespace.nextPlayer(state);
+            return true;
+        }
 
         // Validate
         if (!isClone && !isJump) {
