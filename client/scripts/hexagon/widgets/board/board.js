@@ -247,17 +247,20 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         performMove: function (move) {
+            var cellFrom = this.getHexAt(move.from),
+                cellTo = this.getHexAt(move.to);
+
             this._stateCached = false;
-            move.cellFrom.set('selected', 0);
+            cellFrom.set('selected', 0);
             if (move.type === "clone") {
-                move.cellTo.set('playerID', move.playerID);
-                move.cellTo.possessNeighbours();
+                cellTo.set('playerID', move.playerID);
+                cellTo.possessNeighbours();
             }
 
             if (move.type === "jump") {
-                move.cellFrom.set('playerID', null);
-                move.cellTo.set('playerID', move.playerID);
-                move.cellTo.possessNeighbours();
+                cellFrom.set('playerID', null);
+                cellTo.set('playerID', move.playerID);
+                cellTo.possessNeighbours();
             }
 
             this.set('activePlayerID', Y.Hexagon.logic.nextPlayer(
@@ -421,7 +424,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
             this.board = config.host;
 
             this.model.board.after('stateChange', this._afterModelBoardStateChange, this);
-            this.model.board.after('board:move', this._afterModelBoardMove, this);
+            this.model.after('board:move', this._afterModelBoardMove, this);
             this.board.after('*:move', this._afterBoardMove, this);
         },
 
@@ -440,13 +443,13 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
         _afterModelBoardMove: function (e, move) {
             // Sync with remote moves
-            if (e.src === 'remote') {
+            if (e.sender !== this.board) {
                 this.board.performMove(move);
             }
         },
 
         _afterBoardMove: function (e, data) {
-            this.model.fire('board:move', { src: 'local' }, data);
+            this.model.fire('board:move', { src: 'local', sender: this.board }, data);
         }
 
     }, {
