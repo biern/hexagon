@@ -16,6 +16,13 @@ YUI.add('hexagon.views.game', function (Y) {
                     player2: 'blue'
                 }
             }),
+            bw2 = this._boardWidget2 = new Y.Hexagon.widgets.Board({
+                playerID: 'player2',
+                playerStyles: {
+                    player1: 'red',
+                    player2: 'blue'
+                }
+            }),
             stringState =
                 '-   x   x   -   x   \n\
                    x   1   x   -   2 \n\
@@ -23,12 +30,13 @@ YUI.add('hexagon.views.game', function (Y) {
                    -   x   x   x   x \n\
                  -   2   2   -   x';
 
-            // Allows to player as any player
+            // Allows to play as any player on board1
             bw.after('activePlayerIDChange', function (e) {
                 this.set('playerID', e.newVal);
             }, bw);
 
             bw.plug(Y.Hexagon.widgets.board.Synchronizer, { model: model});
+            bw2.plug(Y.Hexagon.widgets.board.Synchronizer, { model: model});
 
             model.board.set('state', Y.Hexagon.logic.decompressState(
                 stringState, {
@@ -50,6 +58,7 @@ YUI.add('hexagon.views.game', function (Y) {
                 Y.one('body').append(this.container);
             }
             this._boardWidget.render(this.container);
+            this._boardWidget2.render(this.container);
         }
 
     });
