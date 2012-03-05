@@ -54,26 +54,6 @@ YUI.add('hexagon.widgets.board', function (Y) {
             });
         },
 
-        performMove: function (move) {
-            var parent = this.get('parent');
-
-            parent._stateCached = false;
-            move.cellFrom.set('selected', 0);
-            if (move.type === "clone") {
-                move.cellTo.set('playerID', move.playerID);
-                move.cellTo.possessNeighbours();
-            }
-
-            if (move.type === "jump") {
-                move.cellFrom.set('playerID', null);
-                move.cellTo.set('playerID', move.playerID);
-                move.cellTo.possessNeighbours();
-            }
-
-            parent.set('activePlayerID', Y.Hexagon.logic.nextPlayer(
-                parent.get('allPlayers'), parent.get('activePlayerID')));
-        },
-
         requestMove: function (destination) {
             if (this.getCloneCells().indexOf(destination) > -1) {
                 this._fireCloneMove(destination);
@@ -180,7 +160,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         _moveDefault: function (e, move) {
-            this.performMove(move);
+            this.get('parent').performMove(move);
         },
 
         _onSelectedChange: function (e) {
@@ -264,6 +244,24 @@ YUI.add('hexagon.widgets.board', function (Y) {
             this.constructor.superclass.syncUI.call(this);
             this._syncState(this.get('state'));
             this._syncActivePlayerID(this.get('activePlayerID'));
+        },
+
+        performMove: function (move) {
+            this._stateCached = false;
+            move.cellFrom.set('selected', 0);
+            if (move.type === "clone") {
+                move.cellTo.set('playerID', move.playerID);
+                move.cellTo.possessNeighbours();
+            }
+
+            if (move.type === "jump") {
+                move.cellFrom.set('playerID', null);
+                move.cellTo.set('playerID', move.playerID);
+                move.cellTo.possessNeighbours();
+            }
+
+            this.set('activePlayerID', Y.Hexagon.logic.nextPlayer(
+                this.get('allPlayers'), this.get('activePlayerID')));
         },
 
         _onSelectionChange: function (e) {
