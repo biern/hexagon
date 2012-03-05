@@ -28,6 +28,110 @@
 
 /* $W: 82px; */
 /* $H: 80px; */
+@-moz-keyframes token-emerge {
+  from {
+    -moz-transform: translate(0px, 0px) rotate(0deg) scale(0);
+    -webkit-transform: translate(0px, 0px) rotate(0deg) scale(0); }
+
+  to {
+    -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    width: 20px;
+    height: 30px; } }
+
+@-webkit-keyframes token-emerge {
+  from {
+    -moz-transform: translate(0px, 0px) rotate(0deg) scale(0);
+    -webkit-transform: translate(0px, 0px) rotate(0deg) scale(0); }
+
+  to {
+    -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    width: 20px;
+    height: 30px; } }
+
+@-webkit-keyframes funkytokens {
+  0% {
+    -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    width: 20px;
+    height: 30px; }
+
+  20% {
+    -moz-transform: translate(0px, 0px) rotate(90deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(90deg) scale(1);
+    width: 30px;
+    height: 20px; }
+
+  40% {
+    -moz-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    width: 20px;
+    height: 30px; }
+
+  60% {
+    -moz-transform: translate(0px, 0px) rotate(270deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(270deg) scale(1);
+    width: 30px;
+    height: 20px; }
+
+  75% {
+    -moz-transform: translate(0px, 0px) rotate(360deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(360deg) scale(1); }
+
+  85% {
+    -moz-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    width: 30px;
+    height: 20px; }
+
+  100% {
+    -moz-transform: translate(0px, 0px) rotate(375deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(375deg) scale(1);
+    width: 20px;
+    height: 30px; } }
+
+@-moz-keyframes funkytokens {
+  0% {
+    -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+    width: 20px;
+    height: 30px; }
+
+  20% {
+    -moz-transform: translate(0px, 0px) rotate(90deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(90deg) scale(1);
+    width: 30px;
+    height: 20px; }
+
+  40% {
+    -moz-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    width: 20px;
+    height: 30px; }
+
+  60% {
+    -moz-transform: translate(0px, 0px) rotate(270deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(270deg) scale(1);
+    width: 30px;
+    height: 20px; }
+
+  75% {
+    -moz-transform: translate(0px, 0px) rotate(360deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(360deg) scale(1); }
+
+  85% {
+    -moz-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(180deg) scale(1);
+    width: 30px;
+    height: 20px; }
+
+  100% {
+    -moz-transform: translate(0px, 0px) rotate(375deg) scale(1);
+    -webkit-transform: translate(0px, 0px) rotate(375deg) scale(1);
+    width: 20px;
+    height: 30px; } }
+
 .yui3-board {
   position: relative;
   color: grey; }
@@ -117,7 +221,8 @@
   -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
   -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
   border-radius: 6.25px;
-  -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s; }
+  -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s; }
 
 .yui3-hexagoncell-token-blue, .yui3-activeplayer-token-blue {
   background-color: blue;
@@ -125,59 +230,4 @@
   -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
   border-radius: 6.25px;
   -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
-  /* -moz-animation-duration: 7s; */
-  /* -moz-animation-name: funkytokens; */
-  /* -moz-animation-iteration-count: infinite; */
-  /* -moz-animation-timing-function: linear; */ }
-
-@-moz-keyframes token-emerge {
-  from {
-    -moz-transform: translate(0px, 0px) rotate(0deg) scale(0);
-    -webkit-transform: translate(0px, 0px) rotate(0deg) scale(0); }
-
-  to {
-    -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
-    -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
-    width: 20px;
-    height: 30px; } }
-
-@-moz-keyframes funkytokens {
-  0% {
-    -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
-    -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
-    width: 20px;
-    height: 30px; }
-
-  20% {
-    -moz-transform: translate(0px, 0px) rotate(90deg) scale(1);
-    -webkit-transform: translate(0px, 0px) rotate(90deg) scale(1);
-    width: 30px;
-    height: 20px; }
-
-  40% {
-    -moz-transform: translate(0px, 0px) rotate(180deg) scale(1);
-    -webkit-transform: translate(0px, 0px) rotate(180deg) scale(1);
-    width: 20px;
-    height: 30px; }
-
-  60% {
-    -moz-transform: translate(0px, 0px) rotate(270deg) scale(1);
-    -webkit-transform: translate(0px, 0px) rotate(270deg) scale(1);
-    width: 30px;
-    height: 20px; }
-
-  75% {
-    -moz-transform: translate(0px, 0px) rotate(360deg) scale(1);
-    -webkit-transform: translate(0px, 0px) rotate(360deg) scale(1); }
-
-  85% {
-    -moz-transform: translate(0px, 0px) rotate(180deg) scale(1);
-    -webkit-transform: translate(0px, 0px) rotate(180deg) scale(1);
-    width: 30px;
-    height: 20px; }
-
-  100% {
-    -moz-transform: translate(0px, 0px) rotate(375deg) scale(1);
-    -webkit-transform: translate(0px, 0px) rotate(375deg) scale(1);
-    width: 20px;
-    height: 30px; } }
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s; }
