@@ -2,6 +2,19 @@ YUI.add('hexagon.logic', function(Y) {
 
     var namespace = Y.namespace('Hexagon.logic');
 
+    namespace.eachCell = function (state, func, context) {
+        var i, j;
+        for (i = 0; i < state.cells.length; i++) {
+            for (j = 0; j < state.cells[i].length; j++) {
+                if (context) {
+                    func.call(context, state.cells[i][j], [j, i]);
+                } else {
+                    func(state.cells[i][j], [j, i]);
+                }
+            }
+        }
+    };
+
     /**
      * Returns cell at given pos in state
      */
