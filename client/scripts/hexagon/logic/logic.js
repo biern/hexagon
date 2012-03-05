@@ -40,7 +40,7 @@ YUI.add('hexagon.logic', function(Y) {
         // Move is valid
         to.playerID = from.playerID;
         if (isJump) {
-            delete from.playerID;
+            from.playerID = undefined;
         }
         // Capture neighbours
         namespace.neighboursPos(move.to, state.size).each(function (pos) {
@@ -49,6 +49,7 @@ YUI.add('hexagon.logic', function(Y) {
                 cell.playerID = to.playerID;
             }
         });
+        state.activePlayerID = namespace.nextPlayer(state);
         return true;
     };
 

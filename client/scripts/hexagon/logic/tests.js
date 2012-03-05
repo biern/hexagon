@@ -105,6 +105,7 @@ YUI.add('hexagon.logic.tests', function (Y) {
                              'did not capture other players cell');
             Y.Assert.isUndefined(logic.cellAt(this.state, [1, 3]).playerID,
                                 'captured empty cell');
+            Y.Assert.areEqual('player2', this.state.activePlayerID);
         },
 
         testJump: function () {
@@ -131,6 +132,7 @@ YUI.add('hexagon.logic.tests', function (Y) {
                              'did not capture other players cell');
             Y.Assert.isUndefined(logic.cellAt(this.state, [3, 2]).playerID,
                                 'captured disabled cell');
+            Y.Assert.areEqual('player2', this.state.activePlayerID);
         }
 
     });
