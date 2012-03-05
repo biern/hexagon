@@ -101,7 +101,7 @@ YUI.add('hexagon.widgets.scores', function (Y) {
         }
     });
 
-    Y.namespace('Hexagon.widgets.scores').ModelSynch = Y.Base.create('ScoresModelSynch', Y.Plugin.Base, [], {
+    Y.namespace('Hexagon.widgets.scores').ModelSync = Y.Base.create('ScoresModelSync', Y.Plugin.Base, [], {
 
         initializer: function (config) {
             config.model.board.after('stateChange', this._afterModelBoardStateChange, this);
@@ -126,7 +126,7 @@ YUI.add('hexagon.widgets.scores', function (Y) {
 
     }, {
 
-        NS: 'modelSynch',
+        NS: 'modelSync',
 
         ATTRS: {
             model: {

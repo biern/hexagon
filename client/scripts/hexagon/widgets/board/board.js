@@ -417,8 +417,8 @@ YUI.add('hexagon.widgets.board', function (Y) {
         }
     });
 
-    // TODO: Synchronizer tests
-    Y.namespace('Hexagon.widgets.board').Synchronizer = Y.Base.create('BoardSynchronizer', Y.Plugin.Base, [], {
+    // TODO: tests
+    Y.namespace('Hexagon.widgets.board').ModelSync = Y.Base.create('BoardModelSync', Y.Plugin.Base, [], {
         initializer: function (config) {
             this.model = config.model;
             this.board = config.host;
@@ -454,7 +454,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
     }, {
 
-        NS: 'synchronizer',
+        NS: 'modelSync',
 
         ATTRS: {
             model: {

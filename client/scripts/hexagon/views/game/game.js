@@ -5,16 +5,18 @@ YUI.add('hexagon.views.game', function (Y) {
         container: Y.one('.hexagon-game'),
 
         initializer: function () {
-            var model = this.model;
-
-            // model.after('change', this._afterModelChange, this);
-
-            var bw = this._boardWidget = new Y.Hexagon.widgets.Board({
+            var model = this.model,
+            bw = this._boardWidget = new Y.Hexagon.widgets.Board({
                 playerID: 'player1',
                 playerStyles: {
                     player1: 'red',
                     player2: 'blue'
                 }
+            }),
+            scores = this._scoresWidget = new Y.Hexagon.widgets.Scores({
+                players: [
+                    { playerID: 'player1', style: 'red' },
+                    { playerID: 'player2', style: 'blue' }]
             }),
             bw2 = this._boardWidget2 = new Y.Hexagon.widgets.Board({
                 // playerID: 'player2',
@@ -35,8 +37,9 @@ YUI.add('hexagon.views.game', function (Y) {
                 this.set('playerID', e.newVal);
             }, bw);
 
-            bw.plug(Y.Hexagon.widgets.board.Synchronizer, { model: model});
-            bw2.plug(Y.Hexagon.widgets.board.Synchronizer, { model: model});
+            bw.plug(Y.Hexagon.widgets.board.ModelSync, { model: model});
+            bw2.plug(Y.Hexagon.widgets.board.ModelSync, { model: model});
+            scores.plug(Y.Hexagon.widgets.scores.ModelSync, { model: model});
 
             model.board.set('state', Y.Hexagon.logic.decompressState(
                 stringState, {
@@ -59,11 +62,12 @@ YUI.add('hexagon.views.game', function (Y) {
                 Y.one('body').append(this.container);
             }
             this._boardWidget.render(this.container);
+            this._scoresWidget.render(this.container);
             this._boardWidget2.render(this.container);
         }
 
     });
 
 }, '0', {
-    requires: ['view', 'hexagon.widgets.board']
+    requires: ['view', 'hexagon.widgets.board', 'hexagon.widgets.scores']
 });
