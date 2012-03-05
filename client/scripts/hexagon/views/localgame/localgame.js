@@ -6,17 +6,21 @@ YUI.add('hexagon.views.localgame', function (Y) {
 
         initializer: function () {
             var model = this.model,
-            bw = this._boardWidget = new Y.Hexagon.widgets.Board({
-                playerID: 'player1',
-                playerStyles: {
+                playerStyles = {
                     player1: 'red',
                     player2: 'blue'
-                }
+                },
+            bw = this._boardWidget = new Y.Hexagon.widgets.Board({
+                playerID: 'player1',
+                playerStyles: playerStyles
             }),
             scores = this._scoresWidget = new Y.Hexagon.widgets.Scores({
                 players: [
                     { playerID: 'player1', style: 'red' },
                     { playerID: 'player2', style: 'blue' }]
+            }),
+            ap = this._activePlayerWidget = new Y.Hexagon.widgets.ActivePlayer({
+                playerStyles: playerStyles
             });
 
             // Allows to play as any player on board widget
@@ -26,6 +30,7 @@ YUI.add('hexagon.views.localgame', function (Y) {
 
             bw.plug(Y.Hexagon.widgets.board.ModelSync, { model: model});
             scores.plug(Y.Hexagon.widgets.scores.ModelSync, { model: model});
+            ap.plug(Y.Hexagon.widgets.activeplayer.ModelSync, { model: model});
 
             // Set initial state
             model.board.set('state', Y.Hexagon.logic.decompressState(
@@ -40,6 +45,8 @@ YUI.add('hexagon.views.localgame', function (Y) {
             }, 0);
 
             bw.on('*:invalidMove', function () { alert("Invalid move"); });
+
+            window.ap = ap;
             window.bw = bw;
             window.scores = scores;
         },
@@ -49,6 +56,7 @@ YUI.add('hexagon.views.localgame', function (Y) {
                 Y.one('body').append(this.container);
             }
             this._boardWidget.render(this.container);
+            this._activePlayerWidget.render(this.container);
             this._scoresWidget.render(this.container);
         }
 

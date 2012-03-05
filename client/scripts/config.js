@@ -34,6 +34,11 @@ window.YUI_config = {
                     requires: ['hexagon.logic', 'node', 'substitute']
                 },
 
+                'hexagon.widgets.activeplayer': {
+                    path: 'widgets/activeplayer/activeplayer.js',
+                    requires: ['node', 'substitute']
+                },
+
                 'hexagon.views.game': {
                     path: 'views/game/game.js',
                     requires: ['view', 'hexagon.widgets.board', 'hexagon.widgets.scores']
@@ -41,7 +46,10 @@ window.YUI_config = {
 
                 'hexagon.views.localgame': {
                     path: 'views/localgame/localgame.js',
-                    requires: ['view', 'hexagon.widgets.board', 'hexagon.widgets.scores']
+                    requires: ['hexagon.widgets.board',
+                               'hexagon.widgets.scores',
+                               'hexagon.widgets.activeplayer',
+                               'view']
                 },
 
                 'hexagon.utils': {
