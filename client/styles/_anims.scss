@@ -1,0 +1,108 @@
+// TODO: Try scss power to compress this
+@-moz-keyframes token-emerge {
+    from {
+        @include transform($rotate: 0deg, $scale: 0.0);
+    }
+
+    to {
+        @include transform($rotate: 15deg, $scale: 1.0);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+}
+
+@-webkit-keyframes token-emerge {
+    from {
+        @include transform($rotate: 0deg, $scale: 0.0);
+    }
+
+    to {
+        @include transform($rotate: 15deg, $scale: 1.0);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+}
+
+@-webkit-keyframes funkytokens {
+    0% {
+        @include transform($rotate: 15deg);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+
+    20% {
+        @include transform($rotate: 90deg);
+        width: $T * 1.2;
+        height: $T * 0.8;
+    }
+
+    40% {
+        @include transform($rotate: 180deg);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+
+    60% {
+        @include transform($rotate: 270deg);
+        width: $T * 1.2;
+        height: $T * 0.8;
+    }
+
+    75% {
+        @include transform($rotate: 360deg);
+    }
+
+    85% {
+        @include transform($rotate: 180deg);
+        width: $T * 1.2;
+        height: $T * 0.8;
+    }
+
+    100% {
+        @include transform($rotate: 375deg);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+}
+
+@-moz-keyframes funkytokens {
+    0% {
+        @include transform($rotate: 15deg);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+
+    20% {
+        @include transform($rotate: 90deg);
+        width: $T * 1.2;
+        height: $T * 0.8;
+    }
+
+    40% {
+        @include transform($rotate: 180deg);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+
+    60% {
+        @include transform($rotate: 270deg);
+        width: $T * 1.2;
+        height: $T * 0.8;
+    }
+
+    75% {
+        @include transform($rotate: 360deg);
+    }
+
+    85% {
+        @include transform($rotate: 180deg);
+        width: $T * 1.2;
+        height: $T * 0.8;
+    }
+
+    100% {
+        @include transform($rotate: 375deg);
+        width: $T * 0.8;
+        height: $T * 1.2;
+    }
+}
