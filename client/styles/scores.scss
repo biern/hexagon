@@ -1,0 +1,27 @@
+@import "utils";
+
+.yui3-scores-content {
+    width: 200px;
+};
+
+.yui3-scores-box {
+
+};
+
+.yui3-scores-box-content {
+    opacity: 0.8;
+    display: inline-block;
+    background: black;
+    padding: 10;
+    margin: 5px;
+    border-radius: 15px;
+    @include transition($property: width, $duration: 2s);
+};
+
+.yui3-scores-box-content-red {
+    background: red;
+};
+
+.yui3-scores-box-content-blue {
+    background: blue;
+};

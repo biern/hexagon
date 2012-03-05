@@ -29,9 +29,14 @@ window.YUI_config = {
                     requires: ['hex.board', 'hexagon.logic', 'plugin', 'substitute']
                 },
 
+                'hexagon.widgets.scores': {
+                    path: 'widgets/scores/scores.js',
+                    requires: ['hexagon.logic', 'node', 'substitute']
+                },
+
                 'hexagon.views.game': {
                     path: 'views/game/game.js',
-                    requires: ['view', 'hexagon.widgets.board']
+                    requires: ['view', 'hexagon.widgets.board', 'hexagon.widgets.scores']
                 },
 
                 'hexagon.utils': {
