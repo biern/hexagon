@@ -27,29 +27,29 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
 
         },
 
-        _performMove: function (move) {
+        _performLocalMove: function (move) {
             var state = this._boardAttrs.get('state');
 
             if (logic.performMove(state, move)) {
-                this.set('state', state, { src: 'sync' });
+                this.set('state', state, { src: 'sync', sender: this });
                 return true;
             }
             return false;
         },
 
         _afterBoardStateReceived: function (e, data) {
-            this._boardAttrs.set('state', data, { src: 'remote' });
+            this._boardAttrs.set('state', data, { src: 'remote', sender: this });
         },
 
         _afterBoardMoveReceived: function (e, data) {
-            this._performMove(data);
-            this.get('host').fire('board:move', { src: 'remote' }, data);
+            this._performLocalMove(data);
+            this.get('host').fire('board:move', { src: 'remote', sender: this }, data);
         },
 
         _afterBoardMove: function (e, data) {
             if (e.src === 'local') {
                 this.get('host').send('board:move', this.stripped(data, SYNC_ATTRS.move));
-                this._performMove(data);
+                this._performLocalMove(data);
             }
         },
 
