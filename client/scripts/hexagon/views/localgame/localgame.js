@@ -7,19 +7,19 @@ YUI.add('hexagon.views.localgame', function (Y) {
         initializer: function () {
             // TODO: playersStyles
             var model = this.model,
-                playerStyles = {
+                playersStyles = {
                     player1: 'red',
                     player2: 'blue'
                 },
             bw = this._boardWidget = new Y.Hexagon.widgets.Board({
                 playerID: 'player1',
-                playerStyles: playerStyles
+                playersStyles: playersStyles
             }),
             scores = this._scoresWidget = new Y.Hexagon.widgets.Scores({
-                playersStyles: playerStyles
+                playersStyles: playersStyles
             }),
             ap = this._activePlayerWidget = new Y.Hexagon.widgets.ActivePlayer({
-                playerStyles: playerStyles
+                playerStyles: playersStyles
             });
 
             // Allows to play as any player on board widget

@@ -112,8 +112,8 @@ YUI.add('hexagon.widgets.board', function (Y) {
         _afterPlayerIDChange: function (e) {
             var tokenNode = this.get('contentBox').one('*').one('*'),
                 parent = this.get('parent'),
-                newStyle = parent.get('playerStyles')[e.newVal],
-                prevStyle = parent.get('playerStyles')[e.prevVal];
+                newStyle = parent.get('playersStyles')[e.newVal],
+                prevStyle = parent.get('playersStyles')[e.prevVal];
 
             if (newStyle === prevStyle) {
                 return;
@@ -410,7 +410,8 @@ YUI.add('hexagon.widgets.board', function (Y) {
                 getter: '_getState'
             },
 
-            playerStyles: {
+            playersStyles: {
+                writeOnce: 'initOnly',
                 value: {}
             }
 
