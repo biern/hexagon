@@ -49,10 +49,7 @@ window.YUI_config = {
 
                 'hexagon.views.localgame': {
                     path: 'views/localgame/localgame.js',
-                    requires: ['hexagon.widgets.board',
-                               'hexagon.widgets.scores',
-                               'hexagon.widgets.activeplayer',
-                               'view']
+                    requires: ['hexagon.views.game']
                 },
 
                 'hexagon.utils': {

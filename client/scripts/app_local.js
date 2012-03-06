@@ -1,6 +1,10 @@
 YUI(YUI_config).use('hexagon.models.game', 'hexagon.views.localgame', 'hexagon.server.testserver', function(Y){
 
-    window.map = '\
+    var model, view, server, map;
+
+    window.Y = Y;
+
+    map = window.map = '\
     -   -   2   -   - \n\
       -   x   x   -   - \n\
     -   x   x   x   - \n\
@@ -20,17 +24,16 @@ YUI(YUI_config).use('hexagon.models.game', 'hexagon.views.localgame', 'hexagon.s
     -   -   1   -   - \n\
     ';
 
-    var server = window.server = new Y.Hexagon.server.Test();
+    server = window.server = new Y.Hexagon.server.Test();
 
-    var model = window.model = new Y.Hexagon.models.Game({
-        playerID: 'marcin',
-        server: window.server
+    model = window.model = new Y.Hexagon.models.Game({
+        server: server
     });
 
-    var view = window.view = new Y.Hexagon.views.LocalGame({
+    view = window.view = new Y.Hexagon.views.LocalGame({
         model: model,
         map: window.map
     });
 
-    window.view.render();
+    view.render();
 });
