@@ -1,0 +1,20 @@
+.yui3-activeplayer {
+    float: left;
+    margin-top: 15px;
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    background: #FFE8B0;
+};
+
+.yui3-activeplayer-token  {
+    @extend .yui3-hexagoncell-token-content;
+};
+
+.yui3-activeplayer-token-red {
+    @extend .yui3-hexagoncell-token-red;
+};
+
+.yui3-activeplayer-token-blue {
+    @extend .yui3-hexagoncell-token-blue
+};

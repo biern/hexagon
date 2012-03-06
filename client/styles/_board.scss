@@ -103,7 +103,7 @@ $cell_jump_bg: url('../images/hex-highlight-jump-72-62.png');
 }
 
 // TODO move activeplayer to some reasonable place
-.yui3-hexagoncell-token-content, .yui3-activeplayer-token  {
+.yui3-hexagoncell-token-content {
     position: relative;
     top: ($H - $T) / 2;
     left: ($W - $T) / 2;
@@ -117,7 +117,7 @@ $cell_jump_bg: url('../images/hex-highlight-jump-72-62.png');
     // TODO:
 }
 
-.yui3-hexagoncell-token-red, .yui3-activeplayer-token-red {
+.yui3-hexagoncell-token-red {
     background-color: red;
     @include transform($rotate: 15deg);
     border-radius: $T / 4;
@@ -125,7 +125,7 @@ $cell_jump_bg: url('../images/hex-highlight-jump-72-62.png');
     -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
 }
 
-.yui3-hexagoncell-token-blue, .yui3-activeplayer-token-blue  {
+.yui3-hexagoncell-token-blue  {
     background-color: blue;
     @include transform($rotate: 15deg);
     border-radius: $T / 4;

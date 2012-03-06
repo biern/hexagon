@@ -208,7 +208,7 @@
 .yui3-hexagoncell-token {
   height: 62px; }
 
-.yui3-hexagoncell-token-content, .yui3-activeplayer-token {
+.yui3-hexagoncell-token-content {
   position: relative;
   top: 18.5px;
   left: 23.5px;
@@ -216,7 +216,7 @@
   height: 25px;
   /* @include transition($property: all, $duration: 0.5s); */ }
 
-.yui3-hexagoncell-token-red, .yui3-activeplayer-token-red {
+.yui3-hexagoncell-token-red {
   background-color: red;
   -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
   -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
@@ -224,7 +224,7 @@
   -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
   -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s; }
 
-.yui3-hexagoncell-token-blue, .yui3-activeplayer-token-blue {
+.yui3-hexagoncell-token-blue {
   background-color: blue;
   -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
   -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);

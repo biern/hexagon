@@ -1,3 +1,5 @@
+@import "utils";
+
 body {
     font-family: 'Lemon', cursive;
     color: #FDFFBC;
@@ -7,3 +9,7 @@ body {
 a, a:visited {
     color: rgba(0,255,0,0.2);
 }
+
+@import "board";
+@import "activeplayer";
+@import "scores";
