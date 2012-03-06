@@ -19,7 +19,7 @@ YUI.add('hexagon.views.localgame', function (Y) {
                 playersStyles: playersStyles
             }),
             ap = this._activePlayerWidget = new Y.Hexagon.widgets.ActivePlayer({
-                playerStyles: playersStyles
+                playersStyles: playersStyles
             });
 
             // Allows to play as any player on board widget

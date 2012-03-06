@@ -24,7 +24,7 @@ YUI.add('hexagon.widgets.activeplayer', function (Y) {
         },
 
         playerTokenClassname: function (playerID) {
-            return this.getClassName('token', this.get('playerStyles')[playerID]);
+            return this.getClassName('token', this.get('playersStyles')[playerID]);
         },
 
         _syncActivePlayerID: function (playerID) {
@@ -39,7 +39,7 @@ YUI.add('hexagon.widgets.activeplayer', function (Y) {
     }, {
         ATTRS: {
 
-            playerStyles: {
+            playersStyles: {
                 writeOnce: 'initOnly',
                 value: {}
             },
