@@ -141,8 +141,8 @@ YUI.add('hexagon.widgets.scores', function (Y) {
                 }
             }, this);
 
-            this.get('host').set('scores', scores);
             this.get('host').set('allPlayers', state.allPlayers);
+            this.get('host').set('scores', scores);
         }
 
     }, {
