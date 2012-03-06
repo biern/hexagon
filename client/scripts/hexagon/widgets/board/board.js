@@ -243,7 +243,8 @@ YUI.add('hexagon.widgets.board', function (Y) {
         syncUI: function () {
             this.constructor.superclass.syncUI.call(this);
             this._syncState(this.get('state'));
-            this._syncActivePlayerID(this.get('activePlayerID'));
+            // Redundant - already called by _syncState
+            // this._syncActivePlayerID(this.get('activePlayerID'));
         },
 
         performMove: function (move) {
@@ -437,6 +438,12 @@ YUI.add('hexagon.widgets.board', function (Y) {
             // Skip syncing whole state if only playerID changes (common case)
             if (e.subAttrName === 'state.activePlayerID') {
                 this.board.set('activePlayerID', e.newVal.activePlayerID);
+                // Avoids a nasty bug when board is not yet rendered
+                // (previous state.activePlayerID would take precedence of
+                // this one when syncing)
+                if (this.board._stateCached) {
+                    this.board._stateCached.activePlayerID = e.newVal.activePlayerID;
+                }
             } else if (e.subAttrName === undefined){
                 this.board.set('state', e.newVal);
             }
