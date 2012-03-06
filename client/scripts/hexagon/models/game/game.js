@@ -10,10 +10,6 @@ YUI.add('hexagon.models.game', function (Y) {
 
         ATTRS: {
 
-            playerID: {
-                value: null
-            }
-
         }
 
     });

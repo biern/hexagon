@@ -6,68 +6,65 @@ YUI.add('hexagon.views.game', function (Y) {
 
         initializer: function () {
             var model = this.model,
-            bw = this._boardWidget = new Y.Hexagon.widgets.Board({
-                playerID: 'player1',
-                playerStyles: {
-                    player1: 'red',
-                    player2: 'blue'
-                }
-            }),
-            scores = this._scoresWidget = new Y.Hexagon.widgets.Scores({
-                players: [
-                    { playerID: 'player1', style: 'red' },
-                    { playerID: 'player2', style: 'blue' }]
-            }),
-            bw2 = this._boardWidget2 = new Y.Hexagon.widgets.Board({
-                // playerID: 'player2',
-                playerStyles: {
-                    player1: 'red',
-                    player2: 'blue'
-                }
-            }),
-            stringState =
-                '-   x   x   -   x   \n\
-                   x   1   x   -   2 \n\
-                 -   x   x   -   x   \n\
-                   -   x   x   x   x \n\
-                 -   2   2   -   x';
+                playersStyles = this.get('playersStyles'),
+                playerID = this.get('playerID');
 
-            // Allows to play as any player on board1
-            bw.after('activePlayerIDChange', function (e) {
-                this.set('playerID', e.newVal);
-            }, bw);
+            this.boardWidget = new Y.Hexagon.widgets.Board({
+                playerID: this.get('playerID'),
+                playersStyles: playersStyles
+            });
+            this.scoresWidget = new Y.Hexagon.widgets.Scores({
+                playersStyles: playersStyles
+            });
+            this.activePlayerWidget = new Y.Hexagon.widgets.ActivePlayer({
+                playersStyles: playersStyles
+            });
 
-            bw.plug(Y.Hexagon.widgets.board.ModelSync, { model: model});
-            bw2.plug(Y.Hexagon.widgets.board.ModelSync, { model: model});
-            scores.plug(Y.Hexagon.widgets.scores.ModelSync, { model: model});
+            this.boardWidget.plug(Y.Hexagon.widgets.board.ModelSync, {
+                model: model
+            });
+            this.scoresWidget.plug(Y.Hexagon.widgets.scores.ModelSync, {
+                model: model
+            });
+            this.activePlayerWidget.plug(Y.Hexagon.widgets.activeplayer.ModelSync, {
+                model: model
+            });
 
-            model.board.set('state', Y.Hexagon.logic.decompressState(
-                stringState, {
-                    'player1': '1',
-                    'player2': '2'
-                }));
-
-            // If this set is not called like that, than model.board.set('state') that also calls bw.set('activePlayerID') is called after this line (why?)
-            setTimeout(function () {
-                model.board.set('state.activePlayerID', 'player1');
-            }, 0);
-
-            bw.on('*:invalidMove', function () { alert("Invalid move"); });
-            window.bw = bw;
-            window.bw2 = bw2;
+            this.boardWidget.on('*:invalidMove', function () {
+                alert("Invalid move");
+            });
         },
 
         render: function () {
             if (!this.container.inDoc()) {
                 Y.one('body').append(this.container);
             }
-            this._boardWidget.render(this.container);
-            this._scoresWidget.render(this.container);
-            this._boardWidget2.render(this.container);
+            this.boardWidget.render(this.container);
+            this.activePlayerWidget.render(this.container);
+            this.scoresWidget.render(this.container);
         }
 
+    }, {
+        ATTRS: {
+
+            playerID: {
+                writeOnce: 'initOnly',
+                value: 'player1'
+            },
+
+            playersStyles: {
+                writeOnce: 'initOnly',
+                value: {
+                    player1: 'red',
+                    player2: 'blue'
+                }
+            }
+        }
     });
 
 }, '0', {
-    requires: ['view', 'hexagon.widgets.board', 'hexagon.widgets.scores']
+    requires: ['hexagon.widgets.board',
+               'hexagon.widgets.scores',
+               'hexagon.widgets.activeplayer',
+               'view']
 });
