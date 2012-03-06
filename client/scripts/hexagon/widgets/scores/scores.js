@@ -14,29 +14,37 @@ YUI.add('hexagon.widgets.scores', function (Y) {
 
         bindUI: function () {
             this.after('scoresChange', this._afterScoresChange, this);
-            this.on('playersChange', this._onPlayersChange, this);
-            this.after('playersChange', this._afterPlayersChange, this);
+            this.on('allPlayersChange', this._onAllPlayersChange, this);
+            this.after('allPlayersChange', this._afterPlayersChange, this);
+            this.after('playerStylesChange', this._afterPlayersChange, this);
         },
 
         syncUI: function () {
-            this._syncPlayers(this.get('players'));
+            this._syncPlayers(this.get('allPlayers'), this.get('playersStyles'));
             this._syncScores(this.get('scores'));
         },
 
-        _syncPlayers: function (players) {
+        /**
+         * Syncs allPlayers and playerStyles
+         */
+        _syncPlayers: function (allPlayers, playersStyles) {
             var cb = this.get('contentBox');
 
             cb.setContent('');
-            Y.Array.each(players, function (item) {
-                this._nodes[item.playerID] = cb.appendChild(
+            Y.Array.each(allPlayers, function (playerID) {
+                this._nodes[playerID] = cb.appendChild(
                     Y.substitute(BOX_HTML, {
                         outer: this.getClassName('box'),
                         inner: this.getClassName('box', 'content'),
-                        styled: this.getClassName('box', 'content', item.style)
+                        styled: this.getClassName('box', 'content',
+                                                  playersStyles[playerID])
                     })).get('children');
             }, this);
         },
 
+        /**
+         * Sets default scores values and updates bars width
+         */
         _syncScores: function (scores) {
             var sum = 0, minWidth = 10;
             Y.Object.each(scores, function (value) {
@@ -52,7 +60,10 @@ YUI.add('hexagon.widgets.scores', function (Y) {
             }, this);
         },
 
-        _onPlayersChange: function (e) {
+        /**
+         * Prevent changing to another list with equal attributes
+         */
+        _onAllPlayersChange: function (e) {
             if (e.newVal.length !== e.prevVal.length) {
                 return;
             }
@@ -69,16 +80,18 @@ YUI.add('hexagon.widgets.scores', function (Y) {
             this._syncScores(e.newVal);
         },
 
+        /**
+         * Called after allPlayers or playerStyles changes
+         */
         _afterPlayersChange: function (e) {
-            var prev = e.prevVal,
-                val = e.newValue,
-                scores = {};
+            var scores = {},
+                prevScores = this.get('scores');
 
-            this._syncPlayers(val);
-            // Update scores since players have changed
-            Y.Array.each(val, function (item) {
-                scores[item.playerID] = this.get('scores')[item.playerID] || 0;
-            });
+            this._syncPlayers(this.get('allPlayers'), this.get('playersStyles'));
+            // Update scores since players might have changed
+            Y.Array.each(this.get('allPlayers'), function (playerID) {
+                scores[playerID] = prevScores[playerID] || 0;
+            }, this);
             this.set('scores', scores);
         }
 
@@ -86,10 +99,17 @@ YUI.add('hexagon.widgets.scores', function (Y) {
         ATTRS: {
 
             /**
-             * Pairs of playerID -> style name
+             * List of all players in order
              */
-            players: {
-                value: [{ playerID: 'marcin', style: 'red'}]
+            allPlayers: {
+                value: []
+            },
+
+            /**
+             * Mapping of playerID -> styleName
+             */
+            playersStyles: {
+                value: {}
             },
 
             /**
@@ -122,6 +142,7 @@ YUI.add('hexagon.widgets.scores', function (Y) {
             }, this);
 
             this.get('host').set('scores', scores);
+            this.get('host').set('allPlayers', state.allPlayers);
         }
 
     }, {

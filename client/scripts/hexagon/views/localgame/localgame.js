@@ -5,6 +5,7 @@ YUI.add('hexagon.views.localgame', function (Y) {
         container: Y.one('.hexagon-game'),
 
         initializer: function () {
+            // TODO: playersStyles
             var model = this.model,
                 playerStyles = {
                     player1: 'red',
@@ -15,9 +16,7 @@ YUI.add('hexagon.views.localgame', function (Y) {
                 playerStyles: playerStyles
             }),
             scores = this._scoresWidget = new Y.Hexagon.widgets.Scores({
-                players: [
-                    { playerID: 'player1', style: 'red' },
-                    { playerID: 'player2', style: 'blue' }]
+                playersStyles: playerStyles
             }),
             ap = this._activePlayerWidget = new Y.Hexagon.widgets.ActivePlayer({
                 playerStyles: playerStyles
