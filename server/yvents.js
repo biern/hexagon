@@ -40,6 +40,14 @@ function Base (bus) {
 };
 
 Base.prototype = {
+    /**
+     * Binds event name defined as a string to method defined in this instance.
+     *
+     * Bus is a bus on which event is fired, string is event type
+     * in following format: [{ns1}[.{ns2}]].{[prefix:]eventType}
+     * (ie "client.auth:request" or "auth:request" or ns1.ns2.auth:request").
+     * Handler is one of 'after' or 'on'
+     */
     _bindMethFromString: function (bus, string, handler) {
         var target = bus,
             eventName = string.split('.').slice(-1)[0],
@@ -64,7 +72,10 @@ Base.prototype = {
     },
 
     /**
-     * Add extra arguments to event object when bubbling from this instance
+     * Add extra arguments to event object when bubbling from this instance.
+     *
+     * All targets of this instance will have those arguments added to
+     * theirs event facade.
      */
     addBubbleArgs: function (data) {
         this._bubbleArgs = this._bubbleArgs || {};
@@ -117,6 +128,9 @@ exports.subclass = function (cls, options, proto) {
 };
 
 
+/**
+ * Wraps cls to use 'fire' instead of 'emit' to fire its events.
+ */
 // TODO: Remove, merge with augment
 exports.wrapEmitter = function (cls, options) {
     var property = options.emitterFnName || 'emit';
@@ -128,10 +142,3 @@ exports.wrapEmitter = function (cls, options) {
         emitFacade: true
     }, options));
 };
-
-// exports.wrapObj = function (obj, prefix) {
-//     obj.emit = function (name, data) {
-//         obj.fire(prefix ? prefix + ':' + name : name , data);
-//     };
-//     Y.mix(obj, Y.EventTarget)
-// };
