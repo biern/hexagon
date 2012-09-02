@@ -18,16 +18,17 @@ function EventBus () {
  * under given namespace if it does not already exists
  */
 EventBus.prototype.ns = function (name, instance) {
-    if (!this[name]) {
+    if (instance) {
+        if (this[name]) {
+            throw 'Namespace ' + name + ' is already registered!';
+        }
+        this[name] = instance;
+    } else if (!this[name]) {
         this[name] = new EventBus();
     }
-    // if (!this[name] || instance) {
-    //     this[name] = instance || new EventBus();
-    // }
 
     return this[name];
 };
-
 
 yvents.augment(EventBus, {
     prefix: 'bus'
