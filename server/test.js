@@ -12,6 +12,11 @@ function Test (server, bus) {
     // bus.client.room('auth');
 
     // Testing player
+    bus.client.on('test:hello', function (data) {
+        console.log('hello', data.name);
+        data.socket.emit('test:hello', {name: data.name});
+    });
+
     bus.client.on('auth:request', function (data) {
         console.log('hello', data.username);
     });

@@ -81,6 +81,11 @@ window.YUI_config = {
                                'hexagon.logic']
                 },
 
+                'hexagon.server.socketio': {
+                    path: 'server/socketio/socketio.js',
+                    requires: ['base']
+                },
+
                 'hexagon.server.testserver': {
                     path: 'server/testserver/testserver.js',
                     requires: ['base']
@@ -110,6 +115,12 @@ window.YUI_config = {
                                'hexagon.models.synchronized',
                                'hexagon.server.testserver',
                                'hexagon.utils',
+                               'test']
+                },
+
+                'hexagon.server.tests': {
+                    path: 'server/tests.js',
+                    requires: ['hexagon.server.socketio',
                                'test']
                 }
             }

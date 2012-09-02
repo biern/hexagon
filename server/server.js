@@ -46,7 +46,6 @@ Server.prototype = {
             that.fire('socket:connect', {
                 socket: socket
             });
-
         });
     },
 
