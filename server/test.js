@@ -6,18 +6,19 @@ function Test (server, bus) {
 
     var io = server.io;
 
+    // // Room creation
     // bus.ns('client', new ClientNS(bus, io));
     // bus.client.room('test');
     // bus.client.room('auth');
 
-    // // Testing player
-    // bus.client.on('auth:request', function (data) {
-    //     console.log('witaj', data.username);
-    // });
+    // Testing player
+    bus.client.on('auth:request', function (data) {
+        console.log('hello', data.username);
+    });
 
-    // bus.ns('player').on('auth:request', function (data) {
-    //     console.log('już jesteś zalogowany głuptasie');
-    // });
+    bus.ns('player').on('auth:request', function (data) {
+        console.log('already logged in!', data.player.username);
+    });
 
     // // Testing room
     // bus.client.test.join(socket);
@@ -46,3 +47,5 @@ function Test (server, bus) {
 yvents.subclass(Test, {}, {
 
 });
+
+module.exports = Test;
