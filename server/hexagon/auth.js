@@ -7,6 +7,8 @@ var loggedIn = {},
 
 
 function Player (bus, data) {
+    yvents.Base.call(this, bus);
+
     this.extend(data);
     this.addBubbleArgs({ player: this });
     this.socket.addTarget(this);
