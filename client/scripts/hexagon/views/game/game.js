@@ -5,7 +5,7 @@ YUI.add('hexagon.views.game', function (Y) {
         container: Y.one('.hexagon-game'),
 
         initializer: function () {
-            var model = this.model,
+            var model = this.get('model'),
                 playersStyles = this.get('playersStyles'),
                 playerID = this.get('playerID');
 

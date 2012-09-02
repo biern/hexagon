@@ -130,8 +130,8 @@ YUI.add('hexagon.logic', function(Y) {
         if (Y.Array.test(coords)) {
             coords = new Y.ArrayList(coords);
         }
-        // WTH new Y.ArrayList has to be here?
-        return new Y.ArrayList(coords.filter(function (e) {
+
+        return coords.filter(function (e) {
             if (e[0] < 0 || e[1] < 0) {
                 return false;
             }
@@ -140,7 +140,7 @@ YUI.add('hexagon.logic', function(Y) {
                 return false;
             }
             return true;
-        }));
+        });
     };
 
     /**
