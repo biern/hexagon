@@ -4,6 +4,7 @@ YUI.add('hexagon.models.game', function (Y) {
 
         initializer: function (config) {
             this.plug(Y.Hexagon.models.plugs.BoardState);
+            this.plug(Y.Hexagon.models.plugs.Auth);
         }
 
     }, {
@@ -14,4 +15,6 @@ YUI.add('hexagon.models.game', function (Y) {
 
     });
 
-}, '0', { requires: ['hexagon.models.synchronized', 'hexagon.models.plugs.boardstate'] });
+}, '0', { requires: ['hexagon.models.synchronized',
+                     'hexagon.models.plugs.boardstate',
+                     'hexagon.models.plugs.auth'] });

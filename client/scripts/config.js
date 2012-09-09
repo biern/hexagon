@@ -61,6 +61,16 @@ window.YUI_config = {
                     requires: ['hexagon.views.game']
                 },
 
+                'hexagon.views.template': {
+                    path: 'views/template/template.js',
+                    requires: ['view', 'handlebars']
+                },
+
+                'hexagon.views.login': {
+                    path: 'views/login/login.js',
+                    requires: ['hexagon.views.template']
+                },
+
                 'hexagon.utils': {
                     path: 'utils/utils.js',
                     requires: ['test']
@@ -76,7 +86,8 @@ window.YUI_config = {
                 'hexagon.models.game': {
                     path: 'models/game/game.js',
                     requires: ['hexagon.models.synchronized',
-                               'hexagon.models.plugs.boardstate']
+                               'hexagon.models.plugs.boardstate',
+                               'hexagon.models.plugs.auth']
                 },
 
                 'hexagon.models.plugs.synchronized': {
@@ -88,6 +99,11 @@ window.YUI_config = {
                     path: 'models/plugs/boardstate/boardstate.js',
                     requires: ['hexagon.models.plugs.synchronized',
                                'hexagon.logic']
+                },
+
+                'hexagon.models.plugs.auth': {
+                    path: 'models/plugs/auth/auth.js',
+                    requires: ['hexagon.models.plugs.synchronized']
                 },
 
                 'hexagon.server.socketio': {

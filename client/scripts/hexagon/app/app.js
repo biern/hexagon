@@ -1,27 +1,6 @@
 YUI.add('hexagon.app', function (Y) {
     var namespace = Y.namespace('Hexagon');
 
-    var TemplateView = Y.Base.create('TemplateView', Y.View, [], {
-        initializer: function () {
-            this._template = Y.Handlebars.compile(this.get('template').getHTML());
-        },
-
-        render: function () {
-            var content = this._template();
-
-            this.get('container').setHTML(content);
-
-            return this;
-        }
-    }, {
-        ATTRS: {
-            template: {
-                writeOnce: 'initOnly',
-                value: null
-            }
-        }
-    });
-
     var defaultMap = '\
     -   -   2   -   - \n\
       -   x   x   -   - \n\
@@ -46,15 +25,26 @@ YUI.add('hexagon.app', function (Y) {
 
         views: {
             'main': {
-                type: TemplateView
+                type: Y.Hexagon.views.Template
             },
             'play-local': {
                 type: Y.Hexagon.views.LocalGame
+            },
+            'login': {
+                type: Y.Hexagon.views.Login
+            },
+            'tests': {
+                type: Y.Hexagon.views.Template
             }
         },
 
         initializer: function () {
+
             this.set('server', new Y.Hexagon.server.SocketIO());
+            this.set('model', new Y.Hexagon.models.Game({
+                server: this.get('server')
+            }));
+
             this.once('ready', function (e) {
                 if (this.hasRoute(this.getPath())) {
                     this.dispatch();
@@ -62,6 +52,8 @@ YUI.add('hexagon.app', function (Y) {
                     this.showMainPage();
                 }
             });
+
+            this.on('*:login', this._onLogin, this);
         },
 
         showMainPage: function (e) {
@@ -79,6 +71,25 @@ YUI.add('hexagon.app', function (Y) {
                 model: model,
                 map: defaultMap
             });
+        },
+
+        showOnlinePlay: function (e) {
+            var loggedIn = false;
+
+            if (!loggedIn) {
+                this.navigate('/login/');
+            }
+        },
+
+        showLogin: function (e) {
+            this.showView('login', {
+                template: Y.one('#t-login'),
+                model: this.get('model')
+            });
+        },
+
+        _onLogin: function (e, data) {
+            alert('witaj ' + data.player.username);
         }
 
     }, {
@@ -88,24 +99,28 @@ YUI.add('hexagon.app', function (Y) {
                 value: null
             },
 
-            game: {
+            model: {
                 value: null
             },
 
             routes: {
                 value: [
                     {path: '/', callback: 'showMainPage'},
-                    {path: '/play/local/', callback: 'showLocalPlay'}
+                    {path: '/login/', callback: 'showLogin'},
+                    {path: '/play/local/', callback: 'showLocalPlay'},
+                    {path: '/play/online/', callback: 'showOnlinePlay'}
                 ]
             }
         }
     });
 
 }, '0', {
-    requires: ['app', 'handlebars',
+    requires: ['app',
                'hexagon.models.game',
                'hexagon.views.game',
+               'hexagon.views.login',
                'hexagon.views.localgame',
+               'hexagon.views.template',
                'hexagon.server.socketio',
                'hexagon.server.testserver'
               ]

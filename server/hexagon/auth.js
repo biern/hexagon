@@ -42,7 +42,7 @@ yvents.subclass(Auth, { prefix: 'auth' }, {
                 'client.auth:request'],
 
         fires: ['auth:success', 'auth:fail'],
-        sends: ['auth:response']
+        sends: ['auth:login']
     },
 
     _afterClientAuthRequest: function (e) {
@@ -50,14 +50,14 @@ yvents.subclass(Auth, { prefix: 'auth' }, {
             var player = this._createPlayer(e.username, e.socket);
 
             this.fire('auth:success', { player: player, socket: e.socket });
-            e.socket.emit('auth:response', {
+            e.socket.emit('auth:login', {
                 success: true,
                 // TODO: Zamiast tego jakiś prepare, czy coś?
                 player: player.toJSON()
             });
         } else {
             this.fire('auth:fail', { socket: e.socket });
-            e.socket.emit('auth:response', {
+            e.socket.emit('auth:login', {
                 success: false
             });
         }
@@ -69,6 +69,7 @@ yvents.subclass(Auth, { prefix: 'auth' }, {
 
     logIn: function (socket, username) {
         if (!loggedIn[username]) {
+            // TODO: Check if not already logged in
             console.log('logged in ' + username);
             loggedIn[username] = socket;
 
