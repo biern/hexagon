@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link href="styles/base.css" rel='stylesheet' type='text/css'>
+    <link href="styles/bootstrap.css" rel='stylesheet' type='text/css'>
+    <script src="http://localhost:12345/socket.io/socket.io.js"></script>
+    <script src="http://yui.yahooapis.com/3.6.0/build/yui/yui-min.js"></script>
+    <script src="scripts/yui/build/yui/yui-min.js" charset="utf-8"></script>
+    <script src="scripts/config.js" charset="utf-8"></script>
+    <script src="scripts/app.js" charset="utf-8"></script>
+    <script id="t-main" type="text/html">
+        <div class="well main-well main-menu">
+          <h1>hexagon</h1>
+          <h4><a href="#/play/online/">Online Play</a></h4>
+          <h4><a href="#/play/local/">Hot Seat</a></h4>
+          <h4><a href="#/test">Unit Tests</a></h4>
+        </div>
+    </script>
+    <script id="t-game" type="text/html">
+        <div class="well main-well hexagon-game">
+          <div class="board"></div>
+          <div class="footer"></div>
+        </div>
+    </script>
+  </head>
+  <body>
+    <div class="row-fluid">
+      <div id="hexagon-app" class="adjust-center">
+
+      </div>
+    </div>
+  </body>
+</html>

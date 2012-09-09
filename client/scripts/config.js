@@ -18,6 +18,15 @@ window.YUI_config = {
         hexagon: {
             base: HEXAGON_BASE_URL,
             modules: {
+                'hexagon.app': {
+                    path: 'app/app.js',
+                    requires: ['app', 'handlebars',
+                               'hexagon.models.game',
+                               'hexagon.views.game',
+                               'hexagon.views.localgame',
+                               'hexagon.server.testserver',
+                               'hexagon.server.socketio']
+                },
 
                 'hexagon.logic': {
                     path: 'logic/logic.js',

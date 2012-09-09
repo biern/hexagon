@@ -36,12 +36,17 @@ YUI.add('hexagon.views.game', function (Y) {
         },
 
         render: function () {
-            if (!this.container.inDoc()) {
-                Y.one('body').append(this.container);
-            }
-            this.boardWidget.render(this.container);
-            this.activePlayerWidget.render(this.container);
-            this.scoresWidget.render(this.container);
+            var container = this.get('container'),
+                node = Y.Node.create(Y.one('#t-game').getHTML()),
+                parent;
+
+            container.setHTML("");
+            container.appendChild(node);
+            parent = container.one('.hexagon-game');
+
+            this.boardWidget.render(parent.one('.board'));
+            this.activePlayerWidget.render(parent.one('.footer'));
+            this.scoresWidget.render(parent.one('.footer'));
         }
 
     }, {
@@ -55,8 +60,8 @@ YUI.add('hexagon.views.game', function (Y) {
             playersStyles: {
                 writeOnce: 'initOnly',
                 value: {
-                    player1: 'red',
-                    player2: 'blue'
+                    player1: 'orange',
+                    player2: 'purple'
                 }
             }
         }
