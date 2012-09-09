@@ -192,7 +192,7 @@ YUI.add('hexagon.logic', function(Y) {
             incW = function () {
                 w++;
                 if (w + 1 > state.size[0]) {
-                    state.size[0] = w + 1;
+                    state.size[0] = w;
                 }
             };
 
