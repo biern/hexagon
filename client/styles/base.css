@@ -275,6 +275,8 @@
   border-radius: 8px;
   height: 25px;
   line-height: 25px;
+  color: #CCCCCC;
+  text-shadow: black 0px 0px 3px;
   transition: width 2s ease;
   -moz-transition: width 2s ease;
   -webkit-transition: width 2s ease; }
@@ -292,30 +294,55 @@
   background-color: #9F3FCF; }
 
 body {
-  font-family: 'Lemon', cursive;
-  color: #FDFFBC;
-  background-color: #545544;
-  padding: 50px; }
+  padding: 75px; }
+
+input {
+  color: #282828 !important; }
 
 .adjust-center {
   text-align: center; }
+
+.adjust-right {
+  text-align: center; }
+
+.dialog {
+  margin-top: 120px; }
 
 .well {
   -moz-transition: width; }
 
 .main-well {
   display: inline-block;
-  padding: 100px;
-  text-align: center; }
+  padding-left: 20px;
+  padding-right: 20px; }
 
 .main-menu {
-  margin-top: 150px; }
+  text-align: center; }
 
 .hexagon-game {
   text-align: left !important; }
+
+.loading {
+  opacity: 0.5 !important; }
+
+#login {
+  text-align: left; }
+  #login label {
+    display: inline-block;
+    margin-right: 10px; }
+  #login input {
+    margin-top: 7px;
+    display: inline-block;
+    padding: 5px 10px 5px 10px;
+    font-size: 15px;
+    width: 130px; }
 
 .hexagon-game .footer {
   padding-top: 15px;
   display: inline-block;
   width: 100%;
   text-align: center; }
+
+.form-actions {
+  margin-bottom: 0px;
+  padding-bottom: 0px; }

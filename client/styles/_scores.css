@@ -16,6 +16,8 @@
   border-radius: 8px;
   height: 25px;
   line-height: 25px;
+  color: #CCCCCC;
+  text-shadow: black 0px 0px 3px;
   transition: width 2s ease;
   -moz-transition: width 2s ease;
   -webkit-transition: width 2s ease; }

@@ -26,6 +26,8 @@
 
     height: 25px;
     line-height: 25px;
+    color: #CCCCCC;
+    text-shadow: black 0px 0px 3px;
 
     @include transition($property: width, $duration: 2s);
 };
