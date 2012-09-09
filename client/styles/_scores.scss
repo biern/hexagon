@@ -1,7 +1,8 @@
 @import "utils";
 
 .yui3-scores {
-    float: left;
+    float: right;
+    text-align: right;
 }
 
 .yui3-scores-content {
@@ -13,12 +14,19 @@
 };
 
 .yui3-scores-box-content {
+    font-weight: bold;
+    padding-right: 15px;
+
     opacity: 0.8;
     display: inline-block;
     background: black;
-    padding: 10;
+    /* padding: 10px; */
     margin: 5px;
-    border-radius: 15px;
+    border-radius: 8px;
+
+    height: 25px;
+    line-height: 25px;
+
     @include transition($property: width, $duration: 2s);
 };
 
@@ -28,4 +36,12 @@
 
 .yui3-scores-box-content-blue {
     background: blue;
+};
+
+.yui3-scores-box-content-orange {
+    background-color: #FF961F;
+};
+
+.yui3-scores-box-content-purple {
+    background-color: #9F3FCF;
 };

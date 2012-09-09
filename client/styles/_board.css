@@ -134,7 +134,8 @@
 
 .yui3-board {
   position: relative;
-  color: grey; }
+  color: grey;
+  margin-left: 72px; }
 
 .yui3-board .yui3-board-row {
   height: 31px;
@@ -163,13 +164,13 @@
     z-index: 2; }
 
 .yui3-hexagoncell-content {
-  background-image: url("../images/hex-72-62.png");
+  background-image: url("../images/hex-72-62-grey.png");
   background-repeat: no-repeat;
   background-position: center;
   /* /\* @include transition($property: all, $duration: 2s); *\/ */
   /* /\* @include transition($property: -moz-transform, $duration: 1s); *\/ */ }
   .yui3-hexagoncell-content:hover {
-    background-image: url("../images/hex-hover-72-62.png"), url("../images/hex-72-62.png");
+    background-image: url("../images/hex-hover-72-62.png"), url("../images/hex-72-62-grey.png");
     background-repeat: no-repeat;
     background-position: center; }
 
@@ -217,17 +218,33 @@
   /* @include transition($property: all, $duration: 0.5s); */ }
 
 .yui3-hexagoncell-token-red {
-  background-color: red;
   -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
   -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
   border-radius: 6.25px;
   -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
-  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s; }
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  background-color: red; }
 
 .yui3-hexagoncell-token-blue {
-  background-color: blue;
   -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
   -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
   border-radius: 6.25px;
   -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
-  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s; }
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  background-color: blue; }
+
+.yui3-hexagoncell-token-purple {
+  -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  border-radius: 6.25px;
+  -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  background-color: #9F3FCF; }
+
+.yui3-hexagoncell-token-orange {
+  -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  border-radius: 6.25px;
+  -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  background-color: #FF961F; }

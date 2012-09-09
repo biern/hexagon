@@ -1,15 +1,42 @@
 @import "utils";
 
+@import "board";
+@import "activeplayer";
+@import "scores";
+
 body {
     font-family: 'Lemon', cursive;
     color: #FDFFBC;
     background-color: #545544;
+    padding: 50px;
 }
 
-a, a:visited {
-    color: rgba(0,255,0,0.2);
+.adjust-center {
+    text-align: center;
 }
 
-@import "board";
-@import "activeplayer";
-@import "scores";
+.well {
+    // TODO: Transition size
+    -moz-transition: width
+}
+
+.main-well {
+    display: inline-block;
+    padding: 100px;
+    text-align: center;
+}
+
+.main-menu {
+    margin-top: 150px;
+}
+
+.hexagon-game {
+    text-align: left !important;
+}
+
+.hexagon-game .footer {
+    padding-top: 15px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}

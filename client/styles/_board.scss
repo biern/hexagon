@@ -13,6 +13,7 @@ $T: 25px;
 .yui3-board {
     position: relative;
     color: grey;
+    margin-left: $W;
 }
 
 .yui3-board .yui3-board-row {
@@ -34,7 +35,7 @@ $T: 25px;
 // cells
 // -----
 
-$cell_bg: url('../images/hex-72-62.png');
+$cell_bg: url('../images/hex-72-62-grey.png');
 $cell_hover_bg: url('../images/hex-hover-72-62.png');
 $cell_selected_bg: url('../images/hex-selected-72-62.png');
 $cell_clone_bg: url('../images/hex-highlight-clone-72-62.png');
@@ -117,18 +118,29 @@ $cell_jump_bg: url('../images/hex-highlight-jump-72-62.png');
     // TODO:
 }
 
-.yui3-hexagoncell-token-red {
-    background-color: red;
+@mixin hexagoncell-token-base {
     @include transform($rotate: 15deg);
     border-radius: $T / 4;
     -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
     -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
 }
 
+.yui3-hexagoncell-token-red {
+    @include hexagoncell-token-base;
+    background-color: red;
+}
+
 .yui3-hexagoncell-token-blue  {
+    @include hexagoncell-token-base;
     background-color: blue;
-    @include transform($rotate: 15deg);
-    border-radius: $T / 4;
-    -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
-    -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+}
+
+.yui3-hexagoncell-token-purple {
+    @include hexagoncell-token-base;
+    background-color: #9F3FCF;
+}
+
+.yui3-hexagoncell-token-orange  {
+    @include hexagoncell-token-base;
+    background-color: #FF961F;
 }

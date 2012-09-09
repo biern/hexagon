@@ -1,7 +1,7 @@
 .yui3-activeplayer {
   float: left;
-  margin-top: 15px;
   width: 70px;
   height: 70px;
   border-radius: 20px;
-  background: #FFE8B0; }
+  background: #CCCCCC;
+  /* border: 3px solid #33B5E5; */ }

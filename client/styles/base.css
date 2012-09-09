@@ -1,11 +1,3 @@
-body {
-  font-family: 'Lemon', cursive;
-  color: #FDFFBC;
-  background-color: #545544; }
-
-a, a:visited {
-  color: rgba(0, 255, 0, 0.2); }
-
 .shape-hexagon {
   width: 100px;
   height: 55px;
@@ -142,7 +134,8 @@ a, a:visited {
 
 .yui3-board {
   position: relative;
-  color: grey; }
+  color: grey;
+  margin-left: 72px; }
 
 .yui3-board .yui3-board-row {
   height: 31px;
@@ -171,13 +164,13 @@ a, a:visited {
     z-index: 2; }
 
 .yui3-hexagoncell-content {
-  background-image: url("../images/hex-72-62.png");
+  background-image: url("../images/hex-72-62-grey.png");
   background-repeat: no-repeat;
   background-position: center;
   /* /\* @include transition($property: all, $duration: 2s); *\/ */
   /* /\* @include transition($property: -moz-transform, $duration: 1s); *\/ */ }
   .yui3-hexagoncell-content:hover {
-    background-image: url("../images/hex-hover-72-62.png"), url("../images/hex-72-62.png");
+    background-image: url("../images/hex-hover-72-62.png"), url("../images/hex-72-62-grey.png");
     background-repeat: no-repeat;
     background-position: center; }
 
@@ -225,42 +218,63 @@ a, a:visited {
   /* @include transition($property: all, $duration: 0.5s); */ }
 
 .yui3-hexagoncell-token-red, .yui3-activeplayer-token-red {
-  background-color: red;
   -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
   -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
   border-radius: 6.25px;
   -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
-  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s; }
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  background-color: red; }
 
 .yui3-hexagoncell-token-blue, .yui3-activeplayer-token-blue {
-  background-color: blue;
   -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
   -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
   border-radius: 6.25px;
   -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
-  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s; }
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  background-color: blue; }
+
+.yui3-hexagoncell-token-purple, .yui3-activeplayer-token-purple {
+  -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  border-radius: 6.25px;
+  -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  background-color: #9F3FCF; }
+
+.yui3-hexagoncell-token-orange, .yui3-activeplayer-token-orange {
+  -moz-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  -webkit-transform: translate(0px, 0px) rotate(15deg) scale(1);
+  border-radius: 6.25px;
+  -moz-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  -webkit-animation: funkytokens 7s 1s linear infinite, token-emerge 1s 0s;
+  background-color: #FF961F; }
 
 .yui3-activeplayer {
   float: left;
-  margin-top: 15px;
   width: 70px;
   height: 70px;
   border-radius: 20px;
-  background: #FFE8B0; }
+  background: #CCCCCC;
+  /* border: 3px solid #33B5E5; */ }
 
 .yui3-scores {
-  float: left; }
+  float: right;
+  text-align: right; }
 
 .yui3-scores-content {
   width: 400px; }
 
 .yui3-scores-box-content {
+  font-weight: bold;
+  padding-right: 15px;
   opacity: 0.8;
   display: inline-block;
   background: black;
-  padding: 10;
+  /* padding: 10px; */
   margin: 5px;
-  border-radius: 15px;
+  border-radius: 8px;
+  height: 25px;
+  line-height: 25px;
   transition: width 2s ease;
   -moz-transition: width 2s ease;
   -webkit-transition: width 2s ease; }
@@ -270,3 +284,38 @@ a, a:visited {
 
 .yui3-scores-box-content-blue {
   background: blue; }
+
+.yui3-scores-box-content-orange {
+  background-color: #FF961F; }
+
+.yui3-scores-box-content-purple {
+  background-color: #9F3FCF; }
+
+body {
+  font-family: 'Lemon', cursive;
+  color: #FDFFBC;
+  background-color: #545544;
+  padding: 50px; }
+
+.adjust-center {
+  text-align: center; }
+
+.well {
+  -moz-transition: width; }
+
+.main-well {
+  display: inline-block;
+  padding: 100px;
+  text-align: center; }
+
+.main-menu {
+  margin-top: 150px; }
+
+.hexagon-game {
+  text-align: left !important; }
+
+.hexagon-game .footer {
+  padding-top: 15px;
+  display: inline-block;
+  width: 100%;
+  text-align: center; }
