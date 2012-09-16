@@ -55,6 +55,7 @@ YUI.add('hexagon.views.game', function (Y) {
     }, {
         ATTRS: {
 
+            // TODO: gameID, remove playerStyles
             playersStyles: {
                 writeOnce: 'initOnly',
                 value: {

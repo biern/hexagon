@@ -45,11 +45,24 @@ YUI.add('hexagon.app', function (Y) {
         },
 
         initializer: function () {
+            var server = new Y.Hexagon.server.SocketIO();
+            this.set('server', server);
 
-            this.set('server', new Y.Hexagon.server.SocketIO());
-            this.set('model', new Y.Hexagon.models.Game({
+            var model = new Y.Hexagon.models.Game({
                 server: this.get('server')
-            }));
+            });
+
+            this.set('model', model);
+
+            model.after('auth:login', this._afterAuthLogin, this);
+            // TODO: model.remote:game:join ...
+            server.after('response:game:join', this._afterGameJoin, this);
+
+            // Test stuff only
+            this.get('model').fire('auth:login', { src: 'local' }, {
+                username: 'user ' + parseInt(Math.random() * 1000)
+            });
+
 
             this.once('ready', function (e) {
                 if (this.hasRoute(this.getPath())) {
@@ -59,7 +72,6 @@ YUI.add('hexagon.app', function (Y) {
                 }
             });
 
-            this.on('*:login', this._onLogin, this);
         },
 
         showMainPage: function (e) {
@@ -85,11 +97,26 @@ YUI.add('hexagon.app', function (Y) {
         },
 
         showOnlinePlay: function (e) {
-            var loggedIn = false;
+            var loggedIn = this.get('loggedIn');
 
             if (!loggedIn) {
-                this.navigate('/login/');
+                // TODO: This url should not stay here like that
+                this._loginRedirect('/play/online/');
             }
+
+            this.showView('play-online', {
+                model: this.get('model')
+            });
+        },
+
+        showGame: function (req, res) {
+            var id = parseInt(req.params.id);
+            console.debug('Entering game', id);
+
+            this.showView('online-game', {
+                gameID: id,
+                model: this.get('model')
+            });
         },
 
         showLogin: function (e) {
@@ -99,8 +126,25 @@ YUI.add('hexagon.app', function (Y) {
             });
         },
 
-        _onLogin: function (e, data) {
-            alert('witaj ' + data.player.username);
+        _loginRedirect: function (nextUrl) {
+            this._afterLoginUrl = nextUrl;
+            this.navigate('/login/');
+        },
+
+        _afterAuthLogin: function (e, data) {
+            if (e.src != 'remote') {
+                return;
+            }
+
+            this.set('loggedIn', true);
+            if (this._afterLoginUrl) {
+                this.navigate(this._afterLoginUrl);
+            }
+        },
+
+        _afterGameJoin: function (e, data) {
+            // TODO: src == etc..
+            this.navigate('/play/game/' + data.id + '/');
         }
 
     }, {
@@ -114,12 +158,17 @@ YUI.add('hexagon.app', function (Y) {
                 value: null
             },
 
+            loggedIn: {
+                value: false
+            },
+
             routes: {
                 value: [
                     {path: '/', callback: 'showMainPage'},
                     {path: '/login/', callback: 'showLogin'},
                     {path: '/play/local/', callback: 'showLocalPlay'},
-                    {path: '/play/online/', callback: 'showOnlinePlay'}
+                    {path: '/play/online/', callback: 'showOnlinePlay'},
+                    {path: '/play/game/:id/', callback: 'showGame'}
                 ]
             }
         }
