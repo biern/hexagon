@@ -2,15 +2,14 @@ YUI.add('hexagon.views.game', function (Y) {
 
     Y.namespace('Hexagon.views').Game = Y.Base.create('GameView', Y.View, [], {
         // TODO: fix that: if already in DOM it should be rendered there, not create new tag
+        // TODO: add playerStyles to model
         container: Y.one('.hexagon-game'),
 
         initializer: function () {
             var model = this.get('model'),
-                playersStyles = this.get('playersStyles'),
-                playerID = this.get('playerID');
+                playersStyles = this.get('playersStyles');
 
             this.boardWidget = new Y.Hexagon.widgets.Board({
-                playerID: this.get('playerID'),
                 playersStyles: playersStyles
             });
             this.scoresWidget = new Y.Hexagon.widgets.Scores({
@@ -36,6 +35,10 @@ YUI.add('hexagon.views.game', function (Y) {
         },
 
         render: function () {
+            this._renderGame();
+        },
+
+        _renderGame: function () {
             var container = this.get('container'),
                 node = Y.Node.create(Y.one('#t-game').getHTML()),
                 parent;
@@ -51,11 +54,6 @@ YUI.add('hexagon.views.game', function (Y) {
 
     }, {
         ATTRS: {
-
-            playerID: {
-                writeOnce: 'initOnly',
-                value: 'player1'
-            },
 
             playersStyles: {
                 writeOnce: 'initOnly',

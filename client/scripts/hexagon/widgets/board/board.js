@@ -426,8 +426,15 @@ YUI.add('hexagon.widgets.board', function (Y) {
             this.board = config.host;
 
             this.model.board.after('stateChange', this._afterModelBoardStateChange, this);
+            this.model.auth.after('playerChange', this._afterModelAuthPlayerChange, this);
             this.model.after('board:move', this._afterModelBoardMove, this);
             this.board.after('*:move', this._afterBoardMove, this);
+
+            this._syncModel();
+        },
+
+        _syncModel: function () {
+            this.board.set('playerID', this.model.auth.get('player.id'));
         },
 
         _afterModelBoardStateChange: function (e) {
@@ -454,6 +461,11 @@ YUI.add('hexagon.widgets.board', function (Y) {
             if (e.sender !== this.board) {
                 this.board.performMove(move);
             }
+        },
+
+        _afterModelAuthPlayerChange: function (e) {
+            // Player changes are remote only
+            this.board.set('playerID', e.newVal ? e.newVal.id : null);
         },
 
         _afterBoardMove: function (e, data) {

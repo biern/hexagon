@@ -67,6 +67,11 @@ YUI.add('hexagon.app', function (Y) {
                 server: new Y.Hexagon.server.Test()
             });
 
+            model.auth.set('player', {
+                'id': 1,
+                'username': 'player 1'
+            });
+
             this.showView('play-local', {
                 model: model,
                 map: defaultMap
