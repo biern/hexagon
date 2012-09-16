@@ -24,6 +24,7 @@ window.YUI_config = {
                                'hexagon.models.game',
                                'hexagon.views.game',
                                'hexagon.views.localgame',
+                               'hexagon.views.onlineplay',
                                'hexagon.server.testserver',
                                'hexagon.server.socketio']
                 },
@@ -59,6 +60,11 @@ window.YUI_config = {
                 'hexagon.views.localgame': {
                     path: 'views/localgame/localgame.js',
                     requires: ['hexagon.views.game']
+                },
+
+                'hexagon.views.onlineplay': {
+                    path: 'views/onlineplay/onlineplay.js',
+                    requires: ['hexagon.views.template']
                 },
 
                 'hexagon.views.template': {

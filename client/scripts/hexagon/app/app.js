@@ -30,6 +30,12 @@ YUI.add('hexagon.app', function (Y) {
             'play-local': {
                 type: Y.Hexagon.views.LocalGame
             },
+            'play-online': {
+                type: Y.Hexagon.views.OnlinePlay
+            },
+            'game-online': {
+                type: Y.Hexagon.views.Game
+            },
             'login': {
                 type: Y.Hexagon.views.Login
             },
@@ -125,6 +131,7 @@ YUI.add('hexagon.app', function (Y) {
                'hexagon.views.game',
                'hexagon.views.login',
                'hexagon.views.localgame',
+               'hexagon.views.onlineplay',
                'hexagon.views.template',
                'hexagon.server.socketio',
                'hexagon.server.testserver'
