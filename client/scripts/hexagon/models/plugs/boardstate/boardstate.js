@@ -12,6 +12,7 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
             var host = config.host;
 
             this._addHostAttrs(host);
+            this._boardAttrs.after('boardIDChange', this._afterBoardIDChange, this);
         },
 
         _bindHost: function (host) {
@@ -46,6 +47,13 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
             this.get('host').fire('remote:board:move', { sender: this }, data);
         },
 
+        _afterBoardIDChange: function (e) {
+            if (e.newVal) {
+                this.get('host').send('board:join', { boardID: e.newVal });
+                this.get('host').send('board:resync', { boardID: e.newVal });
+            }
+        },
+
         _afterBoardMove: function (e, data) {
             this.get('host').send('board:move', this.stripped(data, SYNC_ATTRS.move));
             this._performLocalMove(data);
@@ -61,6 +69,10 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
         NS: 'boardstatePlug',
 
         ADD_ATTRS: {
+
+            boardID: {
+                value: null
+            },
 
             state: {
 

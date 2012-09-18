@@ -9,6 +9,8 @@ YUI.add('hexagon.views.game', function (Y) {
             var model = this.get('model'),
                 playersStyles = this.get('playersStyles');
 
+            model.board.set('boardID', this.get('boardID'));
+
             this.boardWidget = new Y.Hexagon.widgets.Board({
                 playersStyles: playersStyles
             });
@@ -55,7 +57,10 @@ YUI.add('hexagon.views.game', function (Y) {
     }, {
         ATTRS: {
 
-            // TODO: gameID, remove playerStyles
+            boardID: {
+                value: null
+            },
+            // TODO: boardID, remove playerStyles
             playersStyles: {
                 writeOnce: 'initOnly',
                 value: {
