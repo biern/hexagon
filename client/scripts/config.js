@@ -109,7 +109,8 @@ window.YUI_config = {
 
                 'hexagon.models.plugs.auth': {
                     path: 'models/plugs/auth/auth.js',
-                    requires: ['hexagon.models.plugs.synchronized']
+                    requires: ['hexagon.models.plugs.synchronized',
+                               'cookie']
                 },
 
                 'hexagon.server.socketio': {
