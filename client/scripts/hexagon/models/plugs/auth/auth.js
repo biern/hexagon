@@ -8,10 +8,27 @@ YUI.add('hexagon.models.plugs.auth', function (Y) {
             var host = config.host;
 
             this._addHostAttrs(host);
+            this.loginLast();
+        },
+
+        loginLast: function () {
+            var username = Y.Cookie.get('username');
+
+            if (this._authAttrs.get('loggedIn')) {
+                return;
+            }
+
+            if (username) {
+                this.get('host').fire('local:auth:login', {}, {
+                    username: username
+                });
+            }
         },
 
         _bindHost: function (host) {
-            host.after('auth:login', this._afterLogin, this);
+            host.after('local:auth:login', this._afterLogin, this);
+            host.after('socket:disconnect', this._afterDisconnect, this);
+            host.after('socket:connected', this._afterConnected, this);
         },
 
         _bindHostServer: function (server) {
@@ -31,6 +48,7 @@ YUI.add('hexagon.models.plugs.auth', function (Y) {
 
             if (data.success) {
                 this._authAttrs.set('player', data.player);
+                Y.Cookie.set('username', data.player.username);
             } else {
                 this._authAttrs.set('player', null);
             }
@@ -38,10 +56,16 @@ YUI.add('hexagon.models.plugs.auth', function (Y) {
             this.get('host').fire('remote:auth:login', data);
         },
 
+        _afterDisconnect: function () {
+            this._authAttrs.set('loggedIn', false);
+        },
+
+        _afterConnected: function () {
+            this.loginLast();
+        },
+
         _afterLogin: function (e, data) {
-            if (e.src === 'local') {
-                this.get('host').send('auth:request', data);
-            }
+            this.get('host').send('auth:request', data);
         },
 
         _addHostAttrs: function (host) {
@@ -67,5 +91,6 @@ YUI.add('hexagon.models.plugs.auth', function (Y) {
     });
 
 }, '0', {
-    requires: ['hexagon.models.plugs.synchronized']
+    requires: ['hexagon.models.plugs.synchronized',
+               'cookie']
 });
