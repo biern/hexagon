@@ -24,7 +24,8 @@ yvents.subclass(Player, { prefix: 'player' }, {
     toJSON: function () {
         return {
             id: this.id,
-            username: this.username
+            username: this.username,
+            style: null
         };
     }
 });
