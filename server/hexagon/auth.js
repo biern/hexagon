@@ -25,7 +25,7 @@ yvents.subclass(Player, { prefix: 'player' }, {
         return {
             id: this.id,
             username: this.username,
-            style: null
+            style: this.style
         };
     }
 });
@@ -98,7 +98,8 @@ yvents.subclass(Auth, { prefix: 'auth' }, {
         var player = new Player(this._bus, {
             id: ++lastId,
             username: username,
-            socket: socket
+            socket: socket,
+            style: ['orange', 'purple'][parseInt(Math.random() * 2)]
         });
 
         player.fire('player:created', { player: player });
