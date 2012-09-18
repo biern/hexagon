@@ -93,8 +93,7 @@ Base.ETaugment = {
      */
     bubble: function (evt, args) {
         if (this._bubbleArgs) {
-            args[0] = args[0] || {};
-            args[0] = {}.extend(this._bubbleArgs);
+            args[0].extend(this._bubbleArgs);
         }
         return exports.EventTarget.prototype.bubble.apply(this, arguments);
     }
