@@ -427,7 +427,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
             this.model.board.after('stateChange', this._afterModelBoardStateChange, this);
             this.model.auth.after('playerChange', this._afterModelAuthPlayerChange, this);
-            this.model.after('board:move', this._afterModelBoardMove, this);
+            this.model.after('remote:board:move', this._afterModelBoardMove, this);
             this.board.after('*:move', this._afterBoardMove, this);
 
             this._syncModel();
@@ -438,10 +438,6 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         _afterModelBoardStateChange: function (e) {
-            // Sync only with remote changes
-            if (e.src === 'sync' || e.src === 'local') {
-                return;
-            }
             // Skip syncing whole state if only playerID changes (common case)
             if (e.subAttrName === 'state.activePlayerID') {
                 this.board.set('activePlayerID', e.newVal.activePlayerID);
@@ -469,7 +465,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         _afterBoardMove: function (e, data) {
-            this.model.fire('board:move', { src: 'local', sender: this.board }, data);
+            this.model.fire('local:board:move', { sender: this.board }, data);
         }
 
     }, {

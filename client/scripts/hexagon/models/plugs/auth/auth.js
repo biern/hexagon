@@ -35,7 +35,7 @@ YUI.add('hexagon.models.plugs.auth', function (Y) {
                 this._authAttrs.set('player', null);
             }
             this._authAttrs.set('loggedIn', data.success);
-            this.get('host').fire('auth:login', {src: 'remote'}, data);
+            this.get('host').fire('remote:auth:login', data);
         },
 
         _afterLogin: function (e, data) {

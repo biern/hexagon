@@ -66,8 +66,7 @@ YUI.add('hexagon.models.plugs.boardstate.tests', function (Y) {
 
             utils.assertFired.call(this, function () {
                 server.fakeResponse('board:move', move);
-            }, model, 'board:move', function (e, data) {
-                Y.Assert.areEqual(e.src, 'remote');
+            }, model, 'remote:board:move', function (e, data) {
                 Y.Assert.areEqual(e.sender, boardstate);
             });
         },
@@ -102,7 +101,7 @@ YUI.add('hexagon.models.plugs.boardstate.tests', function (Y) {
             };
 
             utils.assertFired.call(this, function () {
-                model.fire('board:move', { src: 'local' }, move);
+                model.fire('local:board:move', {}, move);
             }, server, 'sendRequested', function (e, request) {
                 if (request.name === 'board:move') {
                     utils.assertObjectParams(request.data, move);

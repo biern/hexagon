@@ -9,7 +9,7 @@ YUI.add('hexagon.views.login', function (Y) {
         initializer: function () {
             var model = this.get('model');
 
-            model.on('auth:login', this._onLoginResponse, this);
+            model.on('local:auth:login', this._onLoginResponse, this);
 
             this.on('loadingChange', this._onLoadingChange, this);
         },
@@ -21,7 +21,7 @@ YUI.add('hexagon.views.login', function (Y) {
         _onLoginButton: function (e) {
             this.set('loading', true);
             // TODO: Prefixy zamiast src
-            this.get('model').fire('auth:login', { src: 'local' }, {
+            this.get('model').fire('local:auth:login', {
                 username: Y.one('input.login').get('value')
             });
 

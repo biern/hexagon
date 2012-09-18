@@ -59,7 +59,7 @@ YUI.add('hexagon.app', function (Y) {
             server.after('response:game:join', this._afterGameJoin, this);
 
             // Test stuff only
-            this.get('model').fire('auth:login', { src: 'local' }, {
+            this.get('model').fire('local:auth:login', {
                 username: 'user ' + parseInt(Math.random() * 1000)
             });
 

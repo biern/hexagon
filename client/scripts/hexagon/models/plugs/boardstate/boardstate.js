@@ -15,7 +15,7 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
         },
 
         _bindHost: function (host) {
-            host.after('board:move', this._afterBoardMove, this);
+            host.after('local:board:move', this._afterBoardMove, this);
         },
 
         _bindHostServer: function (server) {
@@ -43,14 +43,12 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
 
         _afterBoardMoveReceived: function (e, data) {
             this._performLocalMove(data);
-            this.get('host').fire('board:move', { src: 'remote', sender: this }, data);
+            this.get('host').fire('remote:board:move', { sender: this }, data);
         },
 
         _afterBoardMove: function (e, data) {
-            if (e.src === 'local') {
-                this.get('host').send('board:move', this.stripped(data, SYNC_ATTRS.move));
-                this._performLocalMove(data);
-            }
+            this.get('host').send('board:move', this.stripped(data, SYNC_ATTRS.move));
+            this._performLocalMove(data);
         },
 
         _addHostAttrs: function (host) {
