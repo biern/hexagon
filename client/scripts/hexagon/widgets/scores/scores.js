@@ -124,12 +124,32 @@ YUI.add('hexagon.widgets.scores', function (Y) {
     Y.namespace('Hexagon.widgets.scores').ModelSync = Y.Base.create('ScoresModelSync', Y.Plugin.Base, [], {
 
         initializer: function (config) {
-            config.model.board.after('stateChange', this._afterModelBoardStateChange, this);
+            this.widget = config.host;
+            this.model = config.model;
+            this.model.board.after('stateChange', this._afterModelBoardStateChange, this);
+            this._syncModel();
+        },
+
+        _syncModel: function () {
+            this.widget.set('playersStyles', this.model.board.get('state.playersStyles'));
+            this.widget.set('allPlayers', this.model.board.get('state.allPlayers'));
+            this.widget.set('scores', this._calcScores(this.model.board.get('state')));
+
         },
 
         _afterModelBoardStateChange: function (e) {
             var state = e.newVal,
-                scores = {};
+                scores = this._calcScores(state);
+
+            if (state.playersStyles) {
+                this.get('host').set('playersStyles', state.playersStyles);
+            }
+            this.get('host').set('allPlayers', state.allPlayers);
+            this.get('host').set('scores', scores);
+        },
+
+        _calcScores: function (state) {
+            var scores = {};
 
             Y.Array.each(state.allPlayers, function (item) {
                 scores[item] = 0;
@@ -141,11 +161,7 @@ YUI.add('hexagon.widgets.scores', function (Y) {
                 }
             }, this);
 
-            if (state.playersStyles) {
-                this.get('host').set('playersStyles', state.playersStyles);
-            }
-            this.get('host').set('allPlayers', state.allPlayers);
-            this.get('host').set('scores', scores);
+            return scores;
         }
 
     }, {

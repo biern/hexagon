@@ -439,6 +439,8 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
         _syncModel: function () {
             this.board.set('playerID', this.model.auth.get('player.username'));
+            this.board.set('playersStyles', this.model.board.get('state.playersStyles'));
+            this.board.set('state', this.model.board.get('state'));
         },
 
         _afterModelBoardStateChange: function (e) {

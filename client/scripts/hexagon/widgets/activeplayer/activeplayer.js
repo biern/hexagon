@@ -57,7 +57,16 @@ YUI.add('hexagon.widgets.activeplayer', function (Y) {
     Y.namespace('Hexagon.widgets.activeplayer').ModelSync = Y.Base.create('ActivePlayerModelSync', Y.Plugin.Base, [], {
 
         initializer: function (config) {
+            this.widget = config.host;
+            this.model = config.model;
+
             config.model.board.after('stateChange', this._afterModelBoardStateChange, this);
+            this._syncModel();
+        },
+
+        _syncModel: function () {
+            this.widget.set('playersStyles', this.model.board.get('state.playersStyles'));
+            this.widget.set('activePlayerID', this.model.board.get('state.activePlayerID'));
         },
 
         _afterModelBoardStateChange: function (e) {
