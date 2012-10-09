@@ -17,6 +17,7 @@ YUI.add('hexagon.widgets.activeplayer', function (Y) {
 
         bindUI: function () {
             this.after('activePlayerIDChange', this._afterActivePlayerIDChange, this);
+            this.after('playersStylesChange', this._afterPlayersStylesChange, this);
         },
 
         syncUI: function () {
@@ -31,6 +32,10 @@ YUI.add('hexagon.widgets.activeplayer', function (Y) {
             this._tokenNode.addClass(this.playerTokenClassname(playerID));
         },
 
+        _afterPlayersStylesChange: function (e) {
+            this._syncActivePlayerID(this.get('activePlayerID'));
+        },
+
         _afterActivePlayerIDChange: function (e) {
             this._tokenNode.removeClass(this.playerTokenClassname(e.prevVal));
             this._syncActivePlayerID(e.newVal);
@@ -40,7 +45,6 @@ YUI.add('hexagon.widgets.activeplayer', function (Y) {
         ATTRS: {
 
             playersStyles: {
-                writeOnce: 'initOnly',
                 value: {}
             },
 
@@ -59,6 +63,9 @@ YUI.add('hexagon.widgets.activeplayer', function (Y) {
         _afterModelBoardStateChange: function (e) {
             var state = e.newVal;
 
+            if (state.playersStyles) {
+                this.get('host').set('playersStyles', state.playersStyles);
+            }
             this.get('host').set('activePlayerID', state.activePlayerID);
         }
 

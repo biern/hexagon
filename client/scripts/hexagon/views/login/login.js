@@ -19,12 +19,13 @@ YUI.add('hexagon.views.login', function (Y) {
         },
 
         _onLoginButton: function (e) {
+            e.preventDefault();
+
             this.set('loading', true);
             // TODO: Prefixy zamiast src
-            this.get('model').fire('local:auth:login', {
+            this.get('model').fire('local:auth:login', {}, {
                 username: Y.one('input.login').get('value')
             });
-
         },
 
         _onLoginResponse: function (e, data) {

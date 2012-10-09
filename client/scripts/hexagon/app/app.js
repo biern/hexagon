@@ -59,9 +59,15 @@ YUI.add('hexagon.app', function (Y) {
             server.after('response:board:join', this._afterBoardJoin, this);
 
             // Test stuff only
-            this.get('model').fire('local:auth:login', {}, {
-                username: 'user ' + parseInt(Math.random() * 1000)
-            });
+            // this.get('model').fire('local:auth:login', {}, {
+            //     username: 'user ' + parseInt(Math.random() * 1000)
+            // });
+            this.get('model').after('remote:auth:login', function (data) {
+                if (data.success) return;
+                this.get('model').fire('local:auth:login', {}, {
+                        username: 'user ' + parseInt(Math.random() * 1000)
+                });
+            }, this);
 
 
             this.once('ready', function (e) {

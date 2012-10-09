@@ -25,6 +25,10 @@ function Test (server, bus) {
         console.log('already logged in!', data.player.username);
     });
 
+    bus.client.on('game:quick', function () {
+        console.log('quick!');
+    });
+
     // // Testing room
     // bus.client.test.join(socket);
     // bus.client.test.on('auth:request', function (data) {

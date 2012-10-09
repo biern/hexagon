@@ -161,6 +161,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
         _moveDefault: function (e, move) {
             this.get('parent').performMove(move);
+            this.get('parent').switchPlayer();
         },
 
         _onSelectedChange: function (e) {
@@ -264,6 +265,9 @@ YUI.add('hexagon.widgets.board', function (Y) {
                 cellTo.possessNeighbours();
             }
 
+        },
+
+        switchPlayer: function () {
             this.set('activePlayerID', Y.Hexagon.logic.nextPlayer(
                 this.get('allPlayers'), this.get('activePlayerID')));
         },
@@ -319,6 +323,7 @@ YUI.add('hexagon.widgets.board', function (Y) {
 
             // Extract other attributes from board state
             this.set('size', state.size);
+            // console.log('state sync activeplayerid', state.activePlayerID);
             this.set('activePlayerID', state.activePlayerID);
             this.set('allPlayers', state.allPlayers);
 
@@ -412,7 +417,6 @@ YUI.add('hexagon.widgets.board', function (Y) {
             },
 
             playersStyles: {
-                writeOnce: 'initOnly',
                 value: {}
             }
 
@@ -434,10 +438,11 @@ YUI.add('hexagon.widgets.board', function (Y) {
         },
 
         _syncModel: function () {
-            this.board.set('playerID', this.model.auth.get('player.id'));
+            this.board.set('playerID', this.model.auth.get('player.username'));
         },
 
         _afterModelBoardStateChange: function (e) {
+            // console.log('modelboard state change');
             // Skip syncing whole state if only playerID changes (common case)
             if (e.subAttrName === 'state.activePlayerID') {
                 this.board.set('activePlayerID', e.newVal.activePlayerID);
@@ -448,6 +453,10 @@ YUI.add('hexagon.widgets.board', function (Y) {
                     this.board._stateCached.activePlayerID = e.newVal.activePlayerID;
                 }
             } else if (e.subAttrName === undefined){
+                // this.board.set('activePlayerID', e.newVal.activePlayerID);
+                if (e.newVal.playersStyles) {
+                    this.board.set('playersStyles', e.newVal.playersStyles);
+                }
                 this.board.set('state', e.newVal);
             }
         },
@@ -455,13 +464,14 @@ YUI.add('hexagon.widgets.board', function (Y) {
         _afterModelBoardMove: function (e, move) {
             // Sync with remote moves
             if (e.sender !== this.board) {
+                // TODO: unhack
                 this.board.performMove(move);
             }
         },
 
         _afterModelAuthPlayerChange: function (e) {
             // Player changes are remote only
-            this.board.set('playerID', e.newVal ? e.newVal.id : null);
+            this.board.set('playerID', e.newVal ? e.newVal.username : null);
         },
 
         _afterBoardMove: function (e, data) {

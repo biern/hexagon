@@ -20,6 +20,13 @@ YUI.add('hexagon.server.socketio', function (Y) {
             this._socket.on('message', function (data) {
                 console.log('message', data);
             });
+            // TODO: does this work?
+            this._socket.on('disconnect', function (data) {
+                that.fire('socket:disconnect');
+            });
+            this._socket.on('connected', function (data) {
+                that.fire('socket:connected');
+            });
             // this._socket.on('anything', Y.bind(this._onSocketMessage, this));
         },
 
@@ -29,6 +36,7 @@ YUI.add('hexagon.server.socketio', function (Y) {
 
         _onSocketMessage: function (name, data) {
             var prefix = 'response';
+            console.log('received', name, data);
 
             this.fire(prefix + ':' + name, {
                 prefix: prefix
@@ -36,6 +44,7 @@ YUI.add('hexagon.server.socketio', function (Y) {
         },
 
         send: function (name, data) {
+            console.debug('sending ', name, data);
             this._socket.emit(name, data);
         },
 

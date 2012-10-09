@@ -24,14 +24,12 @@ yvents.subclass(Game, { prefix: 'game' }, {
     },
 
     _afterPlayerBoardJoin: function (e) {
-        console.log(e);
         var id = e.boardID,
             found = false;
 
         this.boards.every(function (board) {
             if (board.id == id) {
-                board.joinPlayer(e.player);
-                found = true;
+                found = board.joinPlayer(e.player);
                 return false;
             }
             return true;
@@ -59,9 +57,9 @@ function Board (id, map, players) {
 
     this._initState();
 
-    this.players(function (p) {
-        this._bindPlayer(p);
-    });
+    // this.players(function (p) {
+    //     this._bindPlayer(p);
+    // });
 
     this.players(function (p) {
         p.socket.emit('board:join', { id: id });
@@ -72,12 +70,21 @@ function Board (id, map, players) {
 Board.prototype = {
 
     _initState: function () {
-        // Hack hack hack - deep clone
-        this.state = JSON.parse(JSON.stringify(this.map.board));
+        var playersMap = {},
+            playersStyles = {};
+
+        this.players(function (p, i) {
+            // TODO: indeksowanie od 0?
+            playersMap[p.username] = i + 1;
+            playersStyles[p.username] = p.style;
+        });
+
+        this.state = logic.decompressState(
+            this.map.board, playersMap);
+
         this.state.activePlayerID = this._players[0].username;
         this.state.allPlayers = this._playersNames;
-        this.state.playersStyles = this._players.map(
-            function (p) { return p.style; });
+        this.state.playersStyles = playersStyles;
 
         hexutils.fixStyles(this.state.playersStyles);
     },
@@ -87,26 +94,61 @@ Board.prototype = {
             res = [];
 
         args[0] = this._players[0];
+        args[1] = 0;
         [].push.apply(args, Array.prototype.slice.call(arguments, 1));
         res.push(callback.apply(this, args));
         args[0] = this._players[1];
+        args[1] = 1;
         res.push(callback.apply(this, args));
         return res;
     },
 
+    // others: function (skip, callback) {
+    //     this.players(function (p) {
+    //         if (p != skip) {
+    //             p.
+    //         }
+    //     });
+    // },
+
     joinPlayer: function (player) {
+        console.log('join player', player.username);
         if (this._playersNames.indexOf(player.username) != -1) {
-            console.log('player', player.username, 'returned');
+            console.log('joined!');
             this._bindPlayer(player);
+            return true;
         }
+        return false;
     },
 
     _bindPlayer: function (player) {
         player.after('board:resync', this._afterPlayerBoardResync, this);
+        player.after('board:move', this._afterPlayerBoardMove, this);
     },
 
     _afterPlayerBoardResync: function (e) {
         e.socket.emit('board:state', this.state);
+    },
+
+    _afterPlayerBoardMove: function (e) {
+        console.log(e);
+        console.log(e.type);
+        var move = e;
+        if (logic.performMove(this.state, move)) {
+            this.players(function (p) {
+
+                if (p.socket.id == e.socket.id) {
+                    return;
+                }
+
+                p.socket.emit('board:move', {
+                    type: move.type,
+                    from: move.from,
+                    to: move.to,
+                    playerID: e.player.username
+                });
+            });
+        }
     },
 
     toJSON: function () {

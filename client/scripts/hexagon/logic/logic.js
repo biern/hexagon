@@ -149,6 +149,7 @@ YUI.add('hexagon.logic', function(Y) {
      * 'x' represents empty cell
      * '-' represents disabled cell
      * players are mapped to chars according to playerIDMap.
+     * TODO: reverse playerIDMap?
      */
     // TODO: Change compress/decompress pair to (de)compressStateCells
     namespace.compressState = function (state, playerIDMap) {

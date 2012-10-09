@@ -12,7 +12,7 @@ YUI.add('hexagon.models.plugs.auth', function (Y) {
         },
 
         loginLast: function () {
-            var username = Y.Cookie.get('username');
+            var username = this._authAttrs.get('player.username') || Y.Cookie.get('username');
 
             if (this._authAttrs.get('loggedIn')) {
                 return;
@@ -27,8 +27,8 @@ YUI.add('hexagon.models.plugs.auth', function (Y) {
 
         _bindHost: function (host) {
             host.after('local:auth:login', this._afterLogin, this);
-            host.after('socket:disconnect', this._afterDisconnect, this);
-            host.after('socket:connected', this._afterConnected, this);
+            host.after('remote:disconnect', this._afterDisconnect, this);
+            host.after('remote:connect', this._afterConnected, this);
         },
 
         _bindHostServer: function (server) {

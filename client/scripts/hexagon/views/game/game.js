@@ -2,23 +2,21 @@ YUI.add('hexagon.views.game', function (Y) {
 
     Y.namespace('Hexagon.views').Game = Y.Base.create('GameView', Y.View, [], {
         // TODO: fix that: if already in DOM it should be rendered there, not create new tag
-        // TODO: add playerStyles to model
         container: Y.one('.hexagon-game'),
 
         initializer: function () {
-            var model = this.get('model'),
-                playersStyles = this.get('playersStyles');
+            var model = this.get('model');
 
             model.board.set('boardID', this.get('boardID'));
 
             this.boardWidget = new Y.Hexagon.widgets.Board({
-                playersStyles: playersStyles
+
             });
             this.scoresWidget = new Y.Hexagon.widgets.Scores({
-                playersStyles: playersStyles
+
             });
             this.activePlayerWidget = new Y.Hexagon.widgets.ActivePlayer({
-                playersStyles: playersStyles
+
             });
 
             this.boardWidget.plug(Y.Hexagon.widgets.board.ModelSync, {

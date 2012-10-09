@@ -5,6 +5,24 @@ YUI.add('hexagon.views.localgame', function (Y) {
         initializer: function () {
             var model = this.get('model');
 
+            this.boardWidget.set('playersStyles', {
+                player1: 'purple',
+                player2: 'orange'
+            });
+            this.scoresWidget.set('playersStyles', {
+                player1: 'purple',
+                player2: 'orange'
+            });
+            this.activePlayerWidget.set('playersStyles', {
+                player1: 'purple',
+                player2: 'orange'
+            });
+
+            model.board.set('state.playersStyles', {
+                player1: 'purple',
+                player2: 'orange'
+            });
+
             this.boardWidget.after('activePlayerIDChange', function (e) {
                 this.boardWidget.set('playerID', e.newVal);
             }, this);
