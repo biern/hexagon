@@ -62,12 +62,12 @@ YUI.add('hexagon.app', function (Y) {
             // this.get('model').fire('local:auth:login', {}, {
             //     username: 'user ' + parseInt(Math.random() * 1000)
             // });
-            this.get('model').after('remote:auth:login', function (data) {
-                if (data.success) return;
-                this.get('model').fire('local:auth:login', {}, {
-                        username: 'user ' + parseInt(Math.random() * 1000)
-                });
-            }, this);
+            // this.get('model').after('remote:auth:login', function (data) {
+            //     if (data.success) return;
+            //     this.get('model').fire('local:auth:login', {}, {
+            //             username: 'user ' + parseInt(Math.random() * 1000)
+            //     });
+            // }, this);
 
 
             this.once('ready', function (e) {
@@ -102,12 +102,17 @@ YUI.add('hexagon.app', function (Y) {
             });
         },
 
-        showOnlinePlay: function (e) {
-            var loggedIn = this.get('model').auth.get('loggedIn');
-
-            if (!loggedIn) {
+        showOnlinePlay: function (req, res) {
+            if (!this.get('model').auth.get('loggedIn')) {
                 // TODO: This url should not stay here like that
-                this._loginRedirect('/play/online/');
+                this._loginRedirect(req.path);
+            }
+
+            var boardID = this.get('model').board.get('boardID');
+
+            if (boardID) {
+                this.navigate('/play/game/' + boardID + '/');
+                return;
             }
 
             this.showView('play-online', {
@@ -118,6 +123,11 @@ YUI.add('hexagon.app', function (Y) {
         showGame: function (req, res) {
             var id = parseInt(req.params.id);
 
+            if (!this.get('model').auth.get('loggedIn')) {
+                this._loginRedirect(req.path);
+                return;
+            }
+
             this.showView('game-online', {
                 boardID: id,
                 model: this.get('model')
@@ -127,6 +137,7 @@ YUI.add('hexagon.app', function (Y) {
         showLogin: function (e) {
             if (this.get('model').auth.get('loggedIn')) {
                 this.navigate('/');
+                return;
             }
 
             this.showView('login', {
@@ -141,12 +152,11 @@ YUI.add('hexagon.app', function (Y) {
         },
 
         _afterAuthLogin: function (e, data) {
-            if (this._afterLoginUrl) {
-                this.navigate(this._afterLoginUrl);
-            }
+            this.navigate(this._afterLoginUrl || '/');
         },
 
         _afterBoardJoin: function (e, data) {
+            console.log('after join');
             this.navigate('/play/game/' + data.id + '/');
         }
 

@@ -22,6 +22,7 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
         _bindHostServer: function (server) {
             server.after('response:board:state', this._afterBoardStateReceived, this);
             server.after('response:board:move', this._afterBoardMoveReceived, this);
+            server.after('response:board:invalid', this._afterBoardInvalidReceived, this);
         },
 
         _unbindHostServer: function (server) {
@@ -39,23 +40,36 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
         },
 
         _afterBoardStateReceived: function (e, data) {
+            if (data.boardID != this._boardAttrs.get('boardID')) {
+                return;
+            }
             this._boardAttrs.set('state', data, { src: 'remote', sender: this });
         },
 
         _afterBoardMoveReceived: function (e, data) {
+            if (data.boardID != this._boardAttrs.get('boardID')) {
+                return;
+            }
             this._performLocalMove(data);
             this.get('host').fire('remote:board:move', { sender: this }, data);
         },
 
         _afterBoardIDChange: function (e) {
+            console.log('change', e.newVal);
             if (e.newVal) {
                 this.get('host').send('board:join', { boardID: e.newVal });
                 this.get('host').send('board:resync', { boardID: e.newVal });
             }
         },
 
+        _afterBoardInvalidReceived: function (e, data) {
+            this._boardAttrs.set('boardID', null);
+        },
+
         _afterBoardMove: function (e, data) {
-            this.get('host').send('board:move', this.stripped(data, SYNC_ATTRS.move));
+            data = this.stripped(data, SYNC_ATTRS.move);
+            data.boardID = this._boardAttrs.get('boardID');
+            this.get('host').send('board:move', data);
             this._performLocalMove(data);
         },
 
@@ -77,8 +91,16 @@ YUI.add('hexagon.models.plugs.boardstate', function (Y) {
             state: {
 
                 value: {
+                    allPlayers: {
+                        value: []
+                    },
+
                     activePlayerID: {
                         value: null
+                    },
+
+                    playersStyles: {
+                        value: {}
                     },
 
                     size: {
