@@ -33,6 +33,7 @@ yvents.subclass(Player, { prefix: 'player' }, {
 
 function Auth (bus) {
     yvents.Base.call(this, bus);
+    this.addTarget(bus);
     this._bus = bus;
 };
 
@@ -47,9 +48,10 @@ yvents.subclass(Auth, { prefix: 'auth' }, {
     },
 
     _afterClientAuthRequest: function (e) {
-        if (this.logIn(e.socket, e.username)) {
+        if (!loggedIn[e.username]) {
             var player = this._createPlayer(e.username, e.socket);
 
+            loggedIn[e.username] = player;
             this.fire('auth:success', { player: player, socket: e.socket });
             e.socket.emit('auth:login', {
                 success: true,
@@ -68,24 +70,14 @@ yvents.subclass(Auth, { prefix: 'auth' }, {
         this.logOut(e.socket);
     },
 
-    logIn: function (socket, username) {
-        if (!loggedIn[username]) {
-            // TODO: Check if not already logged in
-            console.log('logged in ' + username);
-            loggedIn[username] = socket;
-
-            return true;
-        }
-        return false;
-    },
-
     logOut: function (socket) {
         var key, player;
 
         for (key in loggedIn) {
-            if (loggedIn[key] === socket) {
+            if (loggedIn[key].socket === socket) {
                 player = loggedIn[key];
-                this.fire('auth:disconnect', { player: player });
+                // TODO: get player instance here?
+                this.fire('auth:logOut', { player: player });
                 delete loggedIn[key];
                 console.log('logged out ' + key);
                 return;
