@@ -29,9 +29,6 @@ YUI.add('hexagon.views.login', function (Y) {
         },
 
         _onLoginResponse: function (e, data) {
-            if (e.src !== 'remote') {
-                return;
-            }
             this.set('loading', false);
             this.fire('login', {}, data);
         }
