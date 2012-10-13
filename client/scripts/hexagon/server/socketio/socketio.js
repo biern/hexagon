@@ -56,7 +56,7 @@ YUI.add('hexagon.server.socketio', function (Y) {
         ATTRS: {
             url: {
                 writeOnce: 'initOnly',
-                value: 'http://localhost:12345'
+                value: 'http://localhost:8080'
             }
         }
     });

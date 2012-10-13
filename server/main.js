@@ -13,4 +13,4 @@ var bus = new hex.EventBus(),
     game = new hex.Game(bus),
     test = new Test(server, bus);
 
-server.listen(12345);
+server.listen(8080);
