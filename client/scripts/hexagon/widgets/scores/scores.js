@@ -149,6 +149,9 @@ YUI.add('hexagon.widgets.scores', function (Y) {
         },
 
         _calcScores: function (state) {
+            if (!state) {
+                return;
+            }
             var scores = {};
 
             Y.Array.each(state.allPlayers, function (item) {

@@ -1,4 +1,7 @@
-// Wrapper for ylogic.js module
+/**
+ * Wrapper for ylogic.js module
+ */
+
 var fs = require('fs'),
     YUI = require('yui').getInstance();
 

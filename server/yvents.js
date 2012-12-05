@@ -134,9 +134,13 @@ exports.subclass = function (cls, options, proto) {
 exports.wrapEmitter = function (cls, options) {
     var property = options.emitterFnName || 'emit';
 
+    // Replace function 'emitterFnName' to work like 'fire'
     cls.prototype[property] = function (name, data) {
         return this.fire(name, data);
     };
+
+    // Augment cls with Y.EventTarget, and given options.
+    // emitfacade is set by default
     Y.augment(cls, Y.EventTarget, true, null, Y.merge({
         emitFacade: true
     }, options));

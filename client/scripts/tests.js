@@ -8,7 +8,7 @@ YUI(YUI_config).use(
     function(Y){
 
         new Y.Console({
-            width: '400px',
+            width: '600px',
             height: '700px'
         }).render('#console');
 
