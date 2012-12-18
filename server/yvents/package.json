@@ -1,0 +1,7 @@
+{
+    "name": "yvents",
+    "version": "0.1.0",
+    "description": "YUI3 EventTarget utilities and bindings to Node.js",
+    "main": "yvents.js",
+    "keywords": ["yui", "events", "yvents"]
+}

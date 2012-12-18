@@ -1,0 +1,9 @@
+{
+    "name": "hexagon",
+    "author": "Marcin Biernat <mb@marcinbiernat.pl>",
+    "version": "0.1.0",
+    "dependencies": {
+        "socket.io": "0.9.10",
+        "yui": "3.6.0"
+    }
+}
