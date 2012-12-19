@@ -1,5 +1,4 @@
-var sys = require('sys'),
-    hex = require('./hexagon'),
+var hex = require('./hexagon'),
     Server = require('./server'),
     Test = require('./test'),
     yvents = require('yvents');
